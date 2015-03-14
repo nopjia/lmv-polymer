@@ -89,7 +89,7 @@ gulp.task('copy', function () {
     'bower_components/**/*'
   ]).pipe(gulp.dest('dist/bower_components'));
 
-  var elements = gulp.src(['app/elements/**/*.html'])
+  var elements = gulp.src(['app/elements/**/*.html', 'app/elements/**/*.js'])
     .pipe(gulp.dest('dist/elements'));
 
   var vulcanized = gulp.src(['app/elements/elements.html'])
