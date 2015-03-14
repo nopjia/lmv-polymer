@@ -43,7 +43,7 @@ var styleTask = function (stylesPath, srcs) {
 
 // Compile and Automatically Prefix Stylesheets
 gulp.task('styles', function () {
-  return styleTask('styles', ['**/*.css', '*.scss']);
+  return styleTask('styles', ['*.css', '*.scss']);
 });
 
 gulp.task('elements', function () {
