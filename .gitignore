@@ -5,3 +5,4 @@ test/temp
 bower_components
 .tmp
 test/bower_components/
+app/data
