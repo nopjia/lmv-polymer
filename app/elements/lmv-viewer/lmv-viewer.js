@@ -1,5 +1,3 @@
-/*jshint -W117 */
-
 (function () {
 
   var avp = Autodesk.Viewing.Private;
