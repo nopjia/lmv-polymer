@@ -4,7 +4,10 @@
 
   var avp = Autodesk.Viewing.Private;
 
-  function getOptionsFromQueryString() {
+  function initializeViewer(parentDom, svf, documentId) {
+
+    // config3d
+
     var config3d = {};
     var canvasConfig = avp.getParameterByName("canvasConfig");
     if (canvasConfig) {
@@ -23,43 +26,33 @@
     extensions.push("Autodesk.Measure");
     config3d.extensions = extensions;
 
-    var svfURL = avp.getParameterByName("file");
-    if(!svfURL)
-      svfURL = avp.getParameterByName("svf");
+    config3d.screenModeDelegate = Autodesk.Viewing.ApplicationScreenModeDelegate;
 
-    // var documentId = avp.getParameterByName("document");
-    // var initialItemId = avp.getParameterByName("item");
-    var documentId = null;
-    var initialItemId = null;
+    // VIEWER INIT
 
-    return {
-      config3d : config3d,
-      documentId: documentId,
-      svf: svfURL,
-      initialItemId: initialItemId
-    };
-  }
+    var viewer = new Autodesk.Viewing.Viewer3D(parentDom, config3d);
 
-  function initializeViewer(viewerElement, options) {
+    // LOAD FILE
 
-    options.config3d.screenModeDelegate = Autodesk.Viewing.ApplicationScreenModeDelegate;
-    var viewer = new Autodesk.Viewing.Viewer3D(viewerElement, options.config3d);
+    var options = {};
+    options.svf = svf;
+    options.documentId = documentId;
 
-    var svfURL = options.svf;
-    var documentId = options.documentId;
-
-    if (svfURL && svfURL.indexOf("urn:") == -1) {
+    if (svf && svf.indexOf("urn:") === -1) {
       // Load local svf file.
       options.env = "Local";
-      Autodesk.Viewing.Initializer(options, function(){viewer.start();viewer.load(svfURL);});
-    } else if (svfURL && svfURL.indexOf("urn:") == 0) {
+      Autodesk.Viewing.Initializer(options, function(){viewer.start();viewer.load(svf);});
+    }
+    else if (svf && svf.indexOf("urn:") === 0) {
       // Load remote svf file through viewing service.
-      Autodesk.Viewing.Initializer(options, function(){viewer.start();viewer.load(svfURL);});
-    } else if (documentId && documentId.indexOf("urn:") == -1) {
+      Autodesk.Viewing.Initializer(options, function(){viewer.start();viewer.load(svf);});
+    }
+    else if (documentId && documentId.indexOf("urn:") === -1) {
       // Load local document.
       viewer.start();
-      loadDocument(viewer, documentId, options.initialItemId);
-    } else {
+      loadDocument(viewer, documentId);
+    }
+    else {
       console.log("Nothing to load");
     }
   }
@@ -69,7 +62,10 @@
     // Load the document.  Once loaded, find the item requested.
     // If not found, just find the first 3d geometry and load that.
     Autodesk.Viewing.Document.load(documentId,
-      function(document, errorsandwarnings) { // onLoadCallback
+      function(document, errors) { // onLoadCallback
+        if (errors)
+          console.log(errors);
+
         var geometryItems = [];
 
         if(initialItemId) {
@@ -96,8 +92,8 @@
     domReady: function() {
       console.log("url:" +this.url);
       initializeViewer(
-        this.$.viewer3d,
-        getOptionsFromQueryString()
+        this.$.wrapper,
+        this.url
       );
     }
   });

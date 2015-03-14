@@ -5,7 +5,8 @@
   app.addEventListener("template-bound", function() {
     console.log("Polymer Template Ready");
   });
-  app.title = "LMV UI Project";
+  app.title = "LMV Polymer";
+  app.fileURL = "data/engineraw/0.svf";
   window.NOP_APP = app;
 
 // wrap document so it plays nice with other libraries
