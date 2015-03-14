@@ -3,13 +3,16 @@
 <polymer-element name="lmv-viewer" attributes="url">
   <template>
     <style type="text/css">
-      :host, #viewer3d {
+      :host, #wrapper {
         display: block;
-        width: 100%;
-        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
       }
     </style>
-    <div id="viewer3d"></div>
+    <div id="wrapper"></div>
   </template>
   <script type="text/javascript" src="lmv-viewer.js"></script>
 </polymer-element>

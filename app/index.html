@@ -9,6 +9,7 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
   <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="styles/reset.css">
   <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild-->
 
@@ -16,6 +17,7 @@
   <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
   <!-- endbuild -->
 
+  <!-- LMV Import: before elements load -->
   <script type="text/javascript" src="http://lmv.autodesk.com/viewers-dev/latest/viewer3D.js"></script>
 
   <!-- will be replaced with elements/elements.vulcanized.html -->
@@ -25,7 +27,10 @@
 
 <body unresolved fullbleed layout vertical>
   <template is="auto-binding" id="app">
-    <lmv-viewer></lmv-viewer>
+    <lmv-viewer url={{fileURL}}></lmv-viewer>
+    <div id="ui-layer">
+      <h1>{{title}}</h1>
+    </div>
   </template>
 
   <!-- build:js scripts/app.js -->
