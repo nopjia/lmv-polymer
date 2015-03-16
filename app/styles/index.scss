@@ -1,11 +1,14 @@
-@import "_constants.scss";
+// This file isn't really necessary
+// since it only sets the body
+
+$font-stack: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$color-1:   #fff;
+$color-2:   #0ff;
+$color-bg:  #333;
 
 body {
-  font-family: $font-stack;
   background: $color-bg;
-  color: $color-1;
-}
-
-#ui-layer {
-  z-index: 1;
+  // color: $color-1;
+  // font-family: $font-stack;
 }
