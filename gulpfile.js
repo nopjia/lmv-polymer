@@ -28,15 +28,15 @@ var styleTask = function (stylesPath, srcs) {
       return path.join('app', stylesPath, src);
     }))
     .pipe($.changed(stylesPath, {extension: '.scss'}))
-    .pipe($.sass({
+    .pipe($.if('*.scss', $.sass({
       outputStyle: 'nested', // libsass doesn't support expanded yet
       precision: 10,
       includePaths: ['.'],
       onError: console.error.bind(console, 'Sass error:')
-    }))
+    })))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(gulp.dest('.tmp/' + stylesPath))
-    .pipe($.if('*.css', $.csso()))
+    .pipe($.if('*.css', $.cssmin()))
     .pipe(gulp.dest('dist/' + stylesPath))
     .pipe($.size({title: stylesPath}));
 };
@@ -118,7 +118,7 @@ gulp.task('html', function () {
     .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
     // Concatenate And Minify Styles
     // In case you are still using useref build blocks
-    .pipe($.if('*.css', $.csso()))
+    .pipe($.if('*.css', $.cssmin()))
     .pipe(assets.restore())
     .pipe($.useref())
     // Minify Any HTML

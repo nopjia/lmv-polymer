@@ -28,9 +28,7 @@
 <body unresolved fullbleed layout vertical>
   <template is="auto-binding" id="app">
     <lmv-viewer url={{fileURL}}></lmv-viewer>
-    <div id="ui-layer">
-      <h1>{{title}}</h1>
-    </div>
+    <lmv-ui-panel title="{{title}}"></lmv-ui-panel>
   </template>
 
   <!-- build:js scripts/app.js -->

@@ -1,0 +1,10 @@
+$font-stack: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$color-1:   #fff;
+$color-2:   #0ff;
+
+:host {
+  display: block;
+  font-family: $font-stack;
+  color: $color-1;
+}

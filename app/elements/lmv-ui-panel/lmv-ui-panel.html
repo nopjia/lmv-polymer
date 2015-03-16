@@ -1,0 +1,27 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="lmv-ui-panel" attributes="title">
+  <template>
+    <link rel="stylesheet" href="lmv-ui-panel.css">
+    <div class="wrapper">
+      <h1>{{title}}</h1>
+      <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+      <form action="action_page.php">
+<fieldset>
+<legend>Personal information:</legend>
+First name:<br>
+<input type="text" name="firstname" value="Mickey">
+<br>
+Last name:<br>
+<input type="text" name="lastname" value="Mouse">
+<br><br>
+<input type="submit" value="Submit"></fieldset>
+</form>
+    </div>
+  </template>
+  <script type="text/javascript" src="lmv-ui-panel.js"></script>
+</polymer-element>

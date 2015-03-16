@@ -53,6 +53,8 @@
     else {
       console.log("Nothing to load");
     }
+
+    return viewer;
   }
 
   //Used for loading models hosted inside "bubbles" in the viewing service.
@@ -86,13 +88,11 @@
     );
   }
 
-  Polymer({
-    domReady: function() {
+  Polymer("lmv-viewer", {
+    ready: function() {
       console.log("url:" +this.url);
-      initializeViewer(
-        this.$.wrapper,
-        this.url
-      );
+      this.viewer = initializeViewer(this.$.wrapper, this.url);
+      this.fire("viewerReady", this.viewer);
     }
   });
 
