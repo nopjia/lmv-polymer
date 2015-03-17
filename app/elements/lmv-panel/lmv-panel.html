@@ -6,14 +6,16 @@
     <div id="header" on-click="{{toggleCollapse}}">
       {{header}}
     </div>
-    <div id="content" collapse="{{collapse}}">
+    <div id="content">
       <content></content>
     </div>
   </template>
   <script>
     (function () {
       Polymer({
-        collapse: false,
+        publish: {
+          collapse: { value: false, reflect: true }
+        },
         toggleCollapse: function() {
           this.collapse = !this.collapse;
         }
