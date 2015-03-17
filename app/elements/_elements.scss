@@ -1,12 +1,15 @@
 $font-stack: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-size: 14px;
 
-$color-1:   #fff;
-$color-2:   #0ff;
-$color-bg:  rgba(0, 0, 0, 0.5);
+$color-1: #fff;
+$color-2: #0ff;
+$color-bg: rgba(0, 0, 0, 0.5);
+$color-bg-dark: rgba(0, 0, 0, 0.6);
 
 :host {
   display: block;
   font-family: $font-stack;
+  font-size: $font-size;
   color: $color-1;
 }
 
