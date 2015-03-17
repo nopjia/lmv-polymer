@@ -1,0 +1,25 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="lmv-button" attributes="label icon toggle active">
+  <template>
+    <link rel="stylesheet" href="lmv-button.css">
+    <div id="button" on-click="{{onClick}}" active="{{active}}">
+      <template if="{{icon}}">
+        <img src="{{icon}}">
+      </template>
+      <content></content>
+    </div>
+  </template>
+  <script>
+    (function () {
+      Polymer({
+        toggle: false,
+        active: false,
+        onClick: function() {
+          if (this.toggle)
+            this.active = !this.active;
+        }
+      });
+    })();
+  </script>
+</polymer-element>

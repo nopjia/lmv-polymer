@@ -5,10 +5,11 @@ $font-stack: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 $color-1:   #fff;
 $color-2:   #0ff;
-$color-bg:  #333;
+$color-bg:  #aaf;
 
 body {
   background: $color-bg;
+  overflow: hidden;
   // color: $color-1;
   // font-family: $font-stack;
 }
