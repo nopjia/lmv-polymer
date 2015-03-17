@@ -23,12 +23,7 @@ $panel-slide-duration: 0.5s;
 #button-bar {
   display: inline-block;
   float: right;
-
-  height: 100%;
-  @media(min-width: 550px) {
-    height: auto;
-  }
-
+  height: auto;
   background-color: $color-bg-light;
 }
 
@@ -50,10 +45,6 @@ $panel-slide-duration: 0.5s;
   &::shadow img {
     transition: transform $panel-slide-duration;
   }
-  display: none;
-  @media(min-width: 550px) {
-    display: inherit;
-  }
 }
 
 // left / right side
@@ -67,7 +58,10 @@ $panel-slide-duration: 0.5s;
     transform: rotate(180deg);
   }
   &[collapse=true] {
-    left: -$panel-width-less-bar;
+    left: calc(50px - 100%);
+    @media(min-width: 550px) {
+      left: -$panel-width-less-bar;
+    }
     #toggle-button::shadow img {
       transform: rotate(0);
     }
@@ -85,7 +79,10 @@ $panel-slide-duration: 0.5s;
       float: left;
     }
     &[collapse=true] {
-      right: -$panel-width-less-bar;
+      right: calc(50px - 100%);
+      @media(min-width: 550px) {
+        right: -$panel-width-less-bar;
+      }
       #toggle-button::shadow img {
         transform: rotate(180deg);
       }
