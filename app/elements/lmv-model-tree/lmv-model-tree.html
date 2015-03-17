@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="lmv-model-tree-node.css">
 
     <div class="wrapper">
-      <div class="icon" expanded="{{expanded}}" on-click="{{expandContent}}"></div>
+      <div class="icon" expanded="{{expanded}}" on-click="{{toggleExpand}}"></div>
       <div id="label">{{label}}</div>
     </div>
-    <div class="content" expanded="{{expanded}}">
+    <div id="content" expanded="{{expanded}}">
       <content></content>
     </div>
 
@@ -23,7 +23,7 @@
           else
             this.expanded = null;
         },
-        expandContent: function() {
+        toggleExpand: function() {
           if (this.expanded !== null)
             this.expanded = !this.expanded;
         }

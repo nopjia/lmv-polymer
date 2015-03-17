@@ -3,17 +3,20 @@
 <polymer-element name="lmv-panel" attributes="header">
   <template>
     <link rel="stylesheet" href="lmv-panel.css">
-    <div id="header">
+    <div id="header" on-click="{{toggleCollapse}}">
       {{header}}
     </div>
-    <div id="content">
+    <div id="content" collapse="{{collapse}}">
       <content></content>
     </div>
   </template>
   <script>
     (function () {
       Polymer({
-        // define element prototype here
+        collapse: false,
+        toggleCollapse: function() {
+          this.collapse = !this.collapse;
+        }
       });
     })();
   </script>
