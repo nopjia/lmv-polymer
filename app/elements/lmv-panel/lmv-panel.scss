@@ -18,3 +18,7 @@
     background-color: $color-bg-dark;
   }
 }
+
+#content[collapse=true] {
+  display: none;
+}

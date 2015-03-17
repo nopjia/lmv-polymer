@@ -37,10 +37,11 @@ $icon-size: 20px;
   }
 }
 
-.content {
+#content {
   display: none;
   padding-left: $icon-size;
-}
-.content[expanded=true] {
-  display: block;
+
+  &[expanded=true] {
+    display: block;
+  }
 }
