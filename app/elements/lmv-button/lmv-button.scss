@@ -2,8 +2,7 @@
 
 $size: 50px;
 
-div#button {
-  display: inline-block;
+:host {
   width: $size;
   height: $size;
 
@@ -14,12 +13,12 @@ div#button {
 
   transition: background-color $color-hover-duration;
 
-  &:hover, &[active=true] {
-    background-color: $color-bg-hover;
-  }
-
   img {
     width: 100%;
     height: 100%;
   }
+}
+
+:host(:hover), :host([active]) {
+  background-color: $color-bg-hover;
 }
