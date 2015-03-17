@@ -1,7 +1,6 @@
 @import "../elements";
 
 $size: 50px;
-$color-bg-hover: rgba(0,0,0,0.75);
 
 div#button {
   display: inline-block;
@@ -16,7 +15,7 @@ div#button {
   transition: background-color 0.1s;
 
   &:hover, &[active=true] {
-    background-color: $color-bg-hover;
+    background-color: $color-bg-dark;
   }
 
   img {

@@ -1,0 +1,46 @@
+@import "../elements";
+
+$icon-size: 20px;
+
+:host {
+  // background-color: black;
+  // border: 1px solid white;
+};
+
+.icon {
+  float: left;
+  width: $icon-size;
+  height: $icon-size;
+  display: block;
+
+  // pointer-events: none;
+  cursor: auto;
+
+  &[expanded=true] {
+    background: gray;
+    cursor: pointer;
+  }
+  &[expanded=false] {
+    background: white;
+    cursor: pointer;
+  }
+}
+
+#label {
+  display: inline-block;
+  padding: 5px 0px;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+    color: $color-2;
+  }
+}
+
+.content {
+  display: none;
+  padding-left: $icon-size;
+}
+.content[expanded=true] {
+  display: block;
+}

@@ -1,0 +1,48 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="lmv-model-tree-node" attributes="label expanded">
+  <template>
+    <link rel="stylesheet" href="lmv-model-tree.css">
+    <link rel="stylesheet" href="lmv-model-tree-node.css">
+
+    <div class="wrapper">
+      <div class="icon" expanded="{{expanded}}" on-click="{{expandContent}}"></div>
+      <div id="label">{{label}}</div>
+    </div>
+    <div class="content" expanded="{{expanded}}">
+      <content></content>
+    </div>
+
+  </template>
+  <script>
+    (function () {
+      Polymer({
+        domReady: function() {
+          if (this.children.length > 0)
+            this.expanded = false;
+          else
+            this.expanded = null;
+        },
+        expandContent: function() {
+          if (this.expanded !== null)
+            this.expanded = !this.expanded;
+        }
+      });
+    })();
+  </script>
+</polymer-element>
+
+
+<polymer-element name="lmv-model-tree" attributes="">
+  <template>
+    <link rel="stylesheet" href="lmv-model-tree.css">
+    <content></content>
+  </template>
+  <script>
+    (function () {
+      Polymer({
+        // define element prototype here
+      });
+    })();
+  </script>
+</polymer-element>
