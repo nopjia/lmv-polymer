@@ -2,6 +2,7 @@
   var _viewerDom, _viewer;
 
   Polymer("lmv-ui-panel", {
+    right: false,
     domReady: function() {
       _viewerDom = document.querySelector("lmv-viewer");
       if (!_viewerDom) {
@@ -9,6 +10,9 @@
         return;
       }
       _viewer = _viewerDom.viewer;
+    },
+    testFunc: function(event, detail, sender) {
+      console.log({event: event, detail: detail, sender: sender});
     }
   });
 })();   // closure

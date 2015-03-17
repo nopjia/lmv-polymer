@@ -2,7 +2,41 @@
 
 :host {
   z-index: 1;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: $color-bg;
 }
 
-div.wrapper {
+:host {
+  width: 100%;
+}
+@media(min-width: 550px) {
+  :host {
+    width: 400px;
+  }
+}
+
+#button-bar {
+  display: inline-block;
+  height: 100%;
+  float: right;
+}
+
+#main-wrap {
+  width: auto;
+  height: 100%;
+  overflow: hidden;
+  display: block;
+}
+#main {
+  width: 100%;
+  height: 100%;
+}
+
+:host([right]) {
+  right: 0;
+  #button-bar {
+    float: left;
+  }
 }
