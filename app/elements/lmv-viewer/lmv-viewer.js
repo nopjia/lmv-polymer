@@ -1,8 +1,8 @@
 (function () {
 
-  var avp = Autodesk.Viewing.Private;
-
   function initializeViewer(parentDom, svf, documentId) {
+
+    var avp = Autodesk.Viewing.Private;
 
     // config3d
 

@@ -4,7 +4,9 @@ $font-size: 14px;
 $color-1: #fff;
 $color-2: #0ff;
 $color-bg: rgba(0, 0, 0, 0.5);
-$color-bg-dark: rgba(0, 0, 0, 0.6);
+$color-bg-light: rgba(0, 0, 0, 0.4);
+$color-bg-hover: rgba(0, 0, 0, 0.5);
+$color-bg-darken: rgba(0, 0, 0, 0.15);
 
 :host {
   display: block;

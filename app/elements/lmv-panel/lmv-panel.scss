@@ -1,7 +1,6 @@
 @import "../elements";
 
-:host {
-}
+$border: 1px solid $color-1;
 
 #header, #content {
   padding: 10px;
@@ -9,16 +8,18 @@
 
 #header {
   font-size: 20px;
-  border-bottom: 1px solid $color-1;
   cursor: pointer;
 
-  transition: background-color 0.1s;
-
+  background-color: $color-bg-darken;
+  transition: background-color 0.2s;
   &:hover {
-    background-color: $color-bg-dark;
+    background-color: $color-bg-hover;
   }
 }
 
-#content[collapse=true] {
-  display: none;
+#content {
+
+  &[collapse=true] {
+    display: none;
+  }
 }
