@@ -11,7 +11,7 @@ $border: 1px solid $color-1;
   cursor: pointer;
 
   background-color: $color-bg-darken;
-  transition: background-color 0.2s;
+  transition: background-color $color-hover-duration;
   &:hover {
     background-color: $color-bg-hover;
   }

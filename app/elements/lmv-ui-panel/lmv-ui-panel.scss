@@ -1,6 +1,10 @@
 @import "../elements";
 
-:host {
+$panel-width: 400px;
+$panel-width-less-bar: 350px;
+$panel-slide-duration: 0.5s;
+
+#wrapper {
   z-index: 1;
   position: absolute;
   top: 0;
@@ -10,8 +14,10 @@
 
   width: 100%;
   @media(min-width: 550px) {
-    width: 400px;
+    width: $panel-width;
   }
+
+  transition: left $panel-slide-duration, right $panel-slide-duration;
 }
 
 #button-bar {
@@ -40,11 +46,50 @@
   background-color: $color-bg;
 }
 
-// right side
-
-:host([right]) {
-  right: 0;
-  #button-bar {
-    float: left;
+#toggle-button {
+  &::shadow img {
+    transition: transform $panel-slide-duration;
+  }
+  display: none;
+  @media(min-width: 550px) {
+    display: inherit;
   }
 }
+
+// left / right side
+
+#wrapper {
+
+  // default left
+
+  left: 0;
+  #toggle-button::shadow img {
+    transform: rotate(180deg);
+  }
+  &[collapse=true] {
+    left: -$panel-width-less-bar;
+    #toggle-button::shadow img {
+      transform: rotate(0);
+    }
+  }
+
+  // right side
+
+  &[right=true] {
+    left: auto;
+    right: 0;
+    #toggle-button::shadow img {
+      transform: rotate(0);
+    }
+    #button-bar {
+      float: left;
+    }
+    &[collapse=true] {
+      right: -$panel-width-less-bar;
+      #toggle-button::shadow img {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+

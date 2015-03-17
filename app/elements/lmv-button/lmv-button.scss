@@ -12,7 +12,7 @@ div#button {
 
   cursor: pointer;
 
-  transition: background-color 0.2s;
+  transition: background-color $color-hover-duration;
 
   &:hover, &[active=true] {
     background-color: $color-bg-hover;

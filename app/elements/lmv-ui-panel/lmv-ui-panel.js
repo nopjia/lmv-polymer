@@ -3,6 +3,7 @@
 
   Polymer("lmv-ui-panel", {
     right: false,
+    collapse: false,
     domReady: function() {
       _viewerDom = document.querySelector("lmv-viewer");
       if (!_viewerDom) {
@@ -13,6 +14,9 @@
     },
     testFunc: function(event, detail, sender) {
       console.log({event: event, detail: detail, sender: sender});
+    },
+    toggleShow: function() {
+      this.collapse = !this.collapse;
     }
   });
 })();   // closure
