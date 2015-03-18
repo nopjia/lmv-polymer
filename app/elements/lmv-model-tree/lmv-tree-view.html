@@ -23,33 +23,39 @@
   </template>
   <script>
     (function () {
-      var _viewerDom;
+      var _viewer;
 
       Polymer({
         domReady: function() {
+          var self = this;
+
+          // init expand logic
           if (this.children.length > 0)
             this.expanded = (this.expanded === undefined) ? false : this.expanded;
           else
             this.expanded = null;
+
+          // grab viewer reference
+          var viewerDom = document.querySelector("lmv-viewer");
+          if (viewerDom) _viewer = viewerDom.viewer;
+
+          // hook to viewer for selected state
+          _viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(event) {
+            self.selected = false;
+            for (var i=0; i<event.dbIdArray.length; i++) {
+              self.selected = self.selected || (self.dataNode.dbId === event.dbIdArray[i]);
+            }
+          });
         },
         toggleExpand: function() {
           if (this.expanded !== null)
             this.expanded = !this.expanded;
         },
         onNodeClick: function() {
-          this.selectNode();
+          _viewer.select(this.dataNode.dbId);
         },
         onNodeDoubleClick: function() {
-          this.getViewer().fitToView(this.dataNode.dbId);
-        },
-        selectNode: function() {
-          // this.selected = true;
-          this.getViewer().select(this.dataNode.dbId);
-        },
-        getViewer: function() {
-          if (!_viewerDom)
-            _viewerDom = document.querySelector("lmv-viewer");
-          return _viewerDom.viewer;
+          _viewer.fitToView(this.dataNode.dbId);
         }
       });
     })();
