@@ -28,7 +28,7 @@
       Polymer({
         domReady: function() {
           if (this.children.length > 0)
-            this.expanded = false;
+            this.expanded = (this.expanded === undefined) ? false : this.expanded;
           else
             this.expanded = null;
         },
@@ -79,7 +79,9 @@
 
       Polymer({
         rootChanged: function(oldRoot, root) {
+          this.innerHTML = "";
           buildTree(root, this);
+          this.children[0].expanded = true;
         }
       });
     })();
