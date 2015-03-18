@@ -1,0 +1,20 @@
+@import "../elements";
+
+table {
+  width: 100%;
+
+  td.prop {         // needed class specifier to override reset.css
+    padding: 3px 0;
+  }
+}
+
+div.category {
+  margin: 10px 0;
+  padding: 10px 0;
+  border-bottom: 1px solid $color-1;
+
+  &:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+  }
+}
