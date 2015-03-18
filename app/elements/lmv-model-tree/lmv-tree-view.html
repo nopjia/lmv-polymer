@@ -8,7 +8,10 @@
     <table id="wrapper">
       <tr>
         <td class="icon" expanded="{{expanded}}" on-click="{{toggleExpand}}"></td>
-        <td id="label">{{label}}</td>
+        <td id="label" selected="{{selected}}"
+          on-click="{{onNodeClick}}"
+          on-dblclick="{{onNodeDoubleClick}}">
+          {{label}}</td>
       </tr>
       <tr>
         <td id="content" expanded="{{expanded}}">
@@ -20,6 +23,8 @@
   </template>
   <script>
     (function () {
+      var _viewerDom;
+
       Polymer({
         domReady: function() {
           if (this.children.length > 0)
@@ -30,6 +35,21 @@
         toggleExpand: function() {
           if (this.expanded !== null)
             this.expanded = !this.expanded;
+        },
+        onNodeClick: function() {
+          this.selectNode();
+        },
+        onNodeDoubleClick: function() {
+          this.getViewer().fitToView(this.dataNode.dbId);
+        },
+        selectNode: function() {
+          // this.selected = true;
+          this.getViewer().select(this.dataNode.dbId);
+        },
+        getViewer: function() {
+          if (!_viewerDom)
+            _viewerDom = document.querySelector("lmv-viewer");
+          return _viewerDom.viewer;
         }
       });
     })();
