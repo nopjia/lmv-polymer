@@ -37,15 +37,30 @@
 </polymer-element>
 
 
-<polymer-element name="lmv-tree" attributes="">
+<polymer-element name="lmv-tree-view" attributes="root">
   <template>
     <link rel="stylesheet" href="lmv-tree.css">
     <content></content>
   </template>
   <script>
     (function () {
+      var buildTree = function(node, parentElem) {
+        var newElem = document.createElement("lmv-tree-node");
+        newElem.label = node.name;
+        newElem.dataNode = node;  // pointer to backing data
+        parentElem.appendChild(newElem);
+
+        if (node.children) {
+          for (var i=0; i<node.children.length; i++) {
+            buildTree(node.children[i], newElem);
+          }
+        }
+      };
+
       Polymer({
-        // define element prototype here
+        rootChanged: function(oldRoot, root) {
+          buildTree(root, this);
+        }
       });
     })();
   </script>
