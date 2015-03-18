@@ -8,28 +8,37 @@ $icon-size: 20px;
 };
 
 .icon {
-  float: left;
   width: $icon-size;
   height: $icon-size;
-  display: block;
 
   // pointer-events: none;
   cursor: auto;
 
-  &[expanded=true] {
-    background: gray;
+  visibility: hidden;
+  background: url("../../images/iconmonstr-arrow-25-icon-64.png") center no-repeat;
+  background-size: 50%;
+
+  &[expanded=true], &[expanded=false] {
+    visibility: visible;
     cursor: pointer;
+    transition: transform $color-hover-duration;
+
   }
-  &[expanded=false] {
-    background: white;
-    cursor: pointer;
+  &[expanded=true] {
+    transform: rotate(90deg);
+  }
+}
+
+#wrapper {
+  &, tbody, tr {
+    display: block;
+    width: 100%;
   }
 }
 
 #label {
-  display: inline-block;
-  padding: 5px 0px;
   cursor: pointer;
+  vertical-align: middle;
 
   &:hover {
     text-decoration: underline;
