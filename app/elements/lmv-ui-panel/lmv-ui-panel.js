@@ -1,16 +1,48 @@
 (function () {
+  var _this;
   var _viewerDom, _viewer;
+
+  var init = function(self) {
+    _this = self;
+
+    // viewer setup
+
+    _viewerDom = document.querySelector("lmv-viewer");
+    if (!_viewerDom) {
+      console.log("ERROR: Cannot find lmv-viewer element");
+      return;
+    }
+    _viewer = _viewerDom.viewer;
+
+    // hook viewer events to model properties
+    _viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(event) {
+      setModelProperties(event.dbIdArray[event.dbIdArray.length - 1]);
+    });
+    _viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
+      setModelProperties();
+    });
+  };
+
+  var setModelProperties = function(nodeId) {
+    if (!nodeId) {
+      if (_viewer.model.getRoot()) {
+        nodeId = _viewer.model.getRootId();
+      }
+      else {
+        _this.modelProperties = undefined;
+        return;
+      }
+    }
+    _viewer.getProperties(nodeId, function(result) {
+      _this.modelProperties = result.properties;
+    });
+  };
 
   Polymer("lmv-ui-panel", {
     right: false,
     collapse: false,
     domReady: function() {
-      _viewerDom = document.querySelector("lmv-viewer");
-      if (!_viewerDom) {
-        console.log("ERROR: Cannot find lmv-viewer element");
-        return;
-      }
-      _viewer = _viewerDom.viewer;
+      init(this);
     },
     testFunc: function(event, detail, sender) {
       console.log({event: event, detail: detail, sender: sender});
