@@ -1,5 +1,6 @@
 @import "../elements";
 
+$header-font-size: 20px;
 $border: 1px solid $color-1;
 
 #header, #content {
@@ -7,7 +8,7 @@ $border: 1px solid $color-1;
 }
 
 #header {
-  font-size: 20px;
+  font-size: $header-font-size;
   cursor: pointer;
 
   background-color: $color-bg-darken;
@@ -19,4 +20,18 @@ $border: 1px solid $color-1;
 
 :host([collapse]) #content {
   display: none;
+}
+
+#header .collapse-icon {
+  float:right;
+  width: $header-font-size;
+  height: $header-font-size;
+  background: url("../../images/iconmonstr-arrow-25-icon-64.png") center no-repeat;
+  background-size: 75%;
+  transition: transform $color-hover-duration;
+  transform: rotate(90deg);
+}
+
+:host([collapse]) #header .collapse-icon {
+  transform: rotate(180deg);
 }
