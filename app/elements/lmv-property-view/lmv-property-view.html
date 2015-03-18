@@ -1,5 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<!--
+  Dependent on properties list having "label" as the name at first position in list
+ -->
+
 <polymer-element name="lmv-property-view" attributes="properties">
   <template>
     <link rel="stylesheet" href="lmv-property-view.css">
@@ -8,10 +12,12 @@
       <div class="category">{{cat}}</div>
       <table>
         <template repeat="{{prop in categories[cat]}}">
-          <tr>
-            <td class="prop">{{prop.displayName}}</td>
-            <td class="prop">{{prop.displayValue}}</td>
-          </tr>
+          <template if="{{prop.displayName!='label'}}">
+            <tr>
+              <td class="prop">{{prop.displayName}}</td>
+              <td class="prop">{{prop.displayValue}}</td>
+            </tr>
+          </template>
         </template>
       </table>
     </template>
@@ -22,7 +28,7 @@
     (function () {
       Polymer({
         propertiesChanged: function(oldValue, newValue) {
-          var props = newValue; // === this.properties;
+          var props = newValue; // === this.properties
           var name = props[0].displayValue;
           this.categories = {};
           for (var i=0; i<props.length; i++) {

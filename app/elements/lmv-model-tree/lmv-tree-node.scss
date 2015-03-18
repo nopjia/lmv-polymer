@@ -22,7 +22,6 @@ $icon-size: 20px;
     visibility: visible;
     cursor: pointer;
     transition: transform $color-hover-duration;
-
   }
   &[expanded=true] {
     transform: rotate(90deg);
