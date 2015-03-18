@@ -80,8 +80,9 @@
       Polymer({
         rootChanged: function(oldRoot, root) {
           this.innerHTML = "";
-          buildTree(root, this);
-          this.children[0].expanded = true;
+          for (var i=0; i<root.children.length; i++) {
+            buildTree(root.children[i], this);
+          }
         }
       });
     })();
