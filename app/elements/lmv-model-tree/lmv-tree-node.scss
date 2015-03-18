@@ -40,7 +40,7 @@ $icon-size: 20px;
   cursor: pointer;
   vertical-align: middle;
 
-  &:hover {
+  &:hover, &[selected=true] {
     text-decoration: underline;
     color: $color-2;
   }
