@@ -18,8 +18,12 @@
     _viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(event) {
       setModelProperties(event.dbIdArray[event.dbIdArray.length - 1]);
     });
+
+    // geometry loaded
+
     _viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
       setModelProperties();
+      setModelTree();
     });
   };
 
@@ -35,6 +39,12 @@
     }
     _viewer.getProperties(nodeId, function(result) {
       _this.modelProperties = result.properties;
+    });
+  };
+
+  var setModelTree = function() {
+    _viewer.getObjectTree(function(root) {
+      _this.modelTree = root;
     });
   };
 
