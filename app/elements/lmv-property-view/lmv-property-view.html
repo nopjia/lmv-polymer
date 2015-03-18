@@ -21,19 +21,16 @@
   <script>
     (function () {
       Polymer({
-        ready: function() {
-          // TODO_NOP: dummy info
-          this.properties = [{"displayName":"label","displayValue":"Tuned Pipe 2:1","displayCategory":null,"type":20,"units":null,"hidden":0},{"displayName":"Center of Gravity:","displayValue":"-79.501 3.643 24.793","displayCategory":"Physical","type":24,"units":"mm","hidden":0},{"displayName":"QTY","displayValue":1,"displayCategory":"","type":21,"units":null,"hidden":0},{"displayName":"Part Number","displayValue":"ADSK-1103070","displayCategory":"","type":21,"units":null,"hidden":0},{"displayName":"Description","displayValue":"MUFFLER","displayCategory":"","type":21,"units":null,"hidden":0},{"displayName":"Item","displayValue":80,"displayCategory":"","type":21,"units":null,"hidden":0},{"displayName":"BOM Structure","displayValue":"Normal","displayCategory":"","type":21,"units":null,"hidden":0},{"displayName":"Unit QTY","displayValue":"Each","displayCategory":"","type":21,"units":null,"hidden":0},{"displayName":"Date Created","displayValue":"2000-08-16","displayCategory":"","type":21,"units":null,"hidden":0},{"displayName":"Design Status","displayValue":0,"displayCategory":"","type":21,"units":null,"hidden":0},{"displayName":"Requested Accuracy","displayValue":"Very High","displayCategory":"Physical","type":20,"units":null,"hidden":0},{"displayName":"Area:","displayValue":20215.01,"displayCategory":"Physical","type":3,"units":"inch^2","hidden":0},{"displayName":"Mass:","displayValue":0.006229053,"displayCategory":"Physical","type":3,"units":"lbmass","hidden":0},{"displayName":"Volume:","displayValue":6229.053,"displayCategory":"Physical","type":3,"units":"inch^3","hidden":0},{"displayName":"Density:","displayValue":0.000001,"displayCategory":"Physical","type":3,"units":"lbmass/inch^3","hidden":0},{"displayName":"Material:","displayValue":"Default","displayCategory":"Physical","type":20,"units":null,"hidden":0}];
-        },
         propertiesChanged: function(oldValue, newValue) {
+          var props = newValue; // === this.properties;
+          var name = props[0].displayValue;
           this.categories = {};
-          for (var i=0; i<this.properties.length; i++) {
-            var cat = this.properties[i].displayCategory || "General";
+          for (var i=0; i<props.length; i++) {
+            var cat = props[i].displayCategory || name;
             if (!this.categories[cat])
               this.categories[cat] = [];
-            this.categories[cat].push(this.properties[i]);
+            this.categories[cat].push(props[i]);
           }
-          console.log(this.categories);
         },
         keys: function(obj) {
           if (obj) return Object.keys(obj);
