@@ -1,0 +1,27 @@
+@import "../elements";
+
+:host {
+  height: $font-size * 1.5;
+  margin-bottom: 5px;
+}
+:host(:last-of-type) {
+  margin-bottom: 0;
+}
+:host(:hover) {
+  // background-color: $color-bg-darken;
+}
+
+#label {
+  width: 40%;
+  display: inline-block;
+}
+#input {
+  width: 60%;
+  height: 100%;
+  display: inline-block;
+}
+
+polyfill-next-selector { content: '> *'; }
+::content > * {
+  height: 100%;
+}

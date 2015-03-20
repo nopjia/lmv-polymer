@@ -1,0 +1,35 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="lmv-settings-input" attributes="label value type">
+  <template>
+    <link rel="stylesheet" href="lmv-settings-input.css">
+
+    <label id="label">{{label}}</label><div id="input">
+    <content></content></div>
+
+  </template>
+  <script>
+    (function () {
+      Polymer({
+        // define element prototype here
+      });
+    })();
+  </script>
+</polymer-element>
+
+
+<polymer-element name="lmv-render-settings-view" attributes="">
+  <template>
+    <!-- <link rel="stylesheet" href="lmv-settings-view.css"> -->
+    <lmv-settings-input label="Environment"><lmv-input-select value="{{env}}" options="{{envlist}}"/></lmv-settings-input>
+    <lmv-settings-input label="FOV"><lmv-input-range value="{{fov}}" min="1" max="90" step="0.1"/></lmv-settings-input>
+    <lmv-settings-input label="Ortho"><lmv-input-check value="{{ortho}}"/></lmv-settings-input>
+    <lmv-settings-input label="Anti-Aliasing"><lmv-input-check value="{{aa}}"/></lmv-settings-input>
+    <lmv-settings-input label="Anbient Occlusion"><lmv-input-check value="{{ssao}}"/></lmv-settings-input>
+    <lmv-settings-input label="Shadows"><lmv-input-check value="{{shadows}}"/></lmv-settings-input>
+    <lmv-settings-input label="Reflections"><lmv-input-check value="{{reflections}}"/></lmv-settings-input>
+    <lmv-settings-input label="Cel Shading"><lmv-input-check value="{{cel}}"/></lmv-settings-input>
+    <lmv-settings-input label="Exposure"><lmv-input-range value="{{exposure}}" min="-30" max="30" step="0.1"/></lmv-settings-input>
+  </template>
+  <script type="text/javascript" src="lmv-render-settings-view.js"></script>
+</polymer-element>
