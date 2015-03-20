@@ -7,24 +7,27 @@
       var viewerDom = document.querySelector("lmv-viewer");
       if (viewerDom) _viewer = viewerDom.viewer;
 
-      this.aa = _viewer.prefs.antialiasing;
-      this.ssao = _viewer.prefs.ambientShadows;
-      this.shadows = _viewer.prefs.groundShadow;
-      this.reflections = _viewer.prefs.groundReflection;
-      this.cel = _viewer.prefs.celShaded;
+      var self = this;
+      _viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
+        self.aa = _viewer.prefs.antialiasing;
+        self.ssao = _viewer.prefs.ambientShadows;
+        self.shadows = _viewer.prefs.groundShadow;
+        self.reflections = _viewer.prefs.groundReflection;
+        self.cel = _viewer.prefs.celShaded;
 
-      var avp = Autodesk.Viewing.Private;
-      this.envlist = [];
-      for (var i=0; i<avp.LightPresets.length; i++) {
-        this.envlist.push({
-          value: i, label: avp.LightPresets[i].name
-        });
-      }
-      this.env = _viewer.impl.currentLightPreset();
+        var avp = Autodesk.Viewing.Private;
+        self.envlist = [];
+        for (var i=0; i<avp.LightPresets.length; i++) {
+          self.envlist.push({
+            value: i, label: avp.LightPresets[i].name
+          });
+        }
+        self.env = _viewer.impl.currentLightPreset();
 
-      this.exposure = _viewer.impl.renderer().getExposureBias();
-      this.fov = _viewer.getFOV();
-      this.ortho = false;  // TODO_NOP: this.ortho get
+        self.exposure = _viewer.impl.renderer().getExposureBias();
+        self.fov = _viewer.getFOV();
+        self.ortho = false;  // TODO_NOP: this.ortho get
+      });
     },
 
     envChanged: function() {
