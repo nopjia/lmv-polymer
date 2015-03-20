@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="lmv-input" attributes="value" noscript>
+  <template>
+    <link rel="stylesheet" type="text/css" href="lmv-input.css">
+    <input id="input" value="{{value}}"/>
+  </template>
+</polymer-element>
+
+<polymer-element name="lmv-input-range" attributes="value min max step" noscript>
+  <template>
+    <link rel="stylesheet" type="text/css" href="lmv-input.css">
+    <style type="text/css">
+    #input {
+      width: 75%;
+    }
+    #range-val {
+      width: calc(25% - 10px);
+      margin-left: 10px;
+      text-align: center;
+    }
+    </style>
+    <input id="input" value="{{value}}" type="range"
+      min="{{min}}" max="{{max}}" step="{{step}}"
+    /><input id="range-val" value="{{value}}" />
+  </template>
+</polymer-element>
+
+<polymer-element name="lmv-input-check" attributes="value" noscript>
+  <template>
+    <link rel="stylesheet" type="text/css" href="lmv-input.css">
+    <input id="input" type="checkbox" checked="{{value}}"/>
+  </template>
+</polymer-element>
+
+<!--
+options: [
+  { value: 1, label: "One" },
+  { value: 2, label: "Two" },
+  { value: 3, label: "Three" },
+] -->
+<polymer-element name="lmv-input-select" attributes="value options" noscript>
+  <template>
+    <link rel="stylesheet" type="text/css" href="lmv-input.css">
+    <style type="text/css">
+
+    </style>
+    <select id="input" value="{{value}}">
+      <template repeat="{{op in options}}">
+        <option value="{{op.value}}">{{op.label}}</option>
+      </template>
+    </select>
+  </template>
+</polymer-element>
