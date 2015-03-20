@@ -24,6 +24,7 @@
     _viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
       setModelProperties();
       setModelTree();
+      setRenderStats();
     });
   };
 
@@ -46,6 +47,15 @@
     _viewer.getObjectTree(function(root) {
       _this.modelTree = root;
     });
+  };
+
+  var setRenderStats = function() {
+    var modelData = _viewer.impl.model.myData;
+    _this.renderStats = [];
+    _this.renderStats.push(["Meshes", modelData.meshCount]);
+    _this.renderStats.push(["Instanced Polys", modelData.instancePolyCount.toLocaleString()]);
+    _this.renderStats.push(["Geometry Polys", modelData.geomPolyCount.toLocaleString()]);
+    _this.renderStats.push(["Geometry Size", (modelData.geomMemory / (1024*1024)).toFixed(2) + " MB"]);
   };
 
   Polymer("lmv-ui-panel", {

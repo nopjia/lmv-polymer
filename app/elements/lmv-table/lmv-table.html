@@ -1,0 +1,18 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="lmv-table" attributes="table right" noscript>
+  <template>
+    <link rel="stylesheet" href="lmv-table.css">
+
+    <table>
+      <template repeat="{{row in table}}">
+        <tr>
+          <template repeat="{{cell in row}}">
+            <td class="cell">{{cell}}</td>
+          </template>
+        </tr>
+      </template>
+    </table>
+
+  </template>
+</polymer-element>

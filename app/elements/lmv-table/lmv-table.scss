@@ -1,0 +1,18 @@
+@import "../elements";
+
+table {
+  width: 100%;
+
+  td.cell {         // needed class specifier to override reset.css
+    padding: 3px 0;
+  }
+}
+
+:host([right]) {
+  td.cell {
+    text-align: right;
+  }
+  td.cell:first-of-type {
+    text-align: inherit;
+  }
+}
