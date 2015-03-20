@@ -64,8 +64,11 @@
           if (this.expanded !== null)
             this.expanded = !this.expanded;
         },
-        onNodeClick: function() {
-          _viewer.select(this.dataNode.dbId);
+        onNodeClick: function(event) {
+          if (event.shiftKey || event.ctrlKey)
+            _viewer.toggleSelect(this.dataNode.dbId);
+          else
+            _viewer.select(this.dataNode.dbId);
         },
         onNodeDoubleClick: function() {
           _viewer.fitToView(this.dataNode.dbId);
