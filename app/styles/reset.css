@@ -5,7 +5,7 @@
  * Modified with "shadow deep" for Polymer web components
  */
 
-
+/* TODO_NOP: really shouldn't be using reset.css... */
 
 html, html/deep/body, html/deep/div, html/deep/span, html/deep/applet, html/deep/object, html/deep/iframe,
 html/deep/h1, html/deep/h2, html/deep/h3, html/deep/h4, html/deep/h5, html/deep/h6, html/deep/p, html/deep/blockquote, html/deep/pre,

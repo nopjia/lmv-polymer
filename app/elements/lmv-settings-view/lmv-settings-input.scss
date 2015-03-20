@@ -4,7 +4,7 @@
   height: $font-size * 1.5;
   margin-bottom: 5px;
 }
-:host(:last-of-type) {
+:host(:last-child) {
   margin-bottom: 0;
 }
 :host(:hover) {
@@ -21,7 +21,7 @@
   display: inline-block;
 }
 
-polyfill-next-selector { content: '> *'; }
+polyfill-next-selector { content: ':host > *'; }
 ::content > * {
   height: 100%;
 }
