@@ -7,6 +7,8 @@
       var viewerDom = document.querySelector("lmv-viewer");
       if (viewerDom) _viewer = viewerDom.viewer;
 
+      // TODO_NOP: we do this on impl.setModel, but currently no event
+
       var self = this;
       if (_viewer) _viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
         self.aa = _viewer.prefs.antialiasing;

@@ -1,0 +1,22 @@
+@import "../elements";
+
+:host {
+  width: 150px;
+  z-index: 10;
+  background-color: $color-bg;
+}
+
+polyfill-next-selector { content: ':host > *'; }
+::content > * {
+  padding: 5px;
+  border-bottom: 1px solid $color-bg-darken;
+  cursor: pointer;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover {
+    background-color: $color-bg-hover;
+  }
+}
