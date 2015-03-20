@@ -8,7 +8,9 @@
     <table id="wrapper">
       <tr>
         <td class="icon" expanded="{{expanded}}" on-click="{{toggleExpand}}"></td>
-        <td id="label" selected="{{selected}}"
+        <td id="label"
+          selected="{{selected}}"
+          grayed="{{grayed}}"
           on-click="{{onNodeClick}}"
           on-dblclick="{{onNodeDoubleClick}}">
           {{label}}</td>
@@ -39,11 +41,22 @@
           var viewerDom = document.querySelector("lmv-viewer");
           if (viewerDom) _viewer = viewerDom.viewer;
 
-          // hook to viewer for selected state
+          // hook to viewer events
           _viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(event) {
             self.selected = false;
             for (var i=0; i<event.dbIdArray.length; i++) {
               self.selected = self.selected || (self.dataNode.dbId === event.dbIdArray[i]);
+            }
+          });
+          _viewer.addEventListener(Autodesk.Viewing.HIDE_EVENT, function(event) {
+            for (var i=0; i<event.nodeIdArray.length; i++) {
+              self.grayed = self.grayed || (self.dataNode.dbId === event.nodeIdArray[i].dbId);
+            }
+          });
+          _viewer.addEventListener(Autodesk.Viewing.ISOLATE_EVENT, function(event) {
+            self.grayed = false;
+            for (var i=0; i<event.nodeIdArray.length; i++) {
+              self.grayed = self.grayed || (self.dataNode.dbId !== event.nodeIdArray[i].dbId);
             }
           });
         },

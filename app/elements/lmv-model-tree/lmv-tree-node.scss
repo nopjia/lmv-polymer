@@ -43,6 +43,10 @@ $icon-size: 20px;
     text-decoration: underline;
     color: $color-2;
   }
+
+  &[grayed=true] {
+    color: $color-3;
+  }
 }
 
 #content {
