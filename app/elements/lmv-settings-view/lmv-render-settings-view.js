@@ -8,7 +8,7 @@
       if (viewerDom) _viewer = viewerDom.viewer;
 
       var self = this;
-      _viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
+      if (_viewer) _viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
         self.aa = _viewer.prefs.antialiasing;
         self.ssao = _viewer.prefs.ambientShadows;
         self.shadows = _viewer.prefs.groundShadow;
