@@ -1,14 +1,71 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<polymer-element name="lmv-context-menu" attributes="x y">
+<polymer-element name="lmv-context-menu" attributes="">
   <template>
     <link rel="stylesheet" href="lmv-context-menu.css">
     <content></content>
   </template>
   <script>
     (function () {
+      var _this;
+
+      function openContextMenu(x,y) {
+        _this.show = true;
+        _this.style.left = x + "px";
+        _this.style.top = y + "px";
+      }
+      function closeContextMenu() {
+        _this.show = false;
+      }
+
+      // function onClick(e) {
+      //   if (e.button === 0) {
+      //     closeContextMenu();
+      //   }
+      //   else if (e.button === 2) {
+      //     openContextMenu(e.x, e.y);
+      //     e.preventDefault();
+      //     e.stopPropagation();
+      //   }
+      // }
+
+      function onContextMenu(e) {
+        openContextMenu(e.x, e.y);
+        e.preventDefault();
+      }
+      function onClick() {
+        closeContextMenu();
+      }
+
+      function listen(node) {
+        if (node && node.addEventListener) {
+          // node.addEventListener("mouseup", onClick);
+          node.addEventListener("mousedown", onClick);
+          node.addEventListener("contextmenu", onContextMenu);
+        }
+      }
+      function unlisten(node) {
+        if (node && node.removeEventListener) {
+          // node.removeEventListener("mouseup", onClick);
+          node.addEventListener("mousedown", onClick);
+          node.removeEventListener("contextmenu", onContextMenu);
+        }
+      }
+
       Polymer({
-        // define element prototype here
+        publish: {
+          show: { value:false, reflect:true }
+        },
+        attached: function() {
+          _this = this;
+          if (!this.target) {
+            this.target = this.parentNode;
+          }
+          listen(this.target);
+        },
+        detached: function() {
+          unlisten(this.target);
+        }
       });
     })();
   </script>

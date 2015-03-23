@@ -1,9 +1,19 @@
 @import "../elements";
 
 :host {
-  width: 150px;
   z-index: 10;
   background-color: $color-bg;
+
+  min-width: 150px;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: none;
+}
+
+:host([show]) {
+  display: block;
 }
 
 polyfill-next-selector { content: ':host > *'; }
