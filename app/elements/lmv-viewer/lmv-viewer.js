@@ -18,10 +18,10 @@
     }
 
     var extensions = config3d.extensions || [];
-    extensions.push("Autodesk.Viewing.Section");
-    extensions.push("Autodesk.Viewing.Collaboration");
-    extensions.push("Autodesk.Viewing.RemoteControl");
-    extensions.push("Autodesk.Measure");
+    // extensions.push("Autodesk.Viewing.Section");
+    // extensions.push("Autodesk.Viewing.Collaboration");
+    // extensions.push("Autodesk.Viewing.RemoteControl");
+    // extensions.push("Autodesk.Measure");
     config3d.extensions = extensions;
 
     config3d.screenModeDelegate = Autodesk.Viewing.ApplicationScreenModeDelegate;
