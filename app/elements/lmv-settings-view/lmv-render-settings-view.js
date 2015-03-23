@@ -10,7 +10,7 @@
       // TODO_NOP: we do this on impl.setModel, but currently no event
 
       var self = this;
-      if (_viewer) _viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
+      if (_viewer) _viewer.addEventListener(Autodesk.Viewing.MODEL_ROOT_LOADED_EVENT, function() {
         self.aa = _viewer.prefs.antialiasing;
         self.ssao = _viewer.prefs.ambientShadows;
         self.shadows = _viewer.prefs.groundShadow;

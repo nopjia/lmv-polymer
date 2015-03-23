@@ -19,18 +19,21 @@
       setModelProperties(event.dbIdArray[event.dbIdArray.length - 1]);
     });
 
-    // geometry loaded
-
-    _viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
+    // property db loaded
+    _viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, function() {
       setModelProperties();
       setModelTree();
+    });
+
+    // geometry complete
+    _viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
       setRenderStats();
     });
   };
 
   var setModelProperties = function(nodeId) {
     if (!nodeId) {
-      if (_viewer.model.getRoot()) {
+      if (_viewer.model.myData.instanceTree) {
         nodeId = _viewer.model.getRootId();
       }
       else {
@@ -44,9 +47,7 @@
   };
 
   var setModelTree = function() {
-    _viewer.getObjectTree(function(root) {
-      _this.modelTree = root;
-    });
+    _this.modelTree = _viewer.model.myData.instanceTree;
   };
 
   var setRenderStats = function() {
