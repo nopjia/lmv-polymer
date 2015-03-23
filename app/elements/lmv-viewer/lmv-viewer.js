@@ -91,7 +91,7 @@
   Polymer("lmv-viewer", {
     ready: function() {
       console.log("url:" +this.url);
-      this.viewer = initializeViewer(this.$.wrapper, this.url);
+      this.viewer = initializeViewer(this.shadowRoot, this.url);
     }
   });
 
