@@ -13,6 +13,10 @@
       return;
     }
     _viewer = _viewerDom.viewer;
+    if (!_viewer) {
+      console.log("ERROR: Cannot find lmv-viewer element");
+      return;
+    }
 
     // hook viewer events to model properties
     _viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(event) {
