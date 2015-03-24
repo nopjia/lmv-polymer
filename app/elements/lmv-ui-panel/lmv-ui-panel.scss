@@ -1,6 +1,6 @@
 @import "../elements";
 
-$toolbar-width: 50px;  // HARDCODE: from button size
+$toolbar-width: 40px;  // HARDCODE: from button size
 $panel-width: 400px;
 $panel-slide-duration: 0.5s;
 $mobile-width: 550px;
@@ -22,8 +22,6 @@ $mobile-width: 550px;
 }
 
 #main {
-  user-select: none;
-
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;

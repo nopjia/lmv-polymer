@@ -1,13 +1,13 @@
 @import "../elements";
 
-$size: 50px;
+$size: 40px;
 
 :host {
   width: $size;
   height: $size;
 
   box-sizing: border-box;
-  padding: 10px;
+  padding: 8px;
 
   cursor: pointer;
 
