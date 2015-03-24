@@ -1,0 +1,50 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="lmv-obj-context-menu" attributes="">
+  <template>
+    <link rel="stylesheet" href="lmv-obj-context-menu.css">
+    <lmv-context-menu id="menu" on-open="{{onOpen}}">
+      <template if="{{hasSelection}}">
+        <div on-click="{{isolate}}">Isolate</div>
+        <div on-click="{{hide}}">Hide</div>
+        <div on-click="{{focus}}">Focus</div>
+        <div on-click="{{clearSelection}}" class="line">Clear Selection</div>
+      </template>
+      <div on-click="{{showAll}}">Show All</div>
+    </lmv-context-menu>
+  </template>
+  <script>
+    (function () {
+      var _viewer;
+      Polymer({
+        domReady: function() {
+          // redirect menu target
+          this.$.menu.target = this.parentNode;
+
+          // grab viewer reference
+          var viewerDom = document.querySelector("lmv-viewer");
+          if (viewerDom) _viewer = viewerDom.viewer;
+        },
+        onOpen: function() {
+          this.hasSelection = (_viewer.getSelectionCount() > 0);
+        },
+        isolate: function() {
+          _viewer.isolate(_viewer.getSelection());
+        },
+        hide: function() {
+          _viewer.hide(_viewer.getSelection());
+          _viewer.clearSelection();
+        },
+        focus: function() {
+          _viewer.fitToView(_viewer.getSelection());
+        },
+        showAll: function() {
+          _viewer.showAll();
+        },
+        clearSelection: function() {
+          _viewer.clearSelection();
+        },
+      });
+    })();
+  </script>
+</polymer-element>

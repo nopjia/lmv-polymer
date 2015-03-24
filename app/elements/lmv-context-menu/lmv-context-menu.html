@@ -13,9 +13,11 @@
         _this.show = true;
         _this.style.left = x + "px";
         _this.style.top = y + "px";
+        _this.fire("open");
       }
       function closeContextMenu() {
         _this.show = false;
+        _this.fire("close");
       }
 
       // function onClick(e) {

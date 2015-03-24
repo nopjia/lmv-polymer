@@ -4,7 +4,7 @@
   z-index: 10;
   background-color: $color-bg;
 
-  min-width: 150px;
+  min-width: 120px;
   position: fixed;
   top: 0;
   left: 0;
@@ -16,8 +16,8 @@
   display: block;
 }
 
-polyfill-next-selector { content: ':host > *'; }
-::content > * {
+polyfill-next-selector { content: ':host > :not(template)'; }
+::content > :not(template) {
   display: block;
   margin: 0;
   padding: 5px;
@@ -30,5 +30,9 @@ polyfill-next-selector { content: ':host > *'; }
 
   &:hover {
     background-color: $color-bg-hover;
+  }
+
+  &.line {
+    border-bottom: 1px solid $color-1;
   }
 }
