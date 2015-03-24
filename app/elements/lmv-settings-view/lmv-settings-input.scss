@@ -23,5 +23,6 @@
 
 polyfill-next-selector { content: ':host > *'; }
 ::content > * {
+  width: 100%;
   height: 100%;
 }
