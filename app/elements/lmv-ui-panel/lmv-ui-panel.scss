@@ -1,45 +1,39 @@
 @import "../elements";
 
+$toolbar-width: 50px;  // HARDCODE: from button size
 $panel-width: 400px;
-$panel-width-less-bar: 350px;
 $panel-slide-duration: 0.5s;
+$mobile-width: 550px;
 
-#wrapper {
+:host {
   z-index: 1;
   position: absolute;
   top: 0;
   bottom: 0;
 
-  user-select: none;
-
-  width: 100%;
-  @media(min-width: 550px) {
+  width: calc(100% - #{$toolbar-width});
+  @media(min-width: $mobile-width) {
     width: $panel-width;
   }
+
+  background-color: $color-bg;
 
   transition: left $panel-slide-duration, right $panel-slide-duration;
 }
 
-#button-bar {
-  display: inline-block;
-  float: right;
-  height: auto;
-  background-color: $color-bg-light;
-}
-
-#main-wrap {
-  width: auto;
-  height: 100%;
-  overflow: hidden;
-  display: block;
-}
 #main {
-  width: 100%;
+  user-select: none;
+
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+}
 
-  background-color: $color-bg;
+#toolbar {
+  position: absolute;
+  display: block;
+  height: auto;
+  background-color: $color-bg-light;
 }
 
 #toggle-button {
@@ -50,44 +44,43 @@ $panel-slide-duration: 0.5s;
 
 // left / right side
 
-#wrapper {
-
-  // default left
-
+:host {
   left: 0;
+  #toolbar {
+    right: -$toolbar-width;
+  }
   #toggle-button::shadow img {
     transform: rotate(180deg);
   }
-  &[collapse=true] {
-    left: calc(50px - 100%);
-    @media(min-width: 550px) {
-      left: -$panel-width-less-bar;
-    }
-    #toggle-button::shadow img {
-      transform: rotate(0);
-    }
+}
+:host([collapse]) {
+  left: calc(#{$toolbar-width} - 100%);
+  @media(min-width: $mobile-width) {
+    left: -$panel-width;
   }
+  #toggle-button::shadow img {
+    transform: rotate(0);
+  }
+}
 
-  // right side
-
-  &[right=true] {
-    left: auto;
-    right: 0;
-    #toggle-button::shadow img {
-      transform: rotate(0);
-    }
-    #button-bar {
-      float: left;
-    }
-    &[collapse=true] {
-      right: calc(50px - 100%);
-      @media(min-width: 550px) {
-        right: -$panel-width-less-bar;
-      }
-      #toggle-button::shadow img {
-        transform: rotate(180deg);
-      }
-    }
+:host([right]) {
+  left: auto;
+  right: 0;
+  #toolbar {
+    left: -$toolbar-width;
+    right: auto;
+  }
+  #toggle-button::shadow img {
+    transform: rotate(0);
+  }
+}
+:host([right][collapse]) {
+  right: calc(#{$toolbar-width} - 100%);
+  @media(min-width: $mobile-width) {
+    right: -$panel-width;
+  }
+  #toggle-button::shadow img {
+    transform: rotate(180deg);
   }
 }
 

@@ -18,6 +18,8 @@
 
 polyfill-next-selector { content: ':host > *'; }
 ::content > * {
+  display: block;
+  margin: 0;
   padding: 5px;
   border-bottom: 1px solid $color-bg-darken;
   cursor: pointer;

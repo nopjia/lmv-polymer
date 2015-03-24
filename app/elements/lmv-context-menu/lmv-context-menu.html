@@ -33,21 +33,22 @@
         openContextMenu(e.x, e.y);
         e.preventDefault();
       }
-      function onClick() {
-        closeContextMenu();
+      function onClickToCancel(e) {
+        if (e.button !== 1 && e.button !== 2)
+          closeContextMenu();
       }
 
       function listen(node) {
         if (node && node.addEventListener) {
           // node.addEventListener("mouseup", onClick);
-          node.addEventListener("mousedown", onClick);
+          window.addEventListener("mouseup", onClickToCancel);
           node.addEventListener("contextmenu", onContextMenu);
         }
       }
       function unlisten(node) {
         if (node && node.removeEventListener) {
           // node.removeEventListener("mouseup", onClick);
-          node.addEventListener("mousedown", onClick);
+          window.addEventListener("mouseup", onClickToCancel);
           node.removeEventListener("contextmenu", onContextMenu);
         }
       }
