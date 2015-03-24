@@ -59,13 +59,16 @@
         },
         attached: function() {
           _this = this;
-          if (!this.target) {
+          if (!this.target)
             this.target = this.parentNode;
-          }
           listen(this.target);
         },
         detached: function() {
           unlisten(this.target);
+        },
+        targetChanged: function(oldTarget, newTarget) {
+          unlisten(oldTarget);
+          listen(newTarget);
         }
       });
     })();
