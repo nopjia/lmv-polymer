@@ -60,8 +60,10 @@
   };
 
   Polymer("lmv-ui-panel", {
-    right: false,
-    collapse: false,
+    publish: {
+      right: { value:false, reflect:true },
+      collapse: { value:false, reflect:true },
+    },
     domReady: function() {
       init(this);
     },
