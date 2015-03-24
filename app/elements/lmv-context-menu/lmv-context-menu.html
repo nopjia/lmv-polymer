@@ -3,11 +3,14 @@
 <polymer-element name="lmv-context-menu" attributes="">
   <template>
     <link rel="stylesheet" href="lmv-context-menu.css">
+    <is-mobile mobile="{{isMobile}}"></is-mobile>
     <content></content>
   </template>
   <script>
     (function () {
       var _this;
+      var _lastX, _lastY;
+      var _DELTA_EPS = 5;
 
       function openContextMenu(x,y) {
         _this.show = true;
@@ -20,38 +23,57 @@
         _this.fire("close");
       }
 
-      // function onClick(e) {
-      //   if (e.button === 0) {
-      //     closeContextMenu();
-      //   }
-      //   else if (e.button === 2) {
-      //     openContextMenu(e.x, e.y);
-      //     e.preventDefault();
-      //     e.stopPropagation();
-      //   }
-      // }
-
+      function onMouseDown(e) {
+        if (e.button !== 2)
+          return;
+        _lastX = e.x;
+        _lastY = e.y;
+      }
+      function onMouseUp(e) {
+        if (e.button !== 2)
+          return;
+        if (Math.abs(_lastX-e.x) < _DELTA_EPS &&
+          Math.abs(_lastY-e.y) < _DELTA_EPS)
+          openContextMenu(e.x, e.y);
+      }
       function onContextMenu(e) {
-        openContextMenu(e.x, e.y);
         e.preventDefault();
       }
       function onClickToCancel(e) {
         if (e.button !== 1 && e.button !== 2)
           closeContextMenu();
       }
+      function onContextMenuMobile(e) {
+        openContextMenu();
+        e.preventDefault();
+      }
 
       function listen(node) {
         if (node && node.addEventListener) {
           // node.addEventListener("mouseup", onClick);
-          window.addEventListener("mouseup", onClickToCancel);
-          node.addEventListener("contextmenu", onContextMenu);
+          window.addEventListener("mouseup", onClickToCancel, true);
+          if (_this.isMobile) {
+            node.addEventListener("contextmenu", onContextMenuMobile, true);
+          }
+          else {
+            node.addEventListener("mousedown", onMouseDown, true);
+            node.addEventListener("mouseup", onMouseUp, true);
+            node.addEventListener("contextmenu", onContextMenu, false);
+          }
         }
       }
       function unlisten(node) {
         if (node && node.removeEventListener) {
           // node.removeEventListener("mouseup", onClick);
-          window.addEventListener("mouseup", onClickToCancel);
-          node.removeEventListener("contextmenu", onContextMenu);
+          window.addEventListener("mouseup", onClickToCancel, true);
+          if (_this.isMobile) {
+            node.removeEventListener("contextmenu", onContextMenuMobile, true);
+          }
+          else {
+            node.removeEventListener("mousedown", onMouseDown, true);
+            node.removeEventListener("mouseup", onMouseUp, true);
+            node.removeEventListener("contextmenu", onContextMenu, false);
+          }
         }
       }
 
