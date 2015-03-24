@@ -44,7 +44,7 @@
           closeContextMenu();
       }
       function onContextMenuMobile(e) {
-        openContextMenu();
+        openContextMenu(e.x, e.y);
         e.preventDefault();
       }
 
@@ -84,7 +84,7 @@
         attached: function() {
           _this = this;
           if (!this.target)
-            this.target = this.parentNode;
+            this.target = this.parentNode.host || this.parentNode;
           listen(this.target);
         },
         detached: function() {

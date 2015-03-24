@@ -19,14 +19,14 @@
       Polymer({
         domReady: function() {
           // redirect menu target
-          this.$.menu.target = this.parentNode;
+          this.$.menu.target = this.parentNode.host || this.parentNode;
 
           // grab viewer reference
           var viewerDom = document.querySelector("lmv-viewer");
           if (viewerDom) _viewer = viewerDom.viewer;
         },
         onOpen: function() {
-          this.hasSelection = (_viewer.getSelectionCount() > 0);
+          this.hasSelection = (_viewer && _viewer.getSelectionCount() > 0);
         },
         isolate: function() {
           _viewer.isolate(_viewer.getSelection());

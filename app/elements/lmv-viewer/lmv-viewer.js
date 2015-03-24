@@ -92,6 +92,9 @@
     ready: function() {
       console.log("url:" +this.url);
       this.viewer = initializeViewer(this.shadowRoot, this.url);
+
+      // hardcode settings
+      this.viewer.prefs.set("clickToSetCOI", false);
     }
   });
 
