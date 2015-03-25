@@ -5,13 +5,14 @@ $color-1: #fff;
 $color-2: #0ff;
 $color-3: #999;
 $color-bg: rgba(0, 0, 0, 0.5);
-$color-bg-light: rgba(0, 0, 0, 0.4);
+$color-bg-light: rgba(0, 0, 0, 0.25);
 $color-bg-hover: rgba(0, 0, 0, 0.5);
 $color-bg-darken: rgba(0, 0, 0, 0.15);
 $color-hover-duration: 0.2s;
 
 :host {
   display: block;
+  position: relative;
   font-family: $font-stack;
   font-size: $font-size;
   color: $color-1;
@@ -19,4 +20,15 @@ $color-hover-duration: 0.2s;
 
 a {
   color: $color-2;
+}
+
+// normalize
+
+input, select {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: $color-1;
+  font-size: $font-size;
+  font: inherit;
 }

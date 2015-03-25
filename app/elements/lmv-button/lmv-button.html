@@ -3,18 +3,16 @@
 <polymer-element name="lmv-button" attributes="label icon toggle active" on-click="{{onClick}}">
   <template>
     <link rel="stylesheet" href="lmv-button.css">
-    <template if="{{icon}}">
-      <img src="{{icon}}">
-    </template>
+    <div id="icon" style="background-image: url({{icon}})"></div>
     <content></content>
   </template>
   <script>
     (function () {
       Polymer({
         publish: {
-          active: { value: false, reflect: true }
+          active: { value: false, reflect: true },
+          toggle: { value: false, reflect: false }
         },
-        toggle: false,
         onClick: function() {
           if (this.toggle)
             this.active = !this.active;
