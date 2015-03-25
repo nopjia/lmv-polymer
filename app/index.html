@@ -30,7 +30,10 @@
 
 <body unresolved fullbleed layout vertical>
   <template is="auto-binding" id="app">
-    <lmv-viewer url="{{fileURL}}"></lmv-viewer>
+    <div>
+      <lmv-obj-context-menu></lmv-obj-context-menu>
+      <lmv-viewer url="{{fileURL}}"></lmv-viewer>
+    </div>
     <lmv-ui-panel right></lmv-ui-panel>
   </template>
 
