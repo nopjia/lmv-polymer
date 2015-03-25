@@ -5,12 +5,19 @@
     <link rel="stylesheet" href="lmv-ui-panel.css">
 
     <div id="toolbar">
-      <lmv-button label="Expand Menu" icon="images/iconmonstr-arrow-25-icon-64.png" on-click="{{toggleShow}}" active="{{!collapse}}" id="toggle-button"></lmv-button>
-      <lmv-button label="View Tool" icon="images/iconmonstr-crown-10-icon-64.png"></lmv-button>
-      <lmv-button label="View Tool" icon="images/iconmonstr-crown-10-icon-64.png"></lmv-button>
-      <lmv-button label="View Tool" icon="images/iconmonstr-crown-10-icon-64.png" toggle></lmv-button>
-      <lmv-button label="View Tool" icon="images/iconmonstr-crown-10-icon-64.png" on-click="{{testFunc}}"></lmv-button>
-      <lmv-button label="Fullscreen" icon="images/iconmonstr-fullscreen-7-icon-64.png" on-click="{{toggleFullScreen}}" toggle></lmv-button>
+      <lmv-button
+        id="toggle-button"
+        label="Expand Menu"
+        icon="images/iconmonstr-arrow-25-icon-64.png"
+        on-click="{{toggleShow}}"
+        active="{{!collapse}}">
+      </lmv-button>
+      <lmv-button
+        label="Fullscreen"
+        icon="images/iconmonstr-fullscreen-7-icon-64.png"
+        on-click="{{toggleFullScreen}}"
+        toggle>
+      </lmv-button>
     </div>
 
     <div id="main">
