@@ -1,0 +1,57 @@
+@import "../elements";
+
+$spacing: 10px;
+
+:host {
+  line-height: 125%;
+}
+
+input {
+  box-sizing: border-box;
+  background: none;
+  width: 100%;
+}
+
+#join {
+  lmv-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  input {
+    padding: 6px 0;
+  }
+}
+
+#users {
+  border-bottom: 1px solid $color-1;
+  padding-bottom: $spacing;
+}
+
+#chats {
+  padding: $spacing 0;
+  border-bottom: 1px solid $color-1;
+
+  max-height: 150px;
+  overflow: auto;
+
+  span.user-msg {
+    color: $color-3;
+    font-weight: bold;
+    margin-right: 0.5em;
+    margin-top: 0.5em;
+    display: inline-block;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:after {
+      content: ":";
+    }
+  }
+}
+
+#chatter {
+  padding-top: 10px;
+}
