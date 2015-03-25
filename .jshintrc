@@ -17,6 +17,7 @@
     "unwrap": true,
     "Polymer": true,
     "Platform": true,
-    "Autodesk": true
+    "Autodesk": true,
+    "Hammer": true
   }
 }

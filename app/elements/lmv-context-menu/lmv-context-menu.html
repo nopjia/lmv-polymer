@@ -6,6 +6,7 @@
     <is-mobile mobile="{{isMobile}}"></is-mobile>
     <content></content>
   </template>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.4/hammer.min.js"></script>
   <script>
     (function () {
       var _this;
@@ -14,7 +15,7 @@
 
       function openContextMenu(x,y) {
         _this.show = true;
-        _this.style.left = x + "px";
+        _this.style.right = "calc( 100% - " + x + "px )";
         _this.style.top = y + "px";
         _this.fire("open");
       }
@@ -44,16 +45,18 @@
           closeContextMenu();
       }
       function onContextMenuMobile(e) {
-        openContextMenu(e.x, e.y);
+        openContextMenu(e.center.x, e.center.y);
         e.preventDefault();
       }
 
       function listen(node) {
         if (node && node.addEventListener) {
-          // node.addEventListener("mouseup", onClick);
           window.addEventListener("mouseup", onClickToCancel, true);
           if (_this.isMobile) {
-            node.addEventListener("contextmenu", onContextMenuMobile, true);
+            // node.addEventListener("contextmenu", onContextMenuMobile, true);
+            var mc = new Hammer(node.host);  // TODO_NOP: .host mobile workaround
+            mc.on("press", onContextMenuMobile);
+            // window.addEventListener("touchstart", onClickToCancel, false);
           }
           else {
             node.addEventListener("mousedown", onMouseDown, true);
@@ -64,10 +67,10 @@
       }
       function unlisten(node) {
         if (node && node.removeEventListener) {
-          // node.removeEventListener("mouseup", onClick);
-          window.addEventListener("mouseup", onClickToCancel, true);
+          window.removeEventListener("mouseup", onClickToCancel, true);
           if (_this.isMobile) {
-            node.removeEventListener("contextmenu", onContextMenuMobile, true);
+            // node.removeEventListener("contextmenu", onContextMenuMobile, true);
+            // window.addEventListener("touchstart", onClickToCancel, false);
           }
           else {
             node.removeEventListener("mousedown", onMouseDown, true);
@@ -81,18 +84,14 @@
         publish: {
           show: { value:false, reflect:true }
         },
-        attached: function() {
+        domReady: function() {
           _this = this;
           if (!this.target)
-            this.target = this.parentNode.host || this.parentNode;
+            this.target = this.parentNode;
           listen(this.target);
         },
         detached: function() {
           unlisten(this.target);
-        },
-        targetChanged: function(oldTarget, newTarget) {
-          unlisten(oldTarget);
-          listen(newTarget);
         }
       });
     })();
