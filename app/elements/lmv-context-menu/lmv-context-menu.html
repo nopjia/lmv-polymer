@@ -3,7 +3,7 @@
 <polymer-element name="lmv-context-menu" attributes="">
   <template>
     <link rel="stylesheet" href="lmv-context-menu.css">
-    <is-mobile mobile="{{isMobile}}"></is-mobile>
+    <is-mobile id="isMobile"></is-mobile>
     <content></content>
   </template>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.4/hammer.min.js"></script>
@@ -52,7 +52,7 @@
       function listen(node) {
         if (node && node.addEventListener) {
           window.addEventListener("mouseup", onClickToCancel, true);
-          if (_this.isMobile) {
+          if (_this.$.isMobile.mobile) {
             // node.addEventListener("contextmenu", onContextMenuMobile, true);
             var mc = new Hammer(node.host);  // TODO_NOP: .host mobile workaround
             mc.on("press", onContextMenuMobile);
@@ -68,7 +68,7 @@
       function unlisten(node) {
         if (node && node.removeEventListener) {
           window.removeEventListener("mouseup", onClickToCancel, true);
-          if (_this.isMobile) {
+          if (_this.$.isMobile.mobile) {
             // node.removeEventListener("contextmenu", onContextMenuMobile, true);
             // window.addEventListener("touchstart", onClickToCancel, false);
           }
