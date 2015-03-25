@@ -31,7 +31,7 @@
         <lmv-property-view properties="{{modelProperties}}" />
       </lmv-panel>
 
-      <lmv-panel header="Model Structure">
+      <lmv-panel header="Model Structure" collapse>
         <lmv-tree-view root="{{modelTree}}" />
       </lmv-panel>
 
@@ -39,8 +39,12 @@
         <lmv-render-settings-view />
       </lmv-panel>
 
+      <lmv-panel header="Collaboration">
+        <lmv-collab-view />
+      </lmv-panel>
+
       <lmv-panel header="Render Stats">
-        <lmv-table right table="{{renderStats}}"/>
+        <lmv-table right table="{{renderStats}}" />
       </lmv-panel>
 
     </div>

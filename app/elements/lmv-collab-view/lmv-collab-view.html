@@ -1,0 +1,32 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="lmv-collab-view" attributes="">
+  <template>
+    <link rel="stylesheet" href="lmv-collab-view.css">
+    <div style="display: {{connected ? 'none' : 'block'}}">
+      <form id="join" on-submit="{{onStart}}">
+        <lmv-button on-click="{{onStart}}">Start</lmv-button>
+        <input id="username" placeholder="Enter your name">
+      </form>
+    </div>
+    <div style="display: {{connected ? 'block' : 'none'}}">
+      <div id="users">
+        <div class="user">Nancy Jeng</div>
+        <div class="user">Terry Stevens</div>
+        <div class="user">Peter Myers</div>
+      </div>
+      <div id="chats">
+        <span class="user-msg">Nancy Jeng</span>Hey folks!<br>
+        This model looks great!<br>
+        <span class="user-msg">Terry Stevens</span>Yea...<br>
+        It doesn't completely suck<br>
+        <span class="user-msg">Peter Myers</span>No, stop, please<br>
+        Let's see what Fusion does<br>
+      </div>
+      <form on-submit="{{onChat}}">
+        <input id="chatter" placeholder=". . .">
+      </form>
+    </div>
+  </template>
+  <script type="text/javascript" src="lmv-collab-view.js"></script>
+</polymer-element>
