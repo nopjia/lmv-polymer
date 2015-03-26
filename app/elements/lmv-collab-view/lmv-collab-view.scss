@@ -9,6 +9,7 @@ $spacing: 10px;
 input {
   box-sizing: border-box;
   background: none;
+  background-color: transparent;  // NOTE_NOP: for iOS
   width: 100%;
 }
 
@@ -50,8 +51,7 @@ input {
   padding: $spacing 0;
   border-bottom: 1px solid $color-1;
 
-  min-height: 100px;
-  max-height: 150px;
+  height: 120px;
   overflow: auto;
 
   span.user-msg {

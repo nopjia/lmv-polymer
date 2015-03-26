@@ -12,10 +12,6 @@ input, select {
   box-sizing: border-box;
 }
 
-input {
-  border: 0;
-}
-
 input[type=checkbox] {
   width: auto;
   height: auto;
@@ -26,16 +22,3 @@ input[type=checkbox],
 input[type=range] {
   cursor: pointer;
 }
-
-// TODO_NOP: styling
-
-input, select {
-  background: none;
-  background-color: $color-bg-darken;
-  border: none;
-  border-radius: 0;
-  color: $color-1;
-  border-color: $color-1;
-}
-
-// TODO_NOP: bug android can't drag range slider
