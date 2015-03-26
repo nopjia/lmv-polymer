@@ -44,8 +44,6 @@
 
   // RTC events
 
-  // TODO_NOP: /nick chat?
-
   var onChatReceived = function(e) {
     if (e.channelId && e.channelId !== _rtc.viewtx.channelId)
       return;
@@ -67,8 +65,6 @@
     _this.$.chats.scrollTop = _this.$.chats.scrollHeight;
   };
 
-  // TODO_NOP: bug: when list updates, the active user disappears (is lost)
-
   var onUserListChange = function(e) {
     if (e.channelId && e.channelId !== _rtc.viewtx.channelId)
       return;
@@ -76,22 +72,30 @@
     if (!ci)
       return;
 
+    /* jshint ignore:start */
+
     var users = ci.users;
     var htmlString = "";
     for (var i=0; i<users.length; i++) {
-      htmlString += "<div class=user uid="+users[i].id+">"+users[i].name+"</div>";
+      var uid = users[i].id;
+      var uname = users[i].name;
+      var classStr = "user" + (_this.lastControlId === uid ? " active" : "");
+
+      htmlString += '<div class="'+classStr+'" uid='+uid+'>'+uname+'</div>';
     }
     _this.$.users.innerHTML = htmlString;
+
+    /* jshint ignore:end */
   };
 
   var onControlChange = function(e) {
     if (e.channelId && e.channelId !== _rtc.viewtx.channelId)
       return;
 
-    var lastId = e.data.lastInControl;
+    _this.lastControlId = e.data.lastInControl;
     var userDoms = _this.$.users.children;
     for (var i=0; i<userDoms.length; i++) {
-      if (userDoms[i].getAttribute("uid") === lastId) {
+      if (userDoms[i].getAttribute("uid") === _this.lastControlId) {
         userDoms[i].classList.add("active");
       }
       else {
@@ -107,6 +111,7 @@
     connected: false,
     username: undefined,
     lastChatterId: undefined,
+    lastControlId: undefined,
     created: function() {
       _this = this;
     },
