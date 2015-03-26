@@ -64,6 +64,8 @@
     _this.$.chats.scrollTop = _this.$.chats.scrollHeight;
   };
 
+  // TODO_NOP: bug: when list updates, the active user disappears (is lost)
+
   var onUserListChange = function(e) {
     if (e.channelId && e.channelId !== _rtc.viewtx.channelId)
       return;
