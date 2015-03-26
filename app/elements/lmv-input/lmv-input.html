@@ -3,7 +3,7 @@
 <polymer-element name="lmv-input" attributes="value placeholder" noscript>
   <template>
     <link rel="stylesheet" type="text/css" href="lmv-input.css">
-    <input id="input" value="{{value}}" placeholder="{{placeholder}}"/>
+    <input value="{{value}}" placeholder="{{placeholder}}"/>
   </template>
 </polymer-element>
 
@@ -11,27 +11,27 @@
   <template>
     <link rel="stylesheet" type="text/css" href="lmv-input.css">
     <style type="text/css">
-    #input {
+    #range-slider {
       width: 70%;
       vertical-align: top;
     }
-    #range-val {
+    #range-value {
       width: calc(30% - 10px);
       margin-left: 10px;
       text-align: center;
       vertical-align: top;
     }
     </style>
-    <input id="input" value="{{value}}" type="range"
+    <input id="range-slider" value="{{value}}" type="range"
       min="{{min}}" max="{{max}}" step="{{step}}"
-    /><input id="range-val" value="{{value}}" />
+    /><input id="range-value" value="{{value}}" />
   </template>
 </polymer-element>
 
 <polymer-element name="lmv-input-check" attributes="value" noscript>
   <template>
     <link rel="stylesheet" type="text/css" href="lmv-input.css">
-    <input id="input" type="checkbox" checked="{{value}}"/>
+    <input type="checkbox" checked="{{value}}"/>
   </template>
 </polymer-element>
 
@@ -47,7 +47,7 @@ options: [
     <style type="text/css">
 
     </style>
-    <select id="input" value="{{value}}">
+    <select value="{{value}}">
       <template repeat="{{op in options}}">
         <option value="{{op.value}}">{{op.label}}</option>
       </template>
