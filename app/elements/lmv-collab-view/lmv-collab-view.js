@@ -2,7 +2,8 @@
   var _rtc;
   var _viewerDom;
   var _viewer;
-  var _this;
+  var _this;  // NOP_NOTE: "_this" dangerous:
+              // will only work if there's only one instance of this element
 
 
   // RTC connection
