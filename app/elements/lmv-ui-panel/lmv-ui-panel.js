@@ -1,6 +1,6 @@
 (function () {
-  var _this;
   var _viewerDom, _viewer;
+  var _this;  // NOP_NOTE: "_this" dangerous
 
   var init = function(self) {
     _this = self;

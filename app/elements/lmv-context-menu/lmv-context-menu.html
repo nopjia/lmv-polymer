@@ -9,19 +9,19 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.4/hammer.min.js"></script>
   <script>
     (function () {
-      var _this;
       var _lastX, _lastY;
       var _DELTA_EPS = 5;
+      var _isMobile;
 
       function openContextMenu(x,y) {
-        _this.show = true;
-        _this.style.right = "calc( 100% - " + x + "px )";
-        _this.style.top = y + "px";
-        _this.fire("open");
+        this.show = true;
+        this.style.right = "calc( 100% - " + x + "px )";
+        this.style.top = y + "px";
+        this.fire("open");
       }
       function closeContextMenu() {
-        _this.show = false;
-        _this.fire("close");
+        this.show = false;
+        this.fire("close");
       }
 
       function onMouseDown(e) {
@@ -35,47 +35,51 @@
           return;
         if (Math.abs(_lastX-e.x) < _DELTA_EPS &&
           Math.abs(_lastY-e.y) < _DELTA_EPS)
-          openContextMenu(e.x, e.y);
+          openContextMenu.call(this, e.x, e.y);
       }
       function onContextMenu(e) {
         e.preventDefault();
       }
-      function onClickToCancel(e) {
-        if (e.button !== 1 && e.button !== 2)
-          closeContextMenu();
+      function onClickToCancel() {
+        closeContextMenu.call(this);
       }
       function onContextMenuMobile(e) {
-        openContextMenu(e.center.x, e.center.y);
+        openContextMenu.call(this, e.center.x, e.center.y);
         e.preventDefault();
       }
 
       function listen(node) {
         if (node && node.addEventListener) {
-          window.addEventListener("mouseup", onClickToCancel, true);
-          if (_this.$.isMobile.mobile) {
+          this.onClickToCancel = onClickToCancel.bind(this);
+          window.addEventListener("mouseup", this.onClickToCancel, true);
+          if (_isMobile) {
             // node.addEventListener("contextmenu", onContextMenuMobile, true);
             var mc = new Hammer(node.host);  // TODO_NOP: .host mobile workaround
             mc.on("press", onContextMenuMobile);
             // window.addEventListener("touchstart", onClickToCancel, false);
           }
           else {
-            node.addEventListener("mousedown", onMouseDown, true);
-            node.addEventListener("mouseup", onMouseUp, true);
-            node.addEventListener("contextmenu", onContextMenu, false);
+            this.onClickToCancel = onClickToCancel.bind(this);
+            this.onMouseDown = onMouseDown.bind(this);
+            this.onMouseUp = onMouseUp.bind(this);
+            this.onContextMenu = onContextMenu.bind(this);
+            node.addEventListener("mousedown", this.onMouseDown, true);
+            node.addEventListener("mouseup", this.onMouseUp, true);
+            node.addEventListener("contextmenu", this.onContextMenu, false);
           }
         }
       }
       function unlisten(node) {
         if (node && node.removeEventListener) {
-          window.removeEventListener("mouseup", onClickToCancel, true);
-          if (_this.$.isMobile.mobile) {
+          window.removeEventListener("mouseup", this.onClickToCancel, true);
+          if (_isMobile) {
             // node.removeEventListener("contextmenu", onContextMenuMobile, true);
             // window.addEventListener("touchstart", onClickToCancel, false);
           }
           else {
-            node.removeEventListener("mousedown", onMouseDown, true);
-            node.removeEventListener("mouseup", onMouseUp, true);
-            node.removeEventListener("contextmenu", onContextMenu, false);
+            node.removeEventListener("mousedown", this.onMouseDown, true);
+            node.removeEventListener("mouseup", this.onMouseUp, true);
+            node.removeEventListener("contextmenu", this.onContextMenu, false);
           }
         }
       }
@@ -85,13 +89,13 @@
           show: { value:false, reflect:true }
         },
         domReady: function() {
-          _this = this;
+          _isMobile = this.$.isMobile.mobile;
           if (!this.target)
             this.target = this.parentNode;
-          listen(this.target);
+          listen.call(this, this.target);
         },
         detached: function() {
-          unlisten(this.target);
+          unlisten.call(this, this.target);
         }
       });
     })();
