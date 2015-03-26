@@ -25,54 +25,22 @@
   </template>
   <script>
     (function () {
-      var _viewer;
-
       Polymer({
         domReady: function() {
-          var self = this;
-
-          // init expand logic
-          if (this.children.length > 0)
+          if (this.children.length > 0) // init expand logic
             this.expanded = (this.expanded === undefined) ? false : this.expanded;
           else
             this.expanded = null;
-
-          // grab viewer reference
-          var viewerDom = document.querySelector("lmv-viewer");
-          if (viewerDom) _viewer = viewerDom.viewer;
-
-          // hook to viewer events
-          _viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(event) {
-            self.selected = false;
-            for (var i=0; i<event.dbIdArray.length; i++) {
-              self.selected = self.selected || (self.dataNode.dbId === event.dbIdArray[i]);
-            }
-          });
-          _viewer.addEventListener(Autodesk.Viewing.HIDE_EVENT, function(event) {
-            for (var i=0; i<event.nodeIdArray.length; i++) {
-              self.grayed = self.grayed || (self.dataNode.dbId === event.nodeIdArray[i].dbId);
-            }
-          });
-          _viewer.addEventListener(Autodesk.Viewing.ISOLATE_EVENT, function(event) {
-            self.grayed = false;
-            for (var i=0; i<event.nodeIdArray.length; i++) {
-              self.grayed = self.grayed || (self.dataNode.dbId !== event.nodeIdArray[i].dbId);
-            }
-          });
         },
         toggleExpand: function() {
           if (this.expanded !== null)
             this.expanded = !this.expanded;
         },
-        onNodeClick: function(event) {
-          if (event.shiftKey || event.ctrlKey)
-            _viewer.toggleSelect(this.dataNode.dbId);
-          else
-            if (!this.selected)
-              _viewer.select(this.dataNode.dbId);
+        onNodeClick: function() {
+          this.fire("node-click");
         },
         onNodeDoubleClick: function() {
-          _viewer.fitToView(this.dataNode.dbId);
+          this.fire("node-dblclick");
         }
       });
     })();
@@ -88,26 +56,90 @@
   </template>
   <script>
     (function () {
-      var buildTree = function(node, parentElem) {
-        var newElem = document.createElement("lmv-tree-node");
-        newElem.label = node.name;
-        newElem.dataNode = node;  // pointer to backing data
-        parentElem.appendChild(newElem);
-
-        if (node.children) {
-          for (var i=0; i<node.children.length; i++) {
-            buildTree(node.children[i], newElem);
-          }
-        }
-      };
+      var _viewer;
+      var _shiftKey, _ctrlKey;
 
       Polymer({
+        allNodes: [],   // cache flat reference to all nodes for fast iteration
+        domReady: function() {
+          // grab viewer reference
+          var viewerDom = document.querySelector("lmv-viewer");
+          if (viewerDom) _viewer = viewerDom.viewer;
+
+          // viewer events update nodes
+          var self = this;
+          _viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(event) {
+            for (var j=0; j<self.allNodes.length; j++) {
+              var node = self.allNodes[j];
+              node.selected = false;
+              for (var i=0; i<event.dbIdArray.length; i++) {
+                node.selected = node.selected || (node.dataNode.dbId === event.dbIdArray[i]);
+              }
+            }
+          });
+          _viewer.addEventListener(Autodesk.Viewing.HIDE_EVENT, function(event) {
+            for (var j=0; j<self.allNodes.length; j++) {
+              var node = self.allNodes[j];
+              for (var i=0; i<event.nodeIdArray.length; i++) {
+                node.grayed = node.grayed || (node.dataNode.dbId === event.nodeIdArray[i].dbId);
+              }
+            }
+          });
+          _viewer.addEventListener(Autodesk.Viewing.ISOLATE_EVENT, function(event) {
+            for (var j=0; j<self.allNodes.length; j++) {
+              var node = self.allNodes[j];
+              node.grayed = false;
+              for (var i=0; i<event.nodeIdArray.length; i++) {
+                node.grayed = node.grayed || (node.dataNode.dbId !== event.nodeIdArray[i].dbId);
+              }
+            }
+          });
+
+          // track shift/ctrl modifier keys
+          document.addEventListener("keydown", function(event) {
+            _shiftKey = event.shiftKey;
+            _ctrlKey = event.ctrlKey || (event.keyCode === 91) || (event.which === 91);
+          }, true);
+          document.addEventListener("keyup", function(event) {
+            _shiftKey = event.shiftKey;
+            _ctrlKey = event.ctrlKey || (event.keyCode === 91) || (event.which === 91);
+          }, true);
+        },
+        buildTree: function(node, parentElem) {
+          // create node
+          var newElem = document.createElement("lmv-tree-node");
+          newElem.label = node.name;
+          newElem.dataNode = node;  // pointer to backing data
+          newElem.addEventListener("node-click", this.onNodeClick);
+          newElem.addEventListener("node-dblclick", this.onNodeDoubleClick);
+
+          parentElem.appendChild(newElem);
+          this.allNodes.push(newElem);  // cache reference
+
+          // recursive
+          if (node.children) {
+            for (var i=0; i<node.children.length; i++) {
+              this.buildTree(node.children[i], newElem);
+            }
+          }
+        },
         rootChanged: function(oldRoot, root) {
           this.innerHTML = "";
           for (var i=0; i<root.children.length; i++) {
-            buildTree(root.children[i], this);
+            this.buildTree(root.children[i], this);
           }
-        }
+        },
+        onNodeClick: function(event) {
+          if (_shiftKey || _ctrlKey)
+            _viewer.toggleSelect(event.target.dataNode.dbId);
+          else
+            if (!event.target.selected)
+              _viewer.select(event.target.dataNode.dbId);
+        },
+        onNodeDoubleClick: function(event) {
+          console.log(event);
+          _viewer.fitToView(event.target.dataNode.dbId);
+        },
       });
     })();
   </script>
