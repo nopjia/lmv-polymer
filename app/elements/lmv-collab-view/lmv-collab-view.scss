@@ -28,10 +28,29 @@ input {
   padding-bottom: $spacing;
 }
 
+.user {
+  &:before {
+    width: 20px;
+    display: inline-block;
+    text-align: center;
+    color: lime;
+    content: "●";
+  }
+
+  &.active {
+    color: lime;
+    &:before {
+      content: "☸";
+    }
+  }
+}
+
+
 #chats {
   padding: $spacing 0;
   border-bottom: 1px solid $color-1;
 
+  min-height: 100px;
   max-height: 150px;
   overflow: auto;
 
@@ -52,6 +71,6 @@ input {
   }
 }
 
-#chatter {
+input#chatbox {
   padding-top: 10px;
 }

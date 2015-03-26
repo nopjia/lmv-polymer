@@ -18,9 +18,9 @@
     }
 
     var extensions = config3d.extensions || [];
-    // extensions.push("Autodesk.Viewing.Section");
-    // extensions.push("Autodesk.Viewing.Collaboration");
+    extensions.push("Autodesk.Viewing.Collaboration");
     // extensions.push("Autodesk.Viewing.RemoteControl");
+    // extensions.push("Autodesk.Viewing.Section");
     // extensions.push("Autodesk.Measure");
     config3d.extensions = extensions;
 
