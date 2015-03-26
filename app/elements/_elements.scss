@@ -22,13 +22,24 @@ a {
   color: $color-2;
 }
 
-// normalize
-
 input, select {
+
+  // normalize
+
   margin: 0;
   padding: 0;
   border: 0;
   color: $color-1;
   font-size: $font-size;
   font: inherit;
+  vertical-align: baseline;
+
+  // TODO_NOP: styling
+
+  background: none;
+  background-color: $color-bg-darken;
+  border: none;
+  border-radius: 0;
+  color: $color-1;
+  border-color: $color-1;
 }
