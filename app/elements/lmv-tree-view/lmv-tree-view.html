@@ -1,0 +1,80 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="lmv-tree-node" attributes="label expanded">
+  <template>
+    <link rel="stylesheet" href="lmv-tree-node.css">
+
+    <table id="wrapper">
+      <tr>
+        <td class="icon" expanded="{{expanded}}" on-click="{{toggleExpand}}"></td>
+        <td id="label"
+          selected="{{selected}}"
+          grayed="{{grayed}}"
+          on-click="{{onNodeClick}}"
+          on-dblclick="{{onNodeDoubleClick}}">
+          {{label}}</td>
+      </tr>
+      <tr>
+        <td id="content" expanded="{{expanded}}">
+          <content></content>
+        </td>
+      </tr>
+    </table>
+
+  </template>
+  <script>
+    (function () {
+      Polymer({
+        domReady: function() {
+          if (this.children.length > 0) // init expand logic
+            this.expanded = (this.expanded === undefined) ? false : this.expanded;
+          else
+            this.expanded = null;
+        },
+        toggleExpand: function() {
+          if (this.expanded !== null)
+            this.expanded = !this.expanded;
+        },
+        onNodeClick: function() {
+          this.fire("node-click");
+        },
+        onNodeDoubleClick: function() {
+          this.fire("node-dblclick");
+        }
+      });
+    })();
+  </script>
+</polymer-element>
+
+
+<polymer-element name="lmv-tree-view" attributes="root">
+  <template>
+    <lmv-obj-context-menu></lmv-obj-context-menu>
+    <content></content>
+  </template>
+  <script>
+    (function () {
+      Polymer({
+        buildTree: function(node, parentElem) {
+          // create node
+          var newElem = document.createElement("lmv-tree-node");
+          newElem.label = node.name;
+          parentElem.appendChild(newElem);
+
+          // recursive
+          if (node.children) {
+            for (var i=0; i<node.children.length; i++) {
+              this.buildTree(node.children[i], newElem);
+            }
+          }
+        },
+        rootChanged: function(oldRoot, root) {
+          this.innerHTML = "";
+          for (var i=0; i<root.children.length; i++) {
+            this.buildTree(root.children[i], this);
+          }
+        }
+      });
+    })();
+  </script>
+</polymer-element>

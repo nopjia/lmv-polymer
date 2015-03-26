@@ -5,6 +5,7 @@ $icon-size: 20px;
 :host {
   // background-color: black;
   // border: 1px solid white;
+  user-select: none;
 };
 
 .icon {
