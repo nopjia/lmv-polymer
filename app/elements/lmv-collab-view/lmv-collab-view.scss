@@ -40,7 +40,7 @@ input {
   &.active {
     color: lime;
     &:before {
-      content: "☸";
+      content: "★";
     }
   }
 }
