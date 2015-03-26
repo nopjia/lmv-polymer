@@ -7,21 +7,18 @@
     <div id="toolbar">
       <lmv-button
         id="toggle-button"
-        label="Expand Menu"
         icon="images/iconmonstr-arrow-25-icon-64.png"
         on-click="{{toggleShow}}"
         active="{{!collapse}}">
       </lmv-button>
       <lmv-button
-        label="Test Icon Button"
-        icon="images/iconmonstr-menu-icon-64.png"
-        on-click="{{testFunc}}">
+        icon="images/iconmonstr-photo-camera-4-icon-64.png"
+        on-click="{{takeScreenshot}}">
       </lmv-button>
       <lmv-button
-        label="Fullscreen"
-        icon="images/iconmonstr-fullscreen-7-icon-64.png"
+        icon="images/iconmonstr-fullscreen-icon-64.png"
         on-click="{{toggleFullScreen}}"
-        toggle>
+        active="{{fullscreen}}">
       </lmv-button>
     </div>
 
