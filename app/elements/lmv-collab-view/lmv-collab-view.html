@@ -6,7 +6,7 @@
     <div style="display: {{connected ? 'none' : 'block'}}">
       <form id="join" on-submit="{{onStart}}">
         <lmv-button on-click="{{onStart}}">Start</lmv-button>
-        <input id="username" placeholder="Enter your name">
+        <input placeholder="Enter your name" value="{{username}}">
       </form>
     </div>
     <div style="display: {{connected ? 'block' : 'none'}}">
@@ -23,10 +23,11 @@
         <span class="user-msg">Peter Myers</span>No, stop, please<br>
         Let's see what Fusion does<br>
       </div>
-      <form on-submit="{{onChat}}">
-        <input id="chatter" placeholder=". . .">
+      <form on-submit="{{onChatSubmit}}">
+        <input id="chatbox" placeholder=". . .">
       </form>
     </div>
   </template>
+  <script type="text/javascript" src="http://lmv.autodesk.com/viewers-dev/latest/socket.io-1.3.5.js"></script>
   <script type="text/javascript" src="lmv-collab-view.js"></script>
 </polymer-element>
