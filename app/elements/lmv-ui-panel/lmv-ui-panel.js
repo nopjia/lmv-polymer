@@ -67,6 +67,7 @@
     publish: {
       right: { value:false, reflect:true },
       collapse: { value:false, reflect:true },
+      fullscreen: { value:false, reflect:false },
     },
     domReady: function() {
       init(this);
@@ -78,10 +79,7 @@
       this.collapse = !this.collapse;
     },
     toggleFullScreen: function() {
-      if (!document.fullscreenElement &&    // alternative standard method
-          !document.mozFullScreenElement &&
-          !document.webkitFullscreenElement &&
-          !document.msFullscreenElement ) {  // current working methods
+      if (!this.fullscreen) {  // current working methods
         if (document.documentElement.requestFullscreen) {
           document.documentElement.requestFullscreen();
         } else if (document.documentElement.msRequestFullscreen) {
@@ -91,6 +89,7 @@
         } else if (document.documentElement.webkitRequestFullscreen) {
           document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
         }
+        this.fullscreen = true;
       } else {
         if (document.exitFullscreen) {
           document.exitFullscreen();
@@ -101,7 +100,15 @@
         } else if (document.webkitExitFullscreen) {
           document.webkitExitFullscreen();
         }
+        this.fullscreen = false;
       }
+    },
+    takeScreenshot: function() {
+      window.open(_viewer.getScreenShot(),
+        "Screenshot",
+        "width="+_viewer.canvas.clientWidth+" "+
+        "height="+_viewer.canvas.clientHeight+" "+
+        "scrollbars=no, resizable=yes");
     }
   });
 })();   // closure
