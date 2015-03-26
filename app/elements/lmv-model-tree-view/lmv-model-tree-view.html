@@ -1,56 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<polymer-element name="lmv-tree-node" attributes="label expanded">
+<polymer-element name="lmv-model-tree-view" attributes="root">
   <template>
-    <link rel="stylesheet" href="lmv-tree-view.css">
-    <link rel="stylesheet" href="lmv-tree-node.css">
-
-    <table id="wrapper">
-      <tr>
-        <td class="icon" expanded="{{expanded}}" on-click="{{toggleExpand}}"></td>
-        <td id="label"
-          selected="{{selected}}"
-          grayed="{{grayed}}"
-          on-click="{{onNodeClick}}"
-          on-dblclick="{{onNodeDoubleClick}}">
-          {{label}}</td>
-      </tr>
-      <tr>
-        <td id="content" expanded="{{expanded}}">
-          <content></content>
-        </td>
-      </tr>
-    </table>
-
-  </template>
-  <script>
-    (function () {
-      Polymer({
-        domReady: function() {
-          if (this.children.length > 0) // init expand logic
-            this.expanded = (this.expanded === undefined) ? false : this.expanded;
-          else
-            this.expanded = null;
-        },
-        toggleExpand: function() {
-          if (this.expanded !== null)
-            this.expanded = !this.expanded;
-        },
-        onNodeClick: function() {
-          this.fire("node-click");
-        },
-        onNodeDoubleClick: function() {
-          this.fire("node-dblclick");
-        }
-      });
-    })();
-  </script>
-</polymer-element>
-
-
-<polymer-element name="lmv-tree-view" attributes="root">
-  <template>
-    <link rel="stylesheet" href="lmv-tree-view.css">
     <lmv-obj-context-menu></lmv-obj-context-menu>
     <content></content>
   </template>
