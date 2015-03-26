@@ -50,6 +50,9 @@
     if (e.channelId && e.channelId !== _rtc.viewtx.channelId)
       return;
 
+    if (e.data.msg.indexOf("/") === 0)
+      return;
+
     var chatMsg = e.data.msg;
     var chatterId = e.data.from;
     var chatUser = _rtc.client.getUserById(e.data.from, e.channelId);
