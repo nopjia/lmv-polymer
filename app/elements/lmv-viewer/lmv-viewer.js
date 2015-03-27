@@ -36,19 +36,24 @@
     options.svf = svf;
     options.documentId = documentId;
 
-    if (svf && svf.indexOf("urn:") === -1) {
-      // Load local svf file.
+    if (svf && svf.indexOf("urn:") === -1) {    // local svf file
       options.env = "Local";
-      Autodesk.Viewing.Initializer(options, function(){viewer.start();viewer.load(svf);});
+      Autodesk.Viewing.Initializer(options, function(){
+        viewer.start();
+        viewer.load(svf);
+      });
     }
-    else if (svf && svf.indexOf("urn:") === 0) {
-      // Load remote svf file through viewing service.
-      Autodesk.Viewing.Initializer(options, function(){viewer.start();viewer.load(svf);});
+    else if (svf && svf.indexOf("urn:") === 0) {    // file from viewing service
+      Autodesk.Viewing.Initializer(options, function() {
+        viewer.start();
+        viewer.load(svf);
+      });
     }
-    else if (documentId && documentId.indexOf("urn:") === -1) {
-      // Load local document.
-      viewer.start();
-      loadDocument(viewer, documentId);
+    else if (documentId && documentId.indexOf("urn:") === -1) {   // local document
+      Autodesk.Viewing.Initializer(options, function() {
+        viewer.start();
+        loadDocument(viewer, documentId);
+      });
     }
     else {
       console.log("Nothing to load");
@@ -91,7 +96,7 @@
   Polymer("lmv-viewer", {
     ready: function() {
       console.log("url:" +this.url);
-      this.viewer = initializeViewer(this.shadowRoot, this.url);
+      this.viewer = initializeViewer(this.shadowRoot, this.svf, this.bubble);
 
       // hardcode settings
       this.viewer.prefs.set("clickToSetCOI", false);

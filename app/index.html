@@ -29,13 +29,11 @@
   <!-- endreplace-->
 </head>
 
-<!-- TODO_NOP: is this full screen on android?? -->
-
 <body unresolved fullbleed layout vertical>
   <template is="auto-binding" id="app">
     <div>
       <lmv-obj-context-menu></lmv-obj-context-menu>
-      <lmv-viewer url="{{fileURL}}"></lmv-viewer>
+      <lmv-viewer svf="{{svfURL}}" bubble="{{bubbleURL}}"></lmv-viewer>
     </div>
     <lmv-ui-panel right></lmv-ui-panel>
   </template>
