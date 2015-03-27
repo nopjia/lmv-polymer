@@ -14,7 +14,7 @@
     }
     _viewer = _viewerDom.viewer;
     if (!_viewer) {
-      console.log("ERROR: Cannot find lmv-viewer element");
+      console.log("ERROR: Cannot find viewer from lmv-viewer element");
       return;
     }
 
@@ -27,6 +27,7 @@
     _viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, function() {
       setModelProperties();
       setModelTree();
+      setDocTree();
     });
 
     // geometry complete
@@ -54,6 +55,13 @@
     _this.modelTree = _viewer.model.myData.instanceTree;
   };
 
+  var setDocTree = function() {
+    if (!_viewerDom.doc)
+      return;
+    _this.docTree = _viewerDom.doc.getRootItem();
+    _this.docName = _this.docTree.children[0].name;
+  };
+
   var setRenderStats = function() {
     var modelData = _viewer.impl.model.myData;
     _this.renderStats = [];
@@ -67,7 +75,6 @@
     publish: {
       right: { value:false, reflect:true },
       collapse: { value:false, reflect:true },
-      fullscreen: { value:false, reflect:false },
     },
     domReady: function() {
       init(this);

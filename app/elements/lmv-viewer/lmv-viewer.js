@@ -1,6 +1,6 @@
 (function () {
 
-  function initializeViewer(parentDom, svf, documentId) {
+  function initializeViewer(parentDom, callback) {
 
     var avp = Autodesk.Viewing.Private;
 
@@ -28,78 +28,65 @@
 
     // VIEWER INIT
 
+    var options = {};
+    // options.svf = svf;
+    // options.documentId = documentId;
+    // options.env = "Local";   // TODO_NOP: needed?
+
     var viewer = new Autodesk.Viewing.Viewer3D(parentDom, config3d);
 
-    // LOAD FILE
-
-    var options = {};
-    options.svf = svf;
-    options.documentId = documentId;
-
-    if (svf && svf.indexOf("urn:") === -1) {    // local svf file
-      options.env = "Local";
-      Autodesk.Viewing.Initializer(options, function(){
-        viewer.start();
-        viewer.load(svf);
-      });
-    }
-    else if (svf && svf.indexOf("urn:") === 0) {    // file from viewing service
-      Autodesk.Viewing.Initializer(options, function() {
-        viewer.start();
-        viewer.load(svf);
-      });
-    }
-    else if (documentId && documentId.indexOf("urn:") === -1) {   // local document
-      Autodesk.Viewing.Initializer(options, function() {
-        viewer.start();
-        loadDocument(viewer, documentId);
-      });
-    }
-    else {
-      console.log("Nothing to load");
-    }
+    Autodesk.Viewing.Initializer(options, function() {
+      viewer.start();
+      callback(viewer);
+    });
 
     return viewer;
-  }
-
-  //Used for loading models hosted inside "bubbles" in the viewing service.
-  function loadDocument(viewer, documentId, initialItemId) {
-    // Load the document.  Once loaded, find the item requested.
-    // If not found, just find the first 3d geometry and load that.
-    Autodesk.Viewing.Document.load(documentId,
-      function(document, errors) { // onLoadCallback
-        if (errors)
-          console.log(errors);
-
-        var geometryItems = [];
-
-        if(initialItemId) {
-          geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(document.getRootItem(), {"guid":initialItemId}, true);
-        }
-
-        if(geometryItems.length === 0) {
-          geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(document.getRootItem(), {"type":"geometry", "role":"3d"}, true);
-        }
-
-        if(geometryItems.length > 0) {
-          viewer.load(document.getViewablePath(geometryItems[0]));
-        }
-      },
-      function(errorCode, errorMsg, errors ) { // onErrorCallback
-        console.log(errorCode);
-        console.log(errorMsg);
-        console.log(errors);
-      }
-    );
   }
 
   Polymer("lmv-viewer", {
     ready: function() {
       console.log("url:" +this.url);
-      this.viewer = initializeViewer(this.shadowRoot, this.svf, this.bubble);
+      var self = this;
+      this.viewer = initializeViewer(this.shadowRoot, function() {
+        if (self.svfurl)
+          self.viewer.load(self.svfurl);
+        else if (self.docurl)
+          self.loadDocument(self.docurl);
+        else
+          console.log("Nothing to load");
+      });
 
       // hardcode settings
       this.viewer.prefs.set("clickToSetCOI", false);
+    },
+    loadSVF: function(url) {
+      this.viewer.load(url);
+    },
+    loadDocument: function(docId, initialItemId) {
+      var self = this;
+      Autodesk.Viewing.Document.load(docId,
+        function(doc, errors) { // onLoadCallback
+          if (errors && errors.length > 0)
+            console.log(errors);
+          var geometryItems = [];
+          if(initialItemId) {
+            geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(doc.getRootItem(), {"guid":initialItemId}, true);
+          }
+          else if (geometryItems.length === 0) {
+            geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(doc.getRootItem(), {"type":"geometry", "role":"3d"}, true);
+          }
+          if (geometryItems.length > 0) {
+            self.viewer.load(doc.getViewablePath(geometryItems[0]));
+            self.doc = doc;
+          }
+          else {
+            console.log("Did not load anything from document");
+          }
+        },
+        function(errorCode, errorMsg, errors) { // onErrorCallback
+          console.log({errorCode:errorCode, errorMsg:errorMsg, errors:errors});
+        }
+      );
     }
   });
 
