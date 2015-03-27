@@ -24,6 +24,12 @@
 
     <div id="main">
 
+      <template if="{{docName.length > 0}}">
+        <lmv-panel header="{{docName}}">
+          <lmv-doc-tree-view root="{{docTree}}"/>
+        </lmv-panel>
+      </template>
+
       <lmv-panel header="Properties">
         <lmv-property-view properties="{{modelProperties}}" />
       </lmv-panel>

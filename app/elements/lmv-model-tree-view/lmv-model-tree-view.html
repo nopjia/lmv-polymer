@@ -86,9 +86,11 @@
           else
             if (!event.target.selected)
               _viewer.select(event.target.dataNode.dbId);
+          event.stopPropagation();
         },
         onNodeDoubleClick: function(event) {
           _viewer.fitToView(event.target.dataNode.dbId);
+          event.stopPropagation();
         },
       });
     })();

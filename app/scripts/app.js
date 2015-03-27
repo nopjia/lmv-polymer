@@ -6,7 +6,7 @@
     console.log("Polymer Template Ready");
   });
   // app.svfURL = "data/engineraw/0.svf";
-  app.bubbleURL = "data/Displayline/output/bubble.json";
+  app.docURL = "data/Displayline/output/bubble.json";
   window.NOP_APP = app;
 
 // wrap document so it plays nice with other libraries

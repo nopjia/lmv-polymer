@@ -1,0 +1,61 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="lmv-doc-tree-view" attributes="root">
+  <template>
+    <content></content>
+  </template>
+  <script>
+    (function () {
+      var _viewer;
+
+      Polymer({
+        allNodes: [],   // cache flat reference to all nodes for fast iteration
+        domReady: function() {
+          // grab viewer reference
+          var viewerDom = document.querySelector("lmv-viewer");
+          if (viewerDom) _viewer = viewerDom.viewer;
+        },
+        buildTree: function(node, parentElem) {
+          // no name
+          if (!node.name) return;
+
+          // create node
+          var newElem = document.createElement("lmv-tree-node");
+          newElem.label = node.name;
+          newElem.dataNode = node;  // pointer to backing data
+          newElem.addEventListener("node-click", this.onNodeClick);
+          newElem.addEventListener("node-dblclick", this.onNodeDoubleClick);
+
+          parentElem.appendChild(newElem);
+          this.allNodes.push(newElem);  // cache reference
+
+          // recursive
+          if (node.children) {
+            for (var i=0; i<node.children.length; i++) {
+              this.buildTree(node.children[i], newElem);
+            }
+          }
+        },
+        rootChanged: function(oldRoot, root) {
+          this.innerHTML = "";
+          var baseRoot = root.children[0];
+          for (var i=0; i<baseRoot.children.length; i++) {
+            this.buildTree(baseRoot.children[i], this);
+          }
+        },
+        onNodeClick: function(event) {
+          var node = event.target;
+          if (node.dataNode.type === "view") {
+            // load view
+          }
+          else {
+            node.toggleExpand();
+          }
+          event.stopPropagation();
+        },
+        onNodeDoubleClick: function(event) {
+        },
+      });
+    })();
+  </script>
+</polymer-element>
