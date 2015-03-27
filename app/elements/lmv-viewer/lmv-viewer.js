@@ -45,11 +45,10 @@
 
   Polymer("lmv-viewer", {
     ready: function() {
-      console.log("url:" +this.url);
       var self = this;
       this.viewer = initializeViewer(this.shadowRoot, function() {
         if (self.svfurl)
-          self.viewer.load(self.svfurl);
+          self.loadUrl(self.svfurl);
         else if (self.docurl)
           self.loadDocument(self.docurl);
         else
@@ -59,8 +58,14 @@
       // hardcode settings
       this.viewer.prefs.set("clickToSetCOI", false);
     },
-    loadSVF: function(url) {
-      this.viewer.load(url);
+    loadUrl: function(url, sharedDbPath) {
+      if (url === this.url) {
+        console.log("Already loaded: " + url);
+        return;
+      }
+      this.viewer.loadModel(url, undefined, sharedDbPath);
+      this.url = url;
+      console.log("Loading: " + url);
     },
     loadDocument: function(docId, initialItemId) {
       var self = this;
@@ -76,7 +81,8 @@
             geometryItems = Autodesk.Viewing.Document.getSubItemsWithProperties(doc.getRootItem(), {"type":"geometry", "role":"3d"}, true);
           }
           if (geometryItems.length > 0) {
-            self.viewer.load(doc.getViewablePath(geometryItems[0]));
+            var url = doc.getViewablePath(geometryItems[0]);
+            self.loadUrl(url);
             self.doc = doc;
           }
           else {

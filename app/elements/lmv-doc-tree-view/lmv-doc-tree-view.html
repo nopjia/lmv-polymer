@@ -6,14 +6,14 @@
   </template>
   <script>
     (function () {
-      var _viewer;
+      var _viewerDom, _viewer;
 
       Polymer({
         allNodes: [],   // cache flat reference to all nodes for fast iteration
         domReady: function() {
           // grab viewer reference
-          var viewerDom = document.querySelector("lmv-viewer");
-          if (viewerDom) _viewer = viewerDom.viewer;
+          _viewerDom = document.querySelector("lmv-viewer");
+          if (_viewerDom) _viewer = _viewerDom.viewer;
         },
         buildTree: function(node, parentElem) {
           // no name
@@ -23,6 +23,7 @@
           var newElem = document.createElement("lmv-tree-node");
           newElem.label = node.name;
           newElem.dataNode = node;  // pointer to backing data
+          newElem.expanded = true;
           newElem.addEventListener("node-click", this.onNodeClick);
           newElem.addEventListener("node-dblclick", this.onNodeDoubleClick);
 
@@ -47,6 +48,11 @@
           var node = event.target;
           if (node.dataNode.type === "view") {
             // load view
+            var doc = _viewerDom.doc;
+            var url = doc.getViewablePath(node.dataNode);
+            var fullUrl = doc.getFullPath(url);
+            // var geo = doc.getViewGeometry(node.dataNode);
+            _viewerDom.loadUrl(fullUrl, doc.getPropertyDbPath());
           }
           else {
             node.toggleExpand();
