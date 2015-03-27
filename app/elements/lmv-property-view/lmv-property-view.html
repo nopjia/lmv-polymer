@@ -27,14 +27,26 @@
   <script>
     (function () {
       Polymer({
-        propertiesChanged: function(oldValue, newValue) {
-          var props = newValue; // === this.properties
+        propertiesChanged: function() {
+          var props = this.properties;
+
+          // grab name of file
           var name = props[0].displayValue;
           this.categories = {};
+
           for (var i=0; i<props.length; i++) {
+            // if no category, goes under generic "name" category
             var cat = props[i].displayCategory || name;
+
+            // if special __category__, disregard
+            if (cat.indexOf("__") === 0)
+              continue;
+
+            // create new category, if necessary
             if (!this.categories[cat])
               this.categories[cat] = [];
+
+            // add property under category
             this.categories[cat].push(props[i]);
           }
         },
