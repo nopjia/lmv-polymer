@@ -44,32 +44,72 @@
   }
 
   Polymer("lmv-viewer", {
+    url: undefined,     // url to load
+    svfUrl: undefined,  // url currently loaded in viewer, cached
+
     ready: function() {
       var self = this;
       this.viewer = initializeViewer(this.shadowRoot, function() {
-        if (self.svfurl)
-          self.loadUrl(self.svfurl);
-        else if (self.docurl)
-          self.loadDocument(self.docurl);
+        if (self.url)
+          self.loadUrl(self.url);
         else
-          console.log("Nothing to load");
+          console.log("No URL given");
       });
 
       // hardcode settings
       this.viewer.prefs.set("clickToSetCOI", false);
     },
-    loadUrl: function(url, sharedDbPath) {
-      if (url === this.url) {
+
+    /**
+     * Load URL, handles both svf and bubble.json document
+     * Performs http request to check Content-Type
+     */
+    loadUrl: function(url) {
+      var self = this;
+
+      var req = new XMLHttpRequest();
+      req.onerror = function() {
+        console.log("Error: request error on " + url);
+        return;
+      };
+      req.onload = function() {
+        if (this.status !== 200)
+          return this.onerror();
+
+        var contentType = this.getResponseHeader("Content-Type");
+        if (contentType === "application/json") {
+          console.log("Load URL: JSON document");
+          self.loadDocument(url);
+        }
+        else {
+          console.log("Load URL: non-document format");
+          self.loadModel(url);
+        }
+        self.url = url;
+      };
+      req.open("HEAD", url, true);
+      req.send();
+    },
+
+    /**
+     * Load SVF file. Wrapper around Viewer3D.loadModel() with additional checking and states
+     */
+    loadModel: function(url, sharedDbPath) {
+      if (url === this.svfUrl) {
         console.log("Already loaded: " + url);
         return;
       }
       this.viewer.loadModel(url, undefined, sharedDbPath);
-      this.url = url;
-      console.log("Loading: " + url);
+      this.svfUrl = url;
+      console.log("Load model: " + url);
     },
-    loadDocument: function(docId, initialItemId) {
+
+    /**
+     * Load bubble.json document
+     */
+    loadDocument: function(url, initialItemId) {
       var self = this;
-      Autodesk.Viewing.Document.load(docId,
+      Autodesk.Viewing.Document.load(url,
         function(doc, errors) { // onLoadCallback
           if (errors && errors.length > 0)
             console.log(errors);
@@ -82,7 +122,7 @@
           }
           if (geometryItems.length > 0) {
             var url = doc.getViewablePath(geometryItems[0]);
-            self.loadUrl(url);
+            self.loadModel(url);
             self.doc = doc;
           }
           else {

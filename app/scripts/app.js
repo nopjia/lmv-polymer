@@ -13,14 +13,11 @@
     console.log("Polymer Template Ready");
   });
 
-  app.svfURL = getParameterByName("svf");
-  app.docURL = getParameterByName("doc");
+  app.url = "data/engineraw/0.svf";
+  // app.url = "data/Displayline/output/bubble.json";
+  // app.url = "data/gears/output/bubble.json";
 
-  if (!app.svfURL && !app.docURL) {
-    app.svfURL = "data/engineraw/0.svf";
-    // app.docURL = "data/Displayline/output/bubble.json";
-    // app.docURL = "data/gears/output/bubble.json";
-  }
+  app.url = getParameterByName("url") || app.url;
 
   window.NOP_APP = app;
 
