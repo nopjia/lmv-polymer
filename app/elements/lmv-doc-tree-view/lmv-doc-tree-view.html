@@ -58,7 +58,7 @@
             var url = doc.getViewablePath(dataNode);
             var fullUrl = doc.getFullPath(url);
             // var geo = doc.getViewGeometry(dataNode);
-            _viewerDom.loadUrl(fullUrl, doc.getPropertyDbPath());
+            _viewerDom.loadModel(fullUrl, doc.getPropertyDbPath());
           }
           else {
             nodeElem.toggleExpand();
