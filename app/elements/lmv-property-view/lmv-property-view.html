@@ -4,7 +4,7 @@
   Dependent on properties list having "label" as the name at first position in list
  -->
 
-<polymer-element name="lmv-property-view" attributes="properties">
+<polymer-element name="lmv-property-view" attributes="props">
   <template>
     <link rel="stylesheet" href="lmv-property-view.css">
 
@@ -27,8 +27,8 @@
   <script>
     (function () {
       Polymer({
-        propertiesChanged: function() {
-          var props = this.properties;
+        propsChanged: function() {
+          var props = this.props;
 
           // grab name of file
           var name = props[0].displayValue;
