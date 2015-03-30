@@ -5,4 +5,12 @@ test/temp
 bower_components
 .tmp
 test/bower_components/
+
 app/data
+
+# sublime
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
