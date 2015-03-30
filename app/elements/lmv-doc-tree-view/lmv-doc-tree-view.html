@@ -8,6 +8,11 @@
     (function () {
       var _viewerDom, _viewer;
 
+      var isLeafNode = function(node) {
+        return node.type === "geometry" &&
+          (node.role === "3d" || node.role === "2d");
+      };
+
       Polymer({
         allNodes: [],   // cache flat reference to all nodes for fast iteration
         domReady: function() {
@@ -31,7 +36,7 @@
           this.allNodes.push(newElem);  // cache reference
 
           // recursive
-          if (node.children) {
+          if (node.children && !isLeafNode(node)) {
             for (var i=0; i<node.children.length; i++) {
               this.buildTree(node.children[i], newElem);
             }
@@ -45,17 +50,18 @@
           }
         },
         onNodeClick: function(event) {
-          var node = event.target;
-          if (node.dataNode.type === "view") {
+          var nodeElem = event.target;
+          var dataNode = nodeElem.dataNode;
+          if (isLeafNode(dataNode)) {
             // load view
             var doc = _viewerDom.doc;
-            var url = doc.getViewablePath(node.dataNode);
+            var url = doc.getViewablePath(dataNode);
             var fullUrl = doc.getFullPath(url);
-            // var geo = doc.getViewGeometry(node.dataNode);
+            // var geo = doc.getViewGeometry(dataNode);
             _viewerDom.loadUrl(fullUrl, doc.getPropertyDbPath());
           }
           else {
-            node.toggleExpand();
+            nodeElem.toggleExpand();
           }
           event.stopPropagation();
         },
