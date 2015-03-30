@@ -23,6 +23,14 @@
       setModelProperties(event.dbIdArray[event.dbIdArray.length - 1]);
     });
 
+    // init 2D/3D nav tool
+    // TODO_NOP: should this be handled by viewer?
+    _viewer.addEventListener(Autodesk.Viewing.MODEL_ROOT_LOADED_EVENT, function() {
+      _viewer.setDefaultNavigationTool(
+        _viewer.navigation.getIs2D() ? "pan" : "orbit"
+      );
+    });
+
     // property db loaded
     _viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, function() {
       setModelProperties();
