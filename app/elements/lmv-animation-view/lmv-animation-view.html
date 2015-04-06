@@ -1,0 +1,88 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="lmv-animation-view" attributes="">
+  <template>
+    <link rel="stylesheet" href="lmv-animation-view.css">
+
+    <lmv-button id="prev-button"
+      icon="images/iconmonstr-rewind-5-icon-64.png"
+      on-click="{{prev}}">
+    </lmv-button><template if="{{playing}}"><lmv-button id="play-button"
+        icon="images/iconmonstr-pause-icon-64.png"
+        on-click="{{play}}"></lmv-button></template><template if="{{!playing}}"><lmv-button id="play-button"
+        icon="images/iconmonstr-arrow-37-icon-64.png"
+        on-click="{{play}}"></lmv-button></template><lmv-button id="next-button"
+      icon="images/fast-forward-5-icon-64.png"
+      on-click="{{next}}">
+    </lmv-button>
+    <input id="timeline" type="range"
+      value="{{timeVal}}"
+      on-input="{{onSliderChanged}}"
+      min="0" max="100" step=".01" />
+    <div class="time-val"><p>{{timeStr}}</p></div>
+
+  </template>
+  <script>
+    (function () {
+      var _viewer;
+      var _animator;
+
+      var format2 = function(num) {
+        return (("00" + Math.floor(num)).slice(-2));
+      };
+
+      Polymer({
+        playing: false,
+        timeVal: 0,
+        domReady: function() {
+          this.timeValChanged();
+
+          var viewerDom = document.querySelector("lmv-viewer");
+          if (viewerDom) _viewer = viewerDom.viewer;
+          if (!_viewer) return;
+
+          _animator = _viewer.impl.keyFrameAnimator;
+          this.$.timeline.max = _animator.duration;
+        },
+        timeValChanged: function() {
+          this.timeStr =
+            format2(this.timeVal / 60) + ":" +
+            format2(this.timeVal % 60) + ":" +
+            format2(this.timeVal * 100);
+        },
+        onSliderChanged: function() {
+          this.play(false);
+          _animator.goto(this.timeVal);
+        },
+        prev: function() {
+          this.play(false);
+          _animator.prev();
+          this.timeVal = _animator.currentTime;
+        },
+        next: function() {
+          this.play(false);
+          _animator.next();
+          this.timeVal = _animator.currentTime;
+        },
+        play: function(play) {
+          if (play === undefined)
+            this.playing = !this.playing;
+          else if (play === this.playing)
+            return;
+          else
+            this.playing = play;
+
+          if (this.playing)
+            _animator.play(this.timeVal, this.onPlay.bind(this));
+          else
+            _animator.pause();
+        },
+        onPlay: function() {
+          this.timeVal = _animator.currentTime;
+          if (this.timeVal >= _animator.duration)
+            this.play(false);
+        }
+      });
+    })();
+  </script>
+</polymer-element>

@@ -49,10 +49,6 @@ table {
   color: $color-1;
 }
 
-a {
-  color: $color-2;
-}
-
 // TODO_NOP: styling
 input, select {
   background: none;
@@ -61,4 +57,10 @@ input, select {
   border-radius: 0;
   color: $color-1;
   border-color: $color-1;
+}
+
+select,
+input[type=checkbox],
+input[type=range] {
+  cursor: pointer;
 }

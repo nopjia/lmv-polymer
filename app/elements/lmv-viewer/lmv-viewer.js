@@ -19,8 +19,10 @@
 
     var extensions = config3d.extensions || [];
     extensions.push("Autodesk.Viewing.Collaboration");
+    extensions.push("Autodesk.Fusion360.Animation");
     // extensions.push("Autodesk.Viewing.RemoteControl");
-    // extensions.push("Autodesk.Viewing.Section");
+    // extensions.push("Autodesk.Viewing.FusionOrbit");
+    // extensions.push("Autodesk.Section");
     // extensions.push("Autodesk.Measure");
     config3d.extensions = extensions;
 
@@ -31,7 +33,7 @@
     var options = {};
     // options.svf = svf;
     // options.documentId = documentId;
-    // options.env = "Local";   // TODO_NOP: needed?
+    options.env = "Local";   // TODO_NOP: how?
 
     var viewer = new Autodesk.Viewing.Viewer3D(parentDom, config3d);
 
