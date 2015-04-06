@@ -16,6 +16,7 @@
           // grab viewer reference
           var viewerDom = document.querySelector("lmv-viewer");
           if (viewerDom) _viewer = viewerDom.viewer;
+          if (!_viewer) return;
 
           // viewer events update nodes
           var self = this;

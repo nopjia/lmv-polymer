@@ -41,6 +41,7 @@
     // geometry complete
     _viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
       setRenderStats();
+      _this.hasAnimation = !!_viewer.model.myData.animations;
     });
   };
 
