@@ -64,3 +64,19 @@ input[type=checkbox],
 input[type=range] {
   cursor: pointer;
 }
+
+
+// scrollbar
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-button {
+  background-color: $color-bg-darken;
+}
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+}
