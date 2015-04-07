@@ -30,6 +30,8 @@
         self.fov = _viewer.getFOV();
         self.ortho = !_viewer.getCamera().isPerspective;
       });
+
+      self.explode = 0.0;
     },
 
     envChanged: function() {
@@ -62,6 +64,9 @@
       else
         _viewer.navigation.toPerspective();
     },
+    explodeChanged: function() {
+      _viewer.explode(this.explode);
+    }
 
   });
 })();
