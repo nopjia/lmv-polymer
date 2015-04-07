@@ -1,0 +1,9 @@
+@import "../elements";
+
+input#search {
+  width: 100%;
+  border-bottom: 1px solid $color-1;
+  background-color: transparent;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}

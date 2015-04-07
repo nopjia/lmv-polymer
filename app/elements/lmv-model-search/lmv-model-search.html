@@ -1,0 +1,49 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="lmv-model-search" attributes="">
+  <template>
+    <link rel="stylesheet" href="lmv-model-search.css">
+    <input id="search"
+      placeholder="Search"
+      value="{{query}}"
+      on-change="{{onChange}}" />
+  </template>
+  <script>
+    (function () {
+      var _viewer;
+
+      Polymer({
+        isSearching: false,
+        query: undefined,
+        prevQuery: undefined,
+        domReady: function() {
+          var viewerDom = document.querySelector("lmv-viewer");
+          if (viewerDom) _viewer = viewerDom.viewer;
+        },
+        onChange: function() {
+          this.search(this.query);
+        },
+        queryChanged: function() {
+          this.search(this.query);
+        },
+        search: function(str) {
+          if (str === "") {
+            _viewer.isolate();
+            return;
+          }
+          if (!str || str === this.prevQuery || this.isSearching)
+            return;
+
+          // start search
+          this.isSearching = true;
+          var self = this;
+          _viewer.search(str, function(resultIds) {
+            _viewer.isolateById(resultIds);
+            self.isSearching = false;
+            self.prevQuery = self.query;
+          });
+        }
+      });
+    })();
+  </script>
+</polymer-element>

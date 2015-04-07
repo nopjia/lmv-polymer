@@ -25,7 +25,10 @@
               var node = self.allNodes[j];
               node.selected = false;
               for (var i=0; i<event.dbIdArray.length; i++) {
-                node.selected = node.selected || (node.dataNode.dbId === event.dbIdArray[i]);
+                if (node.dataNode.dbId === event.dbIdArray[i]) {
+                  node.selected = true;
+                  break;
+                }
               }
             }
           });
@@ -33,16 +36,22 @@
             for (var j=0; j<self.allNodes.length; j++) {
               var node = self.allNodes[j];
               for (var i=0; i<event.nodeIdArray.length; i++) {
-                node.grayed = node.grayed || (node.dataNode.dbId === event.nodeIdArray[i].dbId);
+                if (node.dataNode.dbId === event.nodeIdArray[i].dbId) {
+                  node.grayed = true;
+                  break;
+                }
               }
             }
           });
           _viewer.addEventListener(Autodesk.Viewing.ISOLATE_EVENT, function(event) {
             for (var j=0; j<self.allNodes.length; j++) {
               var node = self.allNodes[j];
-              node.grayed = false;
+              node.grayed = event.nodeIdArray.length ? true : false;
               for (var i=0; i<event.nodeIdArray.length; i++) {
-                node.grayed = node.grayed || (node.dataNode.dbId !== event.nodeIdArray[i].dbId);
+                if (node.dataNode.dbId === event.nodeIdArray[i].dbId) {
+                  node.grayed = false;
+                  break;
+                }
               }
             }
           });
