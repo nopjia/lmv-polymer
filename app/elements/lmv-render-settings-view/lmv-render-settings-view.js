@@ -29,9 +29,8 @@
         self.exposure = _viewer.impl.renderer().getExposureBias();
         self.fov = _viewer.getFOV();
         self.ortho = !_viewer.getCamera().isPerspective;
+        self.explode = 0.0;
       });
-
-      self.explode = 0.0;
     },
 
     envChanged: function() {

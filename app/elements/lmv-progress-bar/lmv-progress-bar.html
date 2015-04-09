@@ -1,0 +1,20 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="lmv-progress-bar" attributes="progress" noscript>
+  <template>
+    <style type="text/css">
+      /* width, height, colors to be overridden */
+      :host {
+        display: block;
+        width: 100px;
+        height: 10px;
+        background-color: gray;
+      }
+      #progress {
+        height: 100%;
+        background-color: dimgray;
+      }
+    </style>
+    <div id="progress" style="width: {{progress}}%"></div>
+  </template>
+</polymer-element>
