@@ -7,11 +7,17 @@
     <lmv-button id="prev-button"
       icon="images/iconmonstr-rewind-5-icon-64.png"
       on-click="{{prev}}">
-    </lmv-button><template if="{{playing}}"><lmv-button id="play-button"
+    </lmv-button>
+    <template if="{{playing}}">
+      <lmv-button id="play-button"
         icon="images/iconmonstr-pause-icon-64.png"
-        on-click="{{play}}"></lmv-button></template><template if="{{!playing}}"><lmv-button id="play-button"
+        on-click="{{play}}"></lmv-button>
+    </template><template if="{{!playing}}">
+      <lmv-button id="play-button"
         icon="images/iconmonstr-arrow-37-icon-64.png"
-        on-click="{{play}}"></lmv-button></template><lmv-button id="next-button"
+        on-click="{{play}}"></lmv-button>
+    </template>
+    <lmv-button id="next-button"
       icon="images/fast-forward-5-icon-64.png"
       on-click="{{next}}">
     </lmv-button>
@@ -19,7 +25,7 @@
       value="{{timeVal}}"
       on-input="{{onSliderChanged}}"
       min="0" max="100" step=".01" />
-    <div class="time-val"><p>{{timeStr}}</p></div>
+    <div class="time-val">{{timeStr}}</div>
 
   </template>
   <script>
