@@ -84,17 +84,15 @@
 
       // geometry complete
       self.viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
-        var modelData = self.viewer.impl.model.myData;
-
         // check animation
-        self.hasAnimation = !!modelData.animations;
+        self.hasAnimation = !!self.viewer.impl.model.myData.animations;
 
         // set render stats
         self.renderStats = [];
-        self.renderStats.push(["Meshes", modelData.meshCount]);
-        self.renderStats.push(["Instanced Polys", modelData.instancePolyCount.toLocaleString()]);
-        self.renderStats.push(["Geometry Polys", modelData.geomPolyCount.toLocaleString()]);
-        self.renderStats.push(["Geometry Size", (modelData.geomMemory / (1024*1024)).toFixed(2) + " MB"]);
+        self.renderStats.push(["Meshes",          self.viewer.impl.modelQueue().getGeometryList().geoms.length]);
+        self.renderStats.push(["Fragments",       self.viewer.impl.modelQueue().getFragmentList().getCount()]);
+        self.renderStats.push(["Instanced Polys", self.viewer.impl.modelQueue().getGeometryList().instancePolyCount.toLocaleString()]);
+        self.renderStats.push(["Geometry Polys",  self.viewer.impl.modelQueue().getGeometryList().geomPolyCount.toLocaleString()]);
       });
     },
 
