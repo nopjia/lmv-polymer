@@ -104,6 +104,16 @@ $anim-duration: 0.5s;
   lmv-animation-view {
     padding-right: 5px;
   }
+
+  lmv-progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: transparent;
+
+    &::shadow #progress {
+      background-color: $color-bg-hover;
+    }
+  }
 }
 
 
