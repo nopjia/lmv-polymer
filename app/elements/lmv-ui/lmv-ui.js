@@ -25,25 +25,21 @@
 
         var PANEL_WIDTH = this.$.left.clientWidth;
 
-        if (e.layerX > this.clientWidth - PANEL_WIDTH) {
-          if (elem.parentNode === this.$["right-content"])
-            this.rightPanelCount--;
-          this.$["left-content"].appendChild(elem);
-          this.rightbar = !!this.rightPanelCount;
+        if (e.layerX < PANEL_WIDTH) {
+          this.movePanelToRight(elem);
         }
-        else if (e.layerX < PANEL_WIDTH) {
-          this.$["right-content"].appendChild(elem);
-          this.rightPanelCount++;
+        else if (e.layerX > this.clientWidth - PANEL_WIDTH) {
+          this.movePanelToLeft(elem);
         }
       };
       this.addEventListener("drop", onDrop, true);
       this.ondragover = function(e) {
         var PANEL_WIDTH = this.$.left.clientWidth;
-        if (e.layerX < PANEL_WIDTH) {
+        if (e.layerX < PANEL_WIDTH) {    // hover right
           this.rightbar = true;
           return false;
         }
-        else if (e.layerX > this.clientWidth - PANEL_WIDTH) {
+        else if (e.layerX > this.clientWidth-PANEL_WIDTH) {  // hover left
           this.leftbar = true;
           this.rightbar = !!this.rightPanelCount || false;
           return false;
@@ -170,6 +166,8 @@
         "scrollbars=no, resizable=yes");
     },
 
+    // ui drag drop
+
     closeRight: function() {
       var self = this;
       Array.prototype.forEach.call(this.$["right-content"].children, function(elem) {
@@ -177,6 +175,17 @@
       });
       self.rightbar = false;
       self.rightPanelCount = 0;
+    },
+    movePanelToRight: function(panel) {
+      this.$["right-content"].appendChild(panel);
+      this.rightPanelCount++;
+    },
+    movePanelToLeft: function(panel) {
+      if (panel.parentNode === this.$["right-content"]) {
+        this.rightPanelCount--;
+        this.rightbar = !!this.rightPanelCount;
+      }
+      this.$["left-content"].appendChild(panel);
     }
   });
 })();   // closure
