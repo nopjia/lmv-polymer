@@ -32,11 +32,9 @@
         </div>
 
         <div id="left-content">
-          <template if="{{docName.length > 0}}">
-            <lmv-panel header="{{docName}}">
-              <lmv-doc-tree-view root="{{docTree}}"/>
-            </lmv-panel>
-          </template>
+          <lmv-panel header="{{docName}}" style="display:{{docName.length > 0 ? 'block' : 'none'}}">
+            <lmv-doc-tree-view root="{{docTree}}"/>
+          </lmv-panel>
 
           <lmv-panel header="Properties">
             <lmv-property-view props="{{modelProperties}}" />
