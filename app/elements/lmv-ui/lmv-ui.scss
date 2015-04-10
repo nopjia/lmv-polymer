@@ -1,7 +1,7 @@
 @import "../_elements";
 
 $toolbar-width: 40px;
-$panel-width: 400px;
+$panel-width: 350px;
 $panel-width-mobile: 550px;
 $anim-duration: 0.5s;
 
@@ -16,10 +16,6 @@ $anim-duration: 0.5s;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: stretch;
-
-  div {
-    position: relative;
-  }
 }
 
 #main, #bottom {
@@ -53,6 +49,7 @@ $anim-duration: 0.5s;
 }
 
 #right, #left {
+  position: relative;
   width: $panel-width;
   pointer-events: auto;
   background-color: $color-bg;
@@ -70,14 +67,6 @@ $anim-duration: 0.5s;
 
 #center {
   flex-grow: 1;
-}
-
-#content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
 }
 
 
