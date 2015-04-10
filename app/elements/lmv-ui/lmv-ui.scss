@@ -1,0 +1,130 @@
+@import "../_elements";
+
+$toolbar-width: 40px;
+$panel-width: 400px;
+$panel-width-mobile: 550px;
+$anim-duration: 0.5s;
+
+
+// layout
+
+:host {
+  height: 100%;
+
+  // flex container
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+
+  div {
+    position: relative;
+  }
+}
+
+#main, #bottom {
+  z-index: 1;
+}
+
+#main {
+  flex-grow: 1;
+  pointer-events: none;
+
+  // flex container
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+
+  width: 100%;
+  margin-left: 0;
+  transition: width $anim-duration, margin-left $anim-duration;
+
+  &[collapse-left] {
+    width: calc(100% + #{$panel-width});
+  }
+  &[collapse-right] {
+    width: calc(100% + #{$panel-width});
+    margin-left: -$panel-width;
+  }
+  &[collapse-left][collapse-right] {
+    width: calc(100% + #{$panel-width*2});
+  }
+}
+
+#right, #left {
+  width: $panel-width;
+  pointer-events: auto;
+  background-color: $color-bg;
+}
+
+#right-content, #left-content {
+  position: absolute;;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-x: hidden;
+  overflow-y: auto;   // TODO_NOP: this kills toolbar
+}
+
+#center {
+  flex-grow: 1;
+}
+
+#content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+
+// left
+
+#left {
+  #toolbar {
+    position: absolute;
+    left: -$toolbar-width;
+    display: block;
+    height: auto;
+
+    lmv-button {
+      width: $toolbar-width;
+      height: $toolbar-width;
+      display: block;
+    }
+
+    #fold-button::shadow #icon {
+      transition: transform $anim-duration;
+    }
+  }
+}
+#main[collapse-left] #fold-button::shadow #icon {
+  transform: rotate(180deg);
+}
+
+
+// bottom
+
+#bottom {
+  background-color: $color-bg;
+
+  lmv-animation-view {
+    padding-right: 5px;
+  }
+}
+
+
+// right
+
+#right {
+  #close-right-button {
+    position: absolute;
+    right: -$toolbar-width;
+    width: $toolbar-width;
+    height: $toolbar-width;
+    display: block;
+  }
+}
