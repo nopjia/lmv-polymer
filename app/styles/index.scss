@@ -2,3 +2,11 @@ body {
   background: #aac;
   overflow: hidden;
 }
+
+lmv-ui-panel {
+  z-index: 2;
+}
+
+lmv-bottom-bar {
+  z-index: 1;
+}

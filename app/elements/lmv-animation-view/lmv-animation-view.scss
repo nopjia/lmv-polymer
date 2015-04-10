@@ -4,36 +4,25 @@ $height: 2em;
 
 :host {
   height: 2em;
-}
 
-#play-button, #timeline, .time-val {
-  display: inline-block;
+  // flex
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 lmv-button {
   width: 2em;
   height: 2em;
-  // margin-right: 10px;
-}
-
-.time-val {
-  width: 4em;
-  text-align: right;
 }
 
 #timeline {
-  height: 100%;
-  width: 200px;
+  width: auto;
   margin: 0 10px;
+  flex-grow: 1;
 }
 
 .time-val {
-  height: 100%;
-  display: table;
   text-align: right;
-  float: right;
-}
-.time-val > p {
-  display: table-cell;
-  vertical-align: middle;
 }
