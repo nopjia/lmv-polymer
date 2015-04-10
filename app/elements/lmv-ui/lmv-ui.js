@@ -26,12 +26,17 @@
 
         var PANEL_WIDTH = this.$.left.clientWidth;
 
+        // TODO_NOP: layerX not standard
+
         if (e.layerX < PANEL_WIDTH) {
           this.movePanelToRight(elem);
         }
         else if (e.layerX > this.clientWidth - PANEL_WIDTH) {
           this.movePanelToLeft(elem);
         }
+
+        e.preventDefault();
+        return false;
       };
       this.addEventListener("drop", onDrop, true);
       this.ondragover = function(e) {
