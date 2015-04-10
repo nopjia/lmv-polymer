@@ -6,8 +6,6 @@
   </template>
   <script>
     (function () {
-      var _viewerDom, _viewer;
-
       var isLeafNode = function(node) {
         return node.type === "geometry" &&
           (node.role === "3d" || node.role === "2d");
@@ -17,8 +15,22 @@
         allNodes: [],   // cache flat reference to all nodes for fast iteration
         domReady: function() {
           // grab viewer reference
-          _viewerDom = document.querySelector("lmv-viewer");
-          if (_viewerDom) _viewer = _viewerDom.viewer;
+          this.viewerDom = document.querySelector("lmv-viewer");
+          if (this.viewerDom) this.viewer = this.viewerDom.viewer;
+
+          var self = this;
+          this.viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, function() {
+            if (!self.viewerDom.doc)
+              return;
+            var root = self.viewerDom.doc.getRootItem();
+            self.innerHTML = "";
+            var baseRoot = root.children[0];
+            for (var i=0; i<baseRoot.children.length; i++) {
+              self.buildTree(baseRoot.children[i], self);
+            }
+          });
+
+          this.onNodeClick = this.onNodeClick.bind(this);
         },
         buildTree: function(node, parentElem) {
           // no name
@@ -42,31 +54,22 @@
             }
           }
         },
-        rootChanged: function(oldRoot, root) {
-          this.innerHTML = "";
-          var baseRoot = root.children[0];
-          for (var i=0; i<baseRoot.children.length; i++) {
-            this.buildTree(baseRoot.children[i], this);
-          }
-        },
         onNodeClick: function(event) {
           var nodeElem = event.target;
           var dataNode = nodeElem.dataNode;
           if (isLeafNode(dataNode)) {
             // load view
-            var doc = _viewerDom.doc;
+            var doc = this.viewerDom.doc;
             var url = doc.getViewablePath(dataNode);
             var fullUrl = doc.getFullPath(url);
             // var geo = doc.getViewGeometry(dataNode);
-            _viewerDom.loadModel(fullUrl, doc.getPropertyDbPath());
+            this.viewerDom.loadModel(fullUrl, doc.getPropertyDbPath());
           }
           else {
             nodeElem.toggleExpand();
           }
           event.stopPropagation();
-        },
-        onNodeDoubleClick: function() {
-        },
+        }
       });
     })();
   </script>

@@ -33,16 +33,16 @@
 
         <div id="left-content">
           <lmv-panel header="{{docName}}" style="display:{{docName.length > 0 ? 'block' : 'none'}}">
-            <lmv-doc-tree-view root="{{docTree}}"/>
+            <lmv-doc-tree-view />
           </lmv-panel>
 
           <lmv-panel header="Properties">
-            <lmv-property-view props="{{modelProperties}}" />
+            <lmv-property-view />
           </lmv-panel>
 
           <lmv-panel header="Model Structure" collapse>
             <lmv-model-search></lmv-model-search>
-            <lmv-model-tree-view root="{{modelTree}}"></lmv-model-tree-view>
+            <lmv-model-tree-view></lmv-model-tree-view>
           </lmv-panel>
 
           <lmv-panel header="Render Settings">
