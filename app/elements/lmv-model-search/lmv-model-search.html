@@ -6,7 +6,7 @@
     <input id="search"
       placeholder="Search"
       value="{{query}}"
-      on-change="{{onChange}}" />
+      on-change="{{doSearch}}" />
   </template>
   <script>
     (function () {
@@ -16,15 +16,25 @@
         isSearching: false,
         query: undefined,
         prevQuery: undefined,
+
+        TIMEOUT: 500,  // milliseconds
+        timeout: undefined,
+
         domReady: function() {
           var viewerDom = document.querySelector("lmv-viewer");
           if (viewerDom) _viewer = viewerDom.viewer;
+
+          this.doSearch = this.doSearch.bind(this);
         },
-        onChange: function() {
+        doSearch: function() {  // immediate search
+          if (this.timeout)
+            clearTimeout(this.timeout);
           this.search(this.query);
         },
-        queryChanged: function() {
-          this.search(this.query);
+        queryChanged: function() {  // delayed search, as typing
+          if (this.timeout)
+            clearTimeout(this.timeout);
+          this.timeout = setTimeout(this.doSearch, this.TIMEOUT);
         },
         search: function(str) {
           if (str === "") {
