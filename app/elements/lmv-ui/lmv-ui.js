@@ -26,7 +26,6 @@
         var elem = this.$.main.querySelector("lmv-panel[header='"+name+"']");
 
         var PANEL_WIDTH = this.$.left.clientWidth;
-
         var rect = this.getBoundingClientRect();
         var localX = e.clientX - rect.left;
         if (localX < PANEL_WIDTH) {
@@ -76,6 +75,11 @@
       // hook up to viewer events
 
       var self = this;
+
+      // load progress
+      self.viewer.addEventListener(Autodesk.Viewing.PROGRESS_UPDATE_EVENT, function(event) {
+        self.loadProgress = event.percent;
+      });
 
       // init 2D/3D nav tool
       // TODO_NOP: should this be handled by viewer?

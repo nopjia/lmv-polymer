@@ -60,11 +60,11 @@
       </div>
     </div>
     <div id="bottom">
-      <template if="{{loadProgress < 100}}">
-        <lmv-progress-bar progress="{{loadProgress}}"></lmv-progress-bar>
-      </template>
       <template if="{{hasAnimation}}">
         <lmv-animation-view />
+      </template>
+      <template if="{{loadProgress < 100}}">
+        <lmv-progress-bar progress="{{loadProgress}}"></lmv-progress-bar>
       </template>
     </div>
 
