@@ -1,13 +1,12 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<polymer-element name="lmv-model-tree-view" attributes="root">
+<polymer-element name="lmv-model-tree-view" attributes="">
   <template>
     <lmv-obj-context-menu></lmv-obj-context-menu>
     <content></content>
   </template>
   <script>
     (function () {
-      var _viewer;
       var _shiftKey, _ctrlKey;
 
       Polymer({
@@ -15,12 +14,22 @@
         domReady: function() {
           // grab viewer reference
           var viewerDom = document.querySelector("lmv-viewer");
-          if (viewerDom) _viewer = viewerDom.viewer;
-          if (!_viewer) return;
+          if (viewerDom) this.viewer = viewerDom.viewer;
+          if (!this.viewer) return;
+
+          var self = this;
+
+          // viewer init event, build new tree
+          this.viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, function() {
+            var root = self.viewer.model.myData.instanceTree;
+            self.innerHTML = "";
+            for (var i=0; i<root.children.length; i++) {
+              self.buildTree(root.children[i], self);
+            }
+          });
 
           // viewer events update nodes
-          var self = this;
-          _viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(event) {
+          this.viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(event) {
             for (var j=0; j<self.allNodes.length; j++) {
               var node = self.allNodes[j];
               node.selected = false;
@@ -32,7 +41,7 @@
               }
             }
           });
-          _viewer.addEventListener(Autodesk.Viewing.HIDE_EVENT, function(event) {
+          this.viewer.addEventListener(Autodesk.Viewing.HIDE_EVENT, function(event) {
             for (var j=0; j<self.allNodes.length; j++) {
               var node = self.allNodes[j];
               for (var i=0; i<event.nodeIdArray.length; i++) {
@@ -43,7 +52,7 @@
               }
             }
           });
-          _viewer.addEventListener(Autodesk.Viewing.ISOLATE_EVENT, function(event) {
+          this.viewer.addEventListener(Autodesk.Viewing.ISOLATE_EVENT, function(event) {
             for (var j=0; j<self.allNodes.length; j++) {
               var node = self.allNodes[j];
               node.grayed = event.nodeIdArray.length ? true : false;
@@ -65,6 +74,9 @@
             _shiftKey = event.shiftKey;
             _ctrlKey = event.ctrlKey || (event.keyCode === 91) || (event.which === 91);
           }, true);
+
+          this.onNodeClick = this.onNodeClick.bind(this);
+          this.onNodeDoubleClick = this.onNodeDoubleClick.bind(this);
         },
         buildTree: function(node, parentElem) {
           // create node
@@ -84,22 +96,16 @@
             }
           }
         },
-        rootChanged: function(oldRoot, root) {
-          this.innerHTML = "";
-          for (var i=0; i<root.children.length; i++) {
-            this.buildTree(root.children[i], this);
-          }
-        },
         onNodeClick: function(event) {
           if (_shiftKey || _ctrlKey)
-            _viewer.toggleSelect(event.target.dataNode.dbId);
+            this.viewer.toggleSelect(event.target.dataNode.dbId);
           else
             if (!event.target.selected)
-              _viewer.select(event.target.dataNode.dbId);
+              this.viewer.select(event.target.dataNode.dbId);
           event.stopPropagation();
         },
         onNodeDoubleClick: function(event) {
-          _viewer.fitToView(event.target.dataNode.dbId);
+          this.viewer.fitToView(event.target.dataNode.dbId);
           event.stopPropagation();
         },
       });

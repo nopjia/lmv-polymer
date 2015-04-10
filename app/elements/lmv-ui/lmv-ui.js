@@ -4,6 +4,7 @@
     rightbar: false,
     rightPanelCount: 0,
 
+
     // initialize
 
     domReady: function() {
@@ -63,14 +64,10 @@
         return;
       }
 
+
       // hook up to viewer events
 
       var self = this;
-
-      // hook viewer events to model properties
-      self.viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(event) {
-        self.setModelProperties(event.dbIdArray[event.dbIdArray.length - 1]);
-      });
 
       // init 2D/3D nav tool
       // TODO_NOP: should this be handled by viewer?
@@ -82,55 +79,25 @@
 
       // property db loaded
       self.viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, function() {
-        self.setModelProperties();
-        self.setModelTree();
-        self.setDocTree();
+        self.docName = self.viewerDom.doc ? self.viewerDom.doc.getRootItem().children[0].name : undefined;
       });
 
       // geometry complete
       self.viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
-        self.setRenderStats();
-        self.hasAnimation = !!self.viewer.model.myData.animations;
+        var modelData = self.viewer.impl.model.myData;
+
+        // check animation
+        self.hasAnimation = !!modelData.animations;
+
+        // set render stats
+        self.renderStats = [];
+        self.renderStats.push(["Meshes", modelData.meshCount]);
+        self.renderStats.push(["Instanced Polys", modelData.instancePolyCount.toLocaleString()]);
+        self.renderStats.push(["Geometry Polys", modelData.geomPolyCount.toLocaleString()]);
+        self.renderStats.push(["Geometry Size", (modelData.geomMemory / (1024*1024)).toFixed(2) + " MB"]);
       });
     },
 
-    // setup functions
-
-    setModelProperties: function(nodeId) {
-      if (!nodeId) {
-        if (this.viewer.model.myData.instanceTree) {
-          nodeId = this.viewer.model.getRootId();
-        }
-        else {
-          this.modelProperties = undefined;
-          return;
-        }
-      }
-      var self = this;
-      this.viewer.getProperties(nodeId, function(result) {
-        self.modelProperties = result.properties;
-      });
-    },
-
-    setModelTree: function() {
-      this.modelTree = this.viewer.model.myData.instanceTree;
-    },
-
-    setDocTree: function() {
-      if (!this.viewerDom.doc)
-        return;
-      this.docTree = this.viewerDom.doc.getRootItem();
-      this.docName = this.docTree.children[0].name;
-    },
-
-    setRenderStats: function() {
-      var modelData = this.viewer.impl.model.myData;
-      this.renderStats = [];
-      this.renderStats.push(["Meshes", modelData.meshCount]);
-      this.renderStats.push(["Instanced Polys", modelData.instancePolyCount.toLocaleString()]);
-      this.renderStats.push(["Geometry Polys", modelData.geomPolyCount.toLocaleString()]);
-      this.renderStats.push(["Geometry Size", (modelData.geomMemory / (1024*1024)).toFixed(2) + " MB"]);
-    },
 
     // ui functions
 
@@ -166,13 +133,14 @@
         "scrollbars=no, resizable=yes");
     },
 
+
     // ui drag drop
 
     closeRight: function() {
       var self = this;
-      Array.prototype.forEach.call(this.$["right-content"].children, function(elem) {
-        self.$["left-content"].appendChild(elem);
-      });
+      while(self.$["right-content"].children.length > 0) {
+        self.$["left-content"].appendChild(self.$["right-content"].children[0]);
+      }
       self.rightbar = false;
       self.rightPanelCount = 0;
     },

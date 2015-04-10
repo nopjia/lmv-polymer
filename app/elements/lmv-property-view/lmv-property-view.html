@@ -4,7 +4,7 @@
   Dependent on properties list having "label" as the name at first position in list
  -->
 
-<polymer-element name="lmv-property-view" attributes="props">
+<polymer-element name="lmv-property-view" attributes="">
   <template>
     <link rel="stylesheet" href="lmv-property-view.css">
 
@@ -27,9 +27,36 @@
   <script>
     (function () {
       Polymer({
-        propsChanged: function() {
-          var props = this.props;
+        domReady: function() {
+          // grab viewer reference
+          var viewerDom = document.querySelector("lmv-viewer");
+          if (viewerDom) this.viewer = viewerDom.viewer;
 
+          var self = this;
+          this.viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, function() {
+            self.setModelProperties();
+          });
+          this.viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function(event) {
+            self.setModelProperties(event.dbIdArray[event.dbIdArray.length - 1]);
+          });
+        },
+        setModelProperties: function(nodeId) {
+          if (!nodeId) {
+            if (this.viewer.model.myData.instanceTree) {
+              nodeId = this.viewer.model.getRootId();
+            }
+            else {
+              console.log("ERROR: no model instanceTree");
+              this.setProperties();
+              return;
+            }
+          }
+          var self = this;
+          this.viewer.getProperties(nodeId, function(result) {
+            self.setProperties(result.properties);
+          });
+        },
+        setProperties: function(props) {
           // grab name of file
           var name = props[0].displayValue;
           this.categories = {};
