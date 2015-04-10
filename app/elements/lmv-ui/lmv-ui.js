@@ -12,7 +12,8 @@
       // setup panels drag drop
 
       var onPanelDragStart = function(e) {
-        e.dataTransfer.setDragImage(this, e.layerX, e.layerY);
+        var rect = this.getBoundingClientRect();
+        e.dataTransfer.setDragImage(this, e.clientX-rect.left, e.clientY-rect.top);
         e.dataTransfer.setData("text/plain", e.target.header);
       };
       Array.prototype.forEach.call(this.$.main.querySelectorAll("lmv-panel"), function(elem) {
@@ -26,12 +27,12 @@
 
         var PANEL_WIDTH = this.$.left.clientWidth;
 
-        // TODO_NOP: layerX not standard
-
-        if (e.layerX < PANEL_WIDTH) {
+        var rect = this.getBoundingClientRect();
+        var localX = e.clientX - rect.left;
+        if (localX < PANEL_WIDTH) {
           this.movePanelToRight(elem);
         }
-        else if (e.layerX > this.clientWidth - PANEL_WIDTH) {
+        else if (localX > this.clientWidth - PANEL_WIDTH) {
           this.movePanelToLeft(elem);
         }
 
@@ -41,11 +42,13 @@
       this.addEventListener("drop", onDrop, true);
       this.ondragover = function(e) {
         var PANEL_WIDTH = this.$.left.clientWidth;
-        if (e.layerX < PANEL_WIDTH) {    // hover right
+        var rect = this.getBoundingClientRect();
+        var localX = e.clientX - rect.left;
+        if (localX < PANEL_WIDTH) {    // hover right
           this.rightbar = true;
           return false;
         }
-        else if (e.layerX > this.clientWidth-PANEL_WIDTH) {  // hover left
+        else if (localX > this.clientWidth-PANEL_WIDTH) {  // hover left
           this.leftbar = true;
           this.rightbar = !!this.rightPanelCount || false;
           return false;

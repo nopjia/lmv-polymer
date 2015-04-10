@@ -10,6 +10,7 @@ $anim-duration: 0.5s;
 
 :host {
   height: 100%;
+  overflow: hidden;
 
   // flex container
   display: flex;
