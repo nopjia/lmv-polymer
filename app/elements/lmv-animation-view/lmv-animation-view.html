@@ -48,6 +48,7 @@
           if (!_viewer) return;
 
           _animator = _viewer.impl.keyFrameAnimator;
+          if (!_animator) return;
           this.$.timeline.max = _animator.duration;
         },
         timeValChanged: function() {

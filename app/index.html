@@ -30,13 +30,20 @@
 
 <body unresolved fullbleed layout vertical>
   <template is="auto-binding" id="app">
-    <div>
+<!--     <div>
       <lmv-obj-context-menu></lmv-obj-context-menu>
       <lmv-viewer url="{{url}}"></lmv-viewer>
     </div>
     <lmv-ui-panel right></lmv-ui-panel>
-    <lmv-bottom-bar></lmv-bottom-bar>
+    <lmv-bottom-bar></lmv-bottom-bar> -->
+
+    <lmv-ui>
+      <lmv-viewer url="{{url}}"></lmv-viewer>
+    </lmv-ui>
+
   </template>
+
+
 
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
