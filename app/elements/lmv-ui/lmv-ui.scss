@@ -2,9 +2,10 @@
 
 $toolbar-width: 40px;
 $panel-width: 350px;
-$panel-width-mobile: 550px;
 $anim-duration: 0.5s;
 
+$tablet-width: 750px;
+$phone-width: 550px;
 
 // layout
 
@@ -74,6 +75,9 @@ $anim-duration: 0.5s;
 // left
 
 #left {
+  // for responsive
+  transition: width $anim-duration;
+
   #toolbar {
     position: absolute;
     left: -$toolbar-width;
@@ -120,11 +124,46 @@ $anim-duration: 0.5s;
 // right
 
 #right {
+  display: block;
+
   #close-right-button {
     position: absolute;
     right: -$toolbar-width;
     width: $toolbar-width;
     height: $toolbar-width;
     display: block;
+  }
+}
+
+
+// responsive
+
+// hide right
+@media (max-width: #{$tablet-width}) {
+  #right {
+    display: none;
+  }
+}
+
+// stretch left
+@media (max-width: #{$phone-width}) {
+  #left {
+    width: calc(100% - #{$toolbar-width});
+    margin-left: 0;
+  }
+  #main {
+    &, &[collapse-right] {
+      width: 100%;
+      margin-left: 0;
+    }
+    &[collapse-left], &[collapse-left][collapse-right] {
+      width: 200%;
+      #left {
+        width: 50%;                    // TODO_NOP: diff sizes problem
+        margin-left: 0;
+        width: calc(50% - $toolbar-width);  // TODO_NOP: doesn't work
+        margin-left: -$toolbar-width;
+      }
+    }
   }
 }
