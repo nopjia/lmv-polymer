@@ -1,17 +1,18 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<polymer-element name="lmv-ui" attributes="leftbar rightbar">
+<polymer-element name="lmv-ui" attributes="showleft showright">
   <template>
     <link rel="stylesheet" href="lmv-ui.css">
 
-    <div id="main" collapse-left?="{{!leftbar}}" collapse-right?="{{!rightbar}}">
+    <div id="main" collapse-left?="{{!showleft}}" collapse-right?="{{!showright}}">
       <div id="right">
         <lmv-button id="close-right-button"
           style="display:{{rightPanelCount ? 'block' : 'none'}}"
           icon="images/iconmonstr-x-mark-icon-64.png"
           on-click="{{closeRight}}">
         </lmv-button>
-        <div id="right-content"></div>
+        <div id="right-content" ondragover="return false">
+        </div>
       </div>
       <div id="center"></div>
       <div id="left">
@@ -19,7 +20,7 @@
           <lmv-button
             id="fold-button"
             icon="images/iconmonstr-arrow-25-icon-64.png"
-            toggle active="{{leftbar}}">
+            toggle active="{{showleft}}">
           </lmv-button>
           <lmv-button
             icon="images/iconmonstr-photo-camera-4-icon-64.png"
@@ -31,7 +32,7 @@
           </lmv-button>
         </div>
 
-        <div id="left-content">
+        <div id="left-content" ondragover="return false">
           <lmv-panel header="{{docName}}" style="display:{{docName.length > 0 ? 'block' : 'none'}}">
             <lmv-doc-tree-view />
           </lmv-panel>

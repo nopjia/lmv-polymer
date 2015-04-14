@@ -1,13 +1,15 @@
 (function () {
   Polymer({
-    leftbar: true,
-    rightbar: false,
+    showleft: true,
+    showright: false,
     rightPanelCount: 0,
 
 
     // initialize
 
     domReady: function() {
+
+      var self = this;
 
       // setup panels drag drop
 
@@ -23,38 +25,25 @@
 
       var onDrop = function(e) {
         var name = e.dataTransfer.getData("text/plain");
-        var elem = this.$.main.querySelector("lmv-panel[header='"+name+"']");
+        var elem = self.$.main.querySelector("lmv-panel[header='"+name+"']");
 
-        var PANEL_WIDTH = this.$.left.clientWidth;
-        var rect = this.getBoundingClientRect();
-        var localX = e.clientX - rect.left;
-        if (localX < PANEL_WIDTH) {
-          this.movePanelToRight(elem);
-        }
-        else if (localX > this.clientWidth - PANEL_WIDTH) {
-          this.movePanelToLeft(elem);
-        }
+        if (this === self.$["left-content"])
+          self.movePanelToLeft(elem);
+        else
+          self.movePanelToRight(elem);
 
         e.preventDefault();
         return false;
       };
-      this.addEventListener("drop", onDrop, true);
-      this.ondragover = function(e) {
-        var PANEL_WIDTH = this.$.left.clientWidth;
-        var rect = this.getBoundingClientRect();
-        var localX = e.clientX - rect.left;
-        if (localX < PANEL_WIDTH) {    // hover right
-          this.rightbar = true;
-          return false;
-        }
-        else if (localX > this.clientWidth-PANEL_WIDTH) {  // hover left
-          this.leftbar = true;
-          this.rightbar = !!this.rightPanelCount || false;
-          return false;
-        }
-        else {
-          this.rightbar = !!this.rightPanelCount || false;
-        }
+      this.$["left-content"].addEventListener("drop", onDrop);
+      this.$["right-content"].addEventListener("drop", onDrop);
+
+      // animate right bar open/close
+      this.ondragover = function() {
+        this.showright = true;
+      };
+      this.ondragend = function() {
+        this.showright = !!this.rightPanelCount || false;
       };
 
 
@@ -73,8 +62,6 @@
 
 
       // hook up to viewer events
-
-      var self = this;
 
       // load progress
       self.viewer.addEventListener(Autodesk.Viewing.PROGRESS_UPDATE_EVENT, function(event) {
@@ -151,7 +138,7 @@
       while(self.$["right-content"].children.length > 0) {
         self.$["left-content"].appendChild(self.$["right-content"].children[0]);
       }
-      self.rightbar = false;
+      self.showright = false;
       self.rightPanelCount = 0;
     },
     movePanelToRight: function(panel) {
@@ -161,7 +148,7 @@
     movePanelToLeft: function(panel) {
       if (panel.parentNode === this.$["right-content"]) {
         this.rightPanelCount--;
-        this.rightbar = !!this.rightPanelCount;
+        this.showright = !!this.rightPanelCount;
       }
       this.$["left-content"].appendChild(panel);
     }
