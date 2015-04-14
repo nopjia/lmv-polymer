@@ -148,8 +148,7 @@ $phone-width: 550px;
 // stretch left
 @media (max-width: #{$phone-width}) {
   #left {
-    width: calc(100% - #{$toolbar-width});
-    margin-left: 0;
+    width: calc(100vw - #{$toolbar-width});
   }
   #main {
     &, &[collapse-right] {
@@ -157,13 +156,7 @@ $phone-width: 550px;
       margin-left: 0;
     }
     &[collapse-left], &[collapse-left][collapse-right] {
-      width: 200%;
-      #left {
-        width: 50%;                    // TODO_NOP: diff sizes problem
-        margin-left: 0;
-        width: calc(50% - $toolbar-width);  // TODO_NOP: doesn't work
-        margin-left: -$toolbar-width;
-      }
+      width: calc(200% - #{$toolbar-width});
     }
   }
 }
