@@ -20,8 +20,13 @@
 
           // viewer init event, build new tree
           this.viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, function() {
-            var root = self.viewer.model.myData.instanceTree;
             self.innerHTML = "";
+            var root = self.viewer.model.getRoot();
+            // go down to deepest single child
+            // to get rid of single roots in model tree
+            while (root.children.length === 1) {
+              root = root.children[0];
+            }
             for (var i=0; i<root.children.length; i++) {
               self.buildTree(root.children[i], self);
             }

@@ -27,18 +27,17 @@
           this.doSearch = this.doSearch.bind(this);
         },
         doSearch: function() {  // immediate search
-          if (this.timeout)
-            clearTimeout(this.timeout);
+          clearTimeout(this.timeout);
           this.search(this.query);
         },
         queryChanged: function() {  // delayed search, as typing
-          if (this.timeout)
-            clearTimeout(this.timeout);
+          clearTimeout(this.timeout);
           this.timeout = setTimeout(this.doSearch, this.TIMEOUT);
         },
         search: function(str) {
           if (str === "") {
             _viewer.isolate();
+            this.prevQuery = str;
             return;
           }
           if (!str || str === this.prevQuery || this.isSearching)
@@ -50,7 +49,7 @@
           _viewer.search(str, function(resultIds) {
             _viewer.isolateById(resultIds);
             self.isSearching = false;
-            self.prevQuery = self.query;
+            self.prevQuery = str;
           });
         }
       });

@@ -50,6 +50,8 @@
           _animator = _viewer.impl.keyFrameAnimator;
           if (!_animator) return;
           this.$.timeline.max = _animator.duration;
+
+          this.onPlay = this.onPlay.bind(this);
         },
         timeValChanged: function() {
           this.timeStr =
@@ -80,7 +82,7 @@
             this.playing = play;
 
           if (this.playing)
-            _animator.play(this.timeVal, this.onPlay.bind(this));
+            _animator.play(this.timeVal, this.onPlay);
           else
             _animator.pause();
         },
