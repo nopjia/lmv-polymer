@@ -13,8 +13,8 @@
   display: block;
 }
 
-polyfill-next-selector { content: ':host > :not(template)'; }
-::content > :not(template) {
+polyfill-next-selector { content: ':host .context-item'; }
+::content .context-item {
   display: block;
   margin: 0;
   padding: 5px;

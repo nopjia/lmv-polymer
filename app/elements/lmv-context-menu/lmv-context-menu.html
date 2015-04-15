@@ -3,21 +3,25 @@
 <polymer-element name="lmv-context-menu" attributes="">
   <template>
     <link rel="stylesheet" href="lmv-context-menu.css">
-    <is-mobile id="isMobile"></is-mobile>
     <content></content>
   </template>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.4/hammer.min.js"></script>
   <script>
     (function () {
       var _lastX, _lastY;
-      var _DELTA_EPS = 5;
-      var _isMobile;
+      var _DELTA_EPS = 10;
+      var _isTouch;
+      var _longpressTimer;
+      var _longpressDuration = 1000;
+      var _longpressJustOpened = false;
+      var _currX, _currY;
 
       function openContextMenu(x,y) {
-        this.show = true;
-        this.style.right = "calc( 100% - " + x + "px )";
-        this.style.top = y + "px";
-        this.fire("open");
+        if (Math.abs(_lastX-x) < _DELTA_EPS && Math.abs(_lastY-y) < _DELTA_EPS) {
+          this.show = true;
+          this.style.right = "calc( 100% - " + x + "px )";
+          this.style.top = y + "px";
+          this.fire("open");
+        }
       }
       function closeContextMenu() {
         this.show = false;
@@ -27,59 +31,89 @@
       function onMouseDown(e) {
         if (e.button !== 2)
           return;
-        _lastX = e.x;
-        _lastY = e.y;
+        _lastX = e.clientX;
+        _lastY = e.clientY;
       }
       function onMouseUp(e) {
         if (e.button !== 2)
           return;
-        if (Math.abs(_lastX-e.x) < _DELTA_EPS &&
-          Math.abs(_lastY-e.y) < _DELTA_EPS)
-          openContextMenu.call(this, e.x, e.y);
+        openContextMenu.call(this, e.clientX, e.clientY);
+      }
+
+      function onTouchStart(e) {
+        _lastX = e.touches[0].clientX;
+        _lastY = e.touches[0].clientY;
+
+        var self = this;
+        _longpressTimer = window.setTimeout(function() {
+          openContextMenu.call(self, _currX, _currY);
+          _longpressJustOpened = true;
+        }, _longpressDuration);
+      }
+      function onTouchEnd() {
+        clearTimeout(_longpressTimer);
+      }
+      function onTouchMove(e) {
+        _currX = e.touches[0].clientX;
+        _currY = e.touches[0].clientY;
+      }
+
+      function onClickToCancel() {
+        if (_isTouch) {
+          if (_longpressJustOpened) {
+            _longpressJustOpened = false;
+            return;
+          }
+          // TODO_NOP: hack to delay menu closing after clicking on item
+          var self = this;
+          setTimeout(function() {
+            closeContextMenu.call(self);
+          }, 100);
+        }
+        else {
+          closeContextMenu.call(this);
+        }
       }
       function onContextMenu(e) {
-        e.preventDefault();
-      }
-      function onClickToCancel() {
-        closeContextMenu.call(this);
-      }
-      function onContextMenuMobile(e) {
-        openContextMenu.call(this, e.center.x, e.center.y);
         e.preventDefault();
       }
 
       function listen(node) {
         if (node && node.addEventListener) {
           this.onClickToCancel = onClickToCancel.bind(this);
+          this.onContextMenu = onContextMenu.bind(this);
+          node.addEventListener("contextmenu", this.onContextMenu, false);
+
+          this.onMouseDown = onMouseDown.bind(this);
+          this.onMouseUp = onMouseUp.bind(this);
+          node.addEventListener("mousedown", this.onMouseDown, true);
+          node.addEventListener("mouseup", this.onMouseUp, true);
           window.addEventListener("mouseup", this.onClickToCancel, true);
-          if (_isMobile) {
-            // node.addEventListener("contextmenu", onContextMenuMobile, true);
-            var mc = new Hammer(node.host);  // TODO_NOP: .host mobile workaround
-            mc.on("press", onContextMenuMobile);
-            // window.addEventListener("touchstart", onClickToCancel, false);
-          }
-          else {
-            this.onClickToCancel = onClickToCancel.bind(this);
-            this.onMouseDown = onMouseDown.bind(this);
-            this.onMouseUp = onMouseUp.bind(this);
-            this.onContextMenu = onContextMenu.bind(this);
-            node.addEventListener("mousedown", this.onMouseDown, true);
-            node.addEventListener("mouseup", this.onMouseUp, true);
-            node.addEventListener("contextmenu", this.onContextMenu, false);
+
+          if(_isTouch) {
+            this.onTouchStart = onTouchStart.bind(this);
+            this.onTouchEnd = onTouchEnd.bind(this);
+            this.onTouchMove = onTouchMove.bind(this);
+            node.addEventListener("touchstart", this.onTouchStart, true);
+            node.addEventListener("touchend", this.onTouchEnd, true);
+            node.addEventListener("touchmove", this.onTouchMove, true);
+            window.addEventListener("touchend", this.onClickToCancel, true);
           }
         }
       }
       function unlisten(node) {
         if (node && node.removeEventListener) {
+          node.removeEventListener("contextmenu", this.onContextMenu, false);
+
+          node.removeEventListener("mousedown", this.onMouseDown, true);
+          node.removeEventListener("mouseup", this.onMouseUp, true);
           window.removeEventListener("mouseup", this.onClickToCancel, true);
-          if (_isMobile) {
-            // node.removeEventListener("contextmenu", onContextMenuMobile, true);
-            // window.addEventListener("touchstart", onClickToCancel, false);
-          }
-          else {
-            node.removeEventListener("mousedown", this.onMouseDown, true);
-            node.removeEventListener("mouseup", this.onMouseUp, true);
-            node.removeEventListener("contextmenu", this.onContextMenu, false);
+
+          if (_isTouch) {
+            node.removeEventListener("touchstart", this.onTouchStart, true);
+            node.removeEventListener("touchend", this.onTouchEnd, true);
+            node.removeEventListener("touchmove", this.onTouchMove, true);
+            window.removeEventListener("touchend", this.onClickToCancel, true);
           }
         }
       }
@@ -89,7 +123,7 @@
           show: { value:false, reflect:true }
         },
         domReady: function() {
-          _isMobile = this.$.isMobile.mobile;
+          _isTouch = "ontouchstart" in window;
           if (!this.target)
             this.target = this.parentNode;
           listen.call(this, this.target);

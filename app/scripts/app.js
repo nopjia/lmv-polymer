@@ -13,7 +13,7 @@
     console.log("Polymer Template Ready");
   });
 
-  app.url = "data/engineraw/0.svf";
+  app.url = "http://lmv.rocks/data/engineraw/0.svf";
   // app.url = "data/Displayline/output/bubble.json";
   // app.url = "data/gears/output/bubble.json";
 
