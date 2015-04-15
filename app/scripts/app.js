@@ -2,10 +2,10 @@
   "use strict";
 
   var getParameterByName = function(name) {
-      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-          results = regex.exec(location.search);
-      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+    var results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   };
 
   var app = document.querySelector("#app");
@@ -16,6 +16,11 @@
   app.url = "http://lmv.rocks/data/engineraw/0.svf";
   // app.url = "data/Displayline/output/bubble.json";
   // app.url = "data/gears/output/bubble.json";
+  // app.url = "http://lmv.rocks/data/rally/1/RallyFighter2.svf
+  // app.url = "http://lmv.rocks/data/racecar/Design.svf";
+  // app.url = "http://lmv.rocks/data/house/Residential%20Exterior.obj.svf";
+  // app.url = "http://lmv.rocks/data/tractor4/0.svf";
+  // app.url = "http://lmv.rocks/data/gears/output/bubble.json";
 
   app.url = getParameterByName("url") || app.url;
 
