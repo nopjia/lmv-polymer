@@ -27,7 +27,7 @@
         self.env = _viewer.impl.currentLightPreset();
 
         self.exposure = _viewer.impl.renderer().getExposureBias();
-        self.fov = _viewer.getFOV();
+        self.fov = Math.round(_viewer.getFOV());
         self.ortho = !_viewer.getCamera().isPerspective;
         self.explode = 0.0;
       });

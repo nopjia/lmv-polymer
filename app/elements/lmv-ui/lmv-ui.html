@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="lmv-ui.css">
 
     <div id="main" collapse-left?="{{!showleft}}" collapse-right?="{{!showright}}">
+
       <div id="right">
         <lmv-button id="close-right-button"
           style="display:{{rightPanelCount ? 'block' : 'none'}}"
@@ -14,7 +15,9 @@
         <div id="right-content" ondragover="return false">
         </div>
       </div>
+
       <div id="center"></div>
+
       <div id="left">
         <div id="toolbar">
           <lmv-button
@@ -59,16 +62,19 @@
           </lmv-panel>
         </div>
       </div>
-    </div>
+
+    </div>  <!-- main -->
+
     <div id="bottom">
-      <template if="{{hasAnimation}}">
-        <lmv-animation-view />
-      </template>
       <template if="{{loadProgress < 100}}">
         <lmv-progress-bar progress="{{loadProgress}}"></lmv-progress-bar>
       </template>
+      <template if="{{hasAnimation}}">
+        <lmv-animation-view />
+      </template>
     </div>
 
+    <!-- viewer canvas -->
     <div>
       <lmv-obj-context-menu></lmv-obj-context-menu>
       <content></content>
