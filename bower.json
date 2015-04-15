@@ -2,8 +2,7 @@
   "name": "lmv-gui",
   "version": "0.0.0",
   "dependencies": {
-    "polymer": "Polymer/polymer#^0.5.4",
-    "is-mobile": "~0.1.0"
+    "polymer": "Polymer/polymer#^0.5.4"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^2.2.3"
