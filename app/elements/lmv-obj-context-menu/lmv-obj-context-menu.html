@@ -5,12 +5,12 @@
     <link rel="stylesheet" href="lmv-obj-context-menu.css">
     <lmv-context-menu id="menu" on-open="{{onOpen}}">
       <template if="{{hasSelection}}">
-        <div class="context-item" on-click="{{isolate}}">Isolate</div>
-        <div class="context-item" on-click="{{hide}}">Hide</div>
-        <div class="context-item line" on-click="{{focus}}">Focus</div>
-        <div class="context-item" on-click="{{clearSelection}}">Clear Selection</div>
+        <div class="item" on-click="{{isolate}}">Isolate</div>
+        <div class="item" on-click="{{hide}}">Hide</div>
+        <div class="item line" on-click="{{focus}}">Focus</div>
+        <div class="item" on-click="{{clearSelection}}">Clear Selection</div>
       </template>
-      <div class="context-item" on-click="{{showAll}}">Show All</div>
+      <div class="item" on-click="{{showAll}}">Show All</div>
     </lmv-context-menu>
   </template>
   <script>

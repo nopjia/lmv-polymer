@@ -1,35 +1,15 @@
 @import "../elements";
 
 :host {
-  z-index: 10;
-  background-color: $color-bg;
-
-  min-width: 120px;
   position: fixed;
   display: none;
+  z-index: 10;
+
+  // can be override by others
+  background-color: $color-bg;
+  min-width: 120px;
 }
 
 :host([show]) {
   display: block;
-}
-
-polyfill-next-selector { content: ':host .context-item'; }
-::content .context-item {
-  display: block;
-  margin: 0;
-  padding: 5px;
-  border-bottom: 1px solid $color-bg-darken;
-  cursor: pointer;
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &:hover {
-    background-color: $color-bg-hover;
-  }
-
-  &.line {
-    border-bottom: 1px solid $color-1;
-  }
 }

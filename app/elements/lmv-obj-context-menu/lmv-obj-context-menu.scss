@@ -1,3 +1,25 @@
-:host {
+@import "../_elements";
+
+lmv-context-menu {
+  background-color: $color-bg;
+  min-width: 120px;
+}
+
+.item {
   display: block;
+  padding: 5px;
+  border-bottom: 1px solid $color-bg-darken;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-bg-hover;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &.line {
+    border-bottom: 1px solid $color-1;
+  }
 }
