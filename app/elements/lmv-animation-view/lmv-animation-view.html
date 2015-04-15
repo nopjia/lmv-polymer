@@ -41,14 +41,8 @@
           viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
             var animations = viewer.impl.model.myData.animations;
             if (animations) {
-              // init animation
-              self.animator = viewer.impl.keyFrameAnimator = new Autodesk.Viewing.Private.KeyFrameAnimator(viewer.impl, animations.duration);
-              for (var a in animations.animations) {
-                self.animator.add(animations.animations[a]);
-              }
-              self.animator.goto(0);
-
-              self.$.timeline.max = animations.duration;
+              self.animator = viewer.impl.keyFrameAnimator;
+              self.$.timeline.max = self.animator.duration;
               self.timeVal = 0;
               self.playing = false;
               self.style.display = "flex";
