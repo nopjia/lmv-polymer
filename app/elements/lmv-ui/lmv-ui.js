@@ -1,4 +1,14 @@
 (function () {
+
+  function insertAfter(newElement, targetElement) {
+    var parent = targetElement.parentNode;
+    if(parent.lastchild === targetElement) {
+      parent.appendChild(newElement);
+    } else {
+      parent.insertBefore(newElement, targetElement.nextSibling);
+    }
+  }
+
   Polymer({
     showleft: true,
     showright: false,
@@ -8,7 +18,6 @@
     // initialize
 
     domReady: function() {
-
       var self = this;
 
       // setup panels drag drop
@@ -28,6 +37,7 @@
         var panel = self.$.main.querySelector("lmv-panel[header='"+name+"']");
         var parent = this;
 
+        // increment count, book-keeping
         if (parent === panel.parentNode) {
           // same parent, dont increment count
         }
@@ -42,7 +52,22 @@
           console.log("ERROR: invalid panel parent");
         }
 
-        parent.appendChild(panel);
+        // rearrange panels
+        var inserted = false;
+        for (var i=0; i<parent.children.length; i++) {
+          var child = parent.children[i];
+          if (e.clientY > child.offsetTop && e.clientY < child.offsetTop+child.offsetHeight) {
+            if (e.clientY < child.offsetTop+child.offsetHeight/2)
+              parent.insertBefore(panel, child);
+            else
+              insertAfter(panel, child);
+            inserted = true;
+            break;
+          }
+        }
+        if (!inserted) {
+          parent.appendChild(panel);
+        }
 
         e.preventDefault();
         return false;
