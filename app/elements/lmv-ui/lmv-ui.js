@@ -12,8 +12,7 @@
   Polymer({
     showleft: true,
     showright: false,
-    rightPanelCount: 0,
-
+    rightPanelCount: 0, // only for showing the x close button
 
     // initialize
 
@@ -37,21 +36,6 @@
         var panel = self.$.main.querySelector("lmv-panel[header='"+name+"']");
         var parent = this;
 
-        // increment count, book-keeping
-        if (parent === panel.parentNode) {
-          // same parent, dont increment count
-        }
-        else if (parent === self.$["right-content"]) {
-          self.rightPanelCount++;
-        }
-        else if (parent === self.$["left-content"]) {
-          self.rightPanelCount--;
-          self.showright = !!self.rightPanelCount;
-        }
-        else {
-          console.log("ERROR: invalid panel parent");
-        }
-
         // rearrange panels
         var inserted = false;
         for (var i=0; i<parent.children.length; i++) {
@@ -69,6 +53,9 @@
           parent.appendChild(panel);
         }
 
+        // update count
+        self.rightPanelCount = self.$["right-content"].children.length;
+
         e.preventDefault();
         return false;
       };
@@ -80,7 +67,7 @@
         this.showright = true;
       };
       this.ondragend = function() {
-        this.showright = !!this.rightPanelCount || false;
+        this.showright = !!this.$["right-content"].children.length || false;
       };
 
 
