@@ -25,12 +25,24 @@
 
       var onDrop = function(e) {
         var name = e.dataTransfer.getData("text/plain");
-        var elem = self.$.main.querySelector("lmv-panel[header='"+name+"']");
+        var panel = self.$.main.querySelector("lmv-panel[header='"+name+"']");
+        var parent = this;
 
-        if (this === self.$["left-content"])
-          self.movePanelToLeft(elem);
-        else
-          self.movePanelToRight(elem);
+        if (parent === panel.parentNode) {
+          // same parent, dont increment count
+        }
+        else if (parent === self.$["right-content"]) {
+          self.rightPanelCount++;
+        }
+        else if (parent === self.$["left-content"]) {
+          self.rightPanelCount--;
+          self.showright = !!self.rightPanelCount;
+        }
+        else {
+          console.log("ERROR: invalid panel parent");
+        }
+
+        parent.appendChild(panel);
 
         e.preventDefault();
         return false;
@@ -140,17 +152,6 @@
       }
       self.showright = false;
       self.rightPanelCount = 0;
-    },
-    movePanelToRight: function(panel) {
-      this.$["right-content"].appendChild(panel);
-      this.rightPanelCount++;
-    },
-    movePanelToLeft: function(panel) {
-      if (panel.parentNode === this.$["right-content"]) {
-        this.rightPanelCount--;
-        this.showright = !!this.rightPanelCount;
-      }
-      this.$["left-content"].appendChild(panel);
     }
   });
 })();   // closure
