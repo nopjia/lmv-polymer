@@ -88,28 +88,25 @@
       // hook up to viewer events
 
       // load progress
-      self.viewer.addEventListener(Autodesk.Viewing.PROGRESS_UPDATE_EVENT, function(event) {
+      this.viewer.addEventListener(Autodesk.Viewing.PROGRESS_UPDATE_EVENT, function(event) {
         self.loadProgress = event.percent;
       });
 
       // init 2D/3D nav tool
       // TODO_NOP: should this be handled by viewer?
-      self.viewer.addEventListener(Autodesk.Viewing.MODEL_ROOT_LOADED_EVENT, function() {
+      this.viewer.addEventListener(Autodesk.Viewing.MODEL_ROOT_LOADED_EVENT, function() {
         self.viewer.setDefaultNavigationTool(
           self.viewer.navigation.getIs2D() ? "pan" : "orbit"
         );
       });
 
       // property db loaded
-      self.viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, function() {
+      this.viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, function() {
         self.docName = self.viewerDom.doc ? self.viewerDom.doc.getRootItem().children[0].name : undefined;
       });
 
       // geometry complete
-      self.viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
-        // check animation
-        self.hasAnimation = !!self.viewer.impl.model.myData.animations;
-
+      this.viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
         // set render stats
         self.renderStats = [];
         self.renderStats.push(["Meshes",          self.viewer.impl.modelQueue().getGeometryList().geoms.length]);

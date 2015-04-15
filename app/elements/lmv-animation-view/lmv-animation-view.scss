@@ -10,6 +10,9 @@ $height: 2em;
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
+
+  display: none;  // initially hidden
+                  // TODO_NOP: not sure i like this. breaks polymer declarative design
 }
 
 lmv-button {

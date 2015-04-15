@@ -19,7 +19,6 @@
 
     var extensions = config3d.extensions || [];
     extensions.push("Autodesk.Viewing.Collaboration");
-    extensions.push("Autodesk.Fusion360.Animation");
     // extensions.push("Autodesk.Viewing.RemoteControl");
     // extensions.push("Autodesk.Viewing.FusionOrbit");
     // extensions.push("Autodesk.Section");

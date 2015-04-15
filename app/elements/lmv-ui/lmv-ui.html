@@ -69,9 +69,7 @@
       <template if="{{loadProgress < 100}}">
         <lmv-progress-bar progress="{{loadProgress}}"></lmv-progress-bar>
       </template>
-      <template if="{{hasAnimation}}">
-        <lmv-animation-view />
-      </template>
+      <lmv-animation-view></lmv-animation-view>
     </div>
 
     <!-- viewer canvas -->
