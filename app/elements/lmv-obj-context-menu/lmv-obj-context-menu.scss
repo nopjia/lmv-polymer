@@ -1,25 +1,15 @@
 @import "../_elements";
 
+$item-size: 60px;
+
 lmv-context-menu {
-  background-color: $color-bg;
-  min-width: 120px;
+  background-color: transparent;
+  width: auto;
 }
 
-.item {
-  display: block;
-  padding: 5px;
-  border-bottom: 1px solid $color-bg-darken;
-  cursor: pointer;
-
-  &:hover {
-    background-color: $color-bg-hover;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-  }
-
-  &.line {
-    border-bottom: 1px solid $color-1;
-  }
+lmv-button {
+  display: inline-block;
+  width: $item-size;
+  height: $item-size;
+  vertical-align: bottom; // TODO_NOP: not sure why
 }

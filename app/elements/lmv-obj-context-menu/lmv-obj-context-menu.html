@@ -5,17 +5,27 @@
     <link rel="stylesheet" href="lmv-obj-context-menu.css">
     <lmv-context-menu id="menu" on-open="{{onOpen}}">
       <template if="{{hasSelection}}">
-        <div class="item" on-click="{{isolate}}">Isolate</div>
-        <div class="item" on-click="{{hide}}">Hide</div>
-        <div class="item line" on-click="{{focus}}">Focus</div>
-        <div class="item" on-click="{{clearSelection}}">Clear Selection</div>
+        <lmv-button
+          icon="images/iconmonstr-eye-7-icon-64.png"
+          label="Isolate"
+          on-click="{{isolate}}">
+        </lmv-button><lmv-button
+          icon="images/iconmonstr-eye-7-icon-64.png"
+          label="Hide"
+          on-click="{{hide}}">
+        </lmv-button><lmv-button
+          icon="images/iconmonstr-crosshair-6-icon-64.png"
+          label="Focus"
+          on-click="{{focus}}">
+        </lmv-button></template><template if="{{hasHidden}}"><lmv-button
+          label="Show All"
+          on-click="{{showAll}}">
+        </lmv-button>
       </template>
-      <div class="item" on-click="{{showAll}}">Show All</div>
     </lmv-context-menu>
   </template>
   <script>
     (function () {
-      var _viewer;
       Polymer({
         domReady: function() {
           // redirect menu target
@@ -23,26 +33,27 @@
 
           // grab viewer reference
           var viewerDom = document.querySelector("lmv-viewer");
-          if (viewerDom) _viewer = viewerDom.viewer;
+          if (viewerDom) this.viewer = viewerDom.viewer;
         },
         onOpen: function() {
-          this.hasSelection = (_viewer && _viewer.getSelectionCount() > 0);
+          this.hasSelection = (this.viewer && this.viewer.getSelectionCount() > 0);
+          this.hasHidden = (this.viewer && (this.viewer.impl.visibilityManager.isolatedNodes.length || this.viewer.impl.visibilityManager.hiddenNodes.length));
         },
         isolate: function() {
-          _viewer.isolate(_viewer.getSelection());
+          this.viewer.isolate(this.viewer.getSelection());
         },
         hide: function() {
-          _viewer.hide(_viewer.getSelection());
-          _viewer.clearSelection();
+          this.viewer.hide(this.viewer.getSelection());
+          this.viewer.clearSelection();
         },
         focus: function() {
-          _viewer.fitToView(_viewer.getSelection());
+          this.viewer.fitToView(this.viewer.getSelection());
         },
         showAll: function() {
-          _viewer.showAll();
+          this.viewer.showAll();
         },
         clearSelection: function() {
-          _viewer.clearSelection();
+          this.viewer.clearSelection();
         },
       });
     })();
