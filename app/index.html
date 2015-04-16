@@ -8,6 +8,9 @@
   <title>LMV Polymer</title>
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
+  <!-- preload Google Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
   <!-- build:css styles/main.css -->
   <link rel="stylesheet" href="styles/index.css">
   <!-- endbuild-->
@@ -16,6 +19,10 @@
   <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
   <!-- endbuild -->
 
+  <!-- preload minified Viewer -->
+  <script type="text/javascript" src="http://lmv.autodesk.com/viewers-dev/latest/adsk_three.min.js"></script>
+  <script type="text/javascript" src="http://lmv.autodesk.com/viewers-dev/latest/viewer3D.min.js"></script>
+
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endreplace-->
@@ -23,7 +30,7 @@
 
 <body unresolved fullbleed layout vertical>
   <template is="auto-binding" id="app">
-    <lmv-ui showleft="true" showright="false">
+    <lmv-ui showleft="false" showright="false">
       <lmv-viewer url="{{url}}"></lmv-viewer>
     </lmv-ui>
   </template>
