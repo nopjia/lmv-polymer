@@ -136,7 +136,7 @@ gulp.task("html", function () {
 gulp.task("vulcanize", function () {
   var DEST_DIR = "dist/elements";
 
-  return gulp.src("dist/elements/elements.vulcanized.html")
+  var vulcanize = gulp.src("dist/elements/elements.vulcanized.html")
     .pipe($.vulcanize({
       dest: DEST_DIR,
       strip: true,
@@ -144,6 +144,14 @@ gulp.task("vulcanize", function () {
     }))
     .pipe(gulp.dest(DEST_DIR))
     .pipe($.size({title: "vulcanize"}));
+
+  // clean up unnecessary elements files
+  del([
+    "dist/elements/*",
+    "!dist/elements/elements.vulcanized.html"
+  ]);
+
+  return vulcanize;
 });
 
 // Clean Output Directory
