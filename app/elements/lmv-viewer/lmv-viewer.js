@@ -46,7 +46,7 @@
 
   Polymer("lmv-viewer", {
     url: undefined,     // url to load
-    svfUrl: undefined,  // url currently loaded in viewer, cached
+    svfUrl: undefined,  // url of svf loaded in viewer, to check if already loaded
 
     ready: function() {
       var self = this;
@@ -59,6 +59,10 @@
 
       // hardcode settings
       this.viewer.prefs.set("clickToSetCOI", false);
+    },
+
+    urlChanged: function() {
+      this.loadUrl(this.url);
     },
 
     /**
