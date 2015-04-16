@@ -9,12 +9,17 @@ lmv-context-menu {
 
 #wrapper {
   margin-left: -50%;
+  width: 100%;
+  background-color: $color-bg;
+  white-space: nowrap;
 }
 
 lmv-button {
   display: inline-block;
   width: $item-size;
   height: $item-size;
-  vertical-align: bottom; // TODO_NOP: not sure why
+  vertical-align: bottom; // TODO_NOP: random css bug
+
   font-size: 12px;
+  background-color: transparent;
 }
