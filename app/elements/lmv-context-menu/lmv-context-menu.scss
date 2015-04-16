@@ -7,7 +7,7 @@
 
   // can be override by others
   background-color: $color-bg;
-  min-width: 120px;
+  width: 120px;
 }
 
 :host([show]) {

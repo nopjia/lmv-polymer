@@ -19,7 +19,7 @@
         if (Math.abs(_lastX-x) < _DELTA_EPS && Math.abs(_lastY-y) < _DELTA_EPS) {
           this.show = true;
           this.style.right = "calc( 100% - " + x + "px )";
-          this.style.top = y + "px";
+          this.style.bottom = "calc( 100% - " + y + "px )";
           this.fire("open");
         }
       }

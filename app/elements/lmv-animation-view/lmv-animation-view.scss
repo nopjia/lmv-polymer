@@ -3,7 +3,7 @@
 $height: 2em;
 
 :host {
-  height: 2em;
+  height: $height;
 
   // flex
   display: flex;
@@ -16,8 +16,8 @@ $height: 2em;
 }
 
 lmv-button {
-  width: 2em;
-  height: 2em;
+  width: $height;
+  height: $height;
 }
 
 #timeline {
