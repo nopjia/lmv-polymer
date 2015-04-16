@@ -7,9 +7,14 @@ lmv-context-menu {
   width: auto;
 }
 
+#wrapper {
+  margin-left: -50%;
+}
+
 lmv-button {
   display: inline-block;
   width: $item-size;
   height: $item-size;
   vertical-align: bottom; // TODO_NOP: not sure why
+  font-size: 12px;
 }

@@ -90,14 +90,14 @@ $phone-width: 550px;
       display: block;
     }
 
-    #fold-button::shadow #icon {
-      transition: transform $anim-duration;
-    }
+    // #fold-button::shadow #icon {
+    //   transition: transform $anim-duration;
+    // }
   }
 }
-#main[collapse-left] #fold-button::shadow #icon {
-  transform: rotate(180deg);
-}
+// #main[collapse-left] #fold-button::shadow #icon {
+//   transform: rotate(180deg);
+// }
 
 
 // bottom
