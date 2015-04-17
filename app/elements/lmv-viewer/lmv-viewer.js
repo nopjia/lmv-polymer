@@ -32,7 +32,8 @@
     var options = {};
     // options.svf = svf;
     // options.documentId = documentId;
-    options.env = "Local";   // TODO_NOP: how?
+    // options.env = "Local";   // TODO_NOP: how?
+    options.shouldInitializeAuth = true;
 
     var viewer = new Autodesk.Viewing.Viewer3D(parentDom, config3d);
 
@@ -47,10 +48,12 @@
   Polymer("lmv-viewer", {
     url: undefined,     // url to load
     svfUrl: undefined,  // url of svf loaded in viewer, to check if already loaded
+    initialized: false,
 
     ready: function() {
       var self = this;
       this.viewer = initializeViewer(this.shadowRoot, function() {
+        self.initialized = true;
         if (self.url)
           self.loadUrl(self.url);
         else
@@ -70,8 +73,17 @@
      * Performs http request to check Content-Type
      */
     loadUrl: function(url) {
-      var self = this;
+      if (!this.initialized) {
+        console.log("Viewer not yet initialized. URL will load once it is.");
+        return;
+      }
 
+      if (url.indexOf("urn:") === 0) {
+        this.loadDocument(url);
+        return;
+      }
+
+      var self = this;
       var req = new XMLHttpRequest();
       req.onerror = function() {
         console.log("Error: request error on " + url);
