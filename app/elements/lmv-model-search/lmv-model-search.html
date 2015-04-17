@@ -10,8 +10,6 @@
   </template>
   <script>
     (function () {
-      var _viewer;
-
       Polymer({
         isSearching: false,
         query: undefined,
@@ -22,7 +20,7 @@
 
         domReady: function() {
           var viewerDom = document.querySelector("lmv-viewer");
-          if (viewerDom) _viewer = viewerDom.viewer;
+          if (viewerDom) this.viewer = viewerDom.viewer;
 
           this.doSearch = this.doSearch.bind(this);
         },
@@ -36,7 +34,7 @@
         },
         search: function(str) {
           if (str === "") {
-            _viewer.isolate();
+            this.viewer.isolate();
             this.prevQuery = str;
             return;
           }
@@ -46,8 +44,8 @@
           // start search
           this.isSearching = true;
           var self = this;
-          _viewer.search(str, function(resultIds) {
-            _viewer.isolateById(resultIds);
+          this.viewer.search(str, function(resultIds) {
+            self.viewer.isolateById(resultIds);
             self.isSearching = false;
             self.prevQuery = str;
           });

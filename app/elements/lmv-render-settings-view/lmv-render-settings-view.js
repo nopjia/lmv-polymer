@@ -1,21 +1,17 @@
 (function () {
-  var _viewer;
-
   Polymer({
     domReady: function() {
       // grab viewer reference
       var viewerDom = document.querySelector("lmv-viewer");
-      if (viewerDom) _viewer = viewerDom.viewer;
-
-      // TODO_NOP: we do this on impl.setModel, but currently no event
+      if (viewerDom) this.viewer = viewerDom.viewer;
 
       var self = this;
-      if (_viewer) _viewer.addEventListener(Autodesk.Viewing.MODEL_ROOT_LOADED_EVENT, function() {
-        self.aa = _viewer.prefs.antialiasing;
-        self.ssao = _viewer.prefs.ambientShadows;
-        self.shadows = _viewer.prefs.groundShadow;
-        self.reflections = _viewer.prefs.groundReflection;
-        self.cel = _viewer.prefs.celShaded;
+      if (this.viewer) this.viewer.addEventListener(Autodesk.Viewing.MODEL_ROOT_LOADED_EVENT, function() {
+        self.aa = self.viewer.prefs.antialiasing;
+        self.ssao = self.viewer.prefs.ambientShadows;
+        self.shadows = self.viewer.prefs.groundShadow;
+        self.reflections = self.viewer.prefs.groundReflection;
+        self.cel = self.viewer.prefs.celShaded;
 
         var avp = Autodesk.Viewing.Private;
         self.envlist = [];
@@ -24,47 +20,50 @@
             value: i, label: avp.LightPresets[i].name
           });
         }
-        self.env = _viewer.impl.currentLightPreset();
+        self.env = self.viewer.impl.currentLightPreset();
 
-        self.exposure = _viewer.impl.renderer().getExposureBias();
-        self.fov = Math.round(_viewer.getFOV());
-        self.ortho = !_viewer.getCamera().isPerspective;
+        self.exposure = self.viewer.impl.renderer().getExposureBias();
+        self.fov = Math.round(self.viewer.getFOV());
+        self.ortho = !self.viewer.getCamera().isPerspective;
         self.explode = 0.0;
       });
     },
 
     envChanged: function() {
-      _viewer.setLightPreset(this.env);
+      if (this.env !== this.viewer.impl.currentLightPreset())
+        this.viewer.setLightPreset(this.env);
     },
     aaChanged: function() {
-      _viewer.setQualityLevel(this.ssao, this.aa);
+      this.viewer.setQualityLevel(this.ssao, this.aa);
     },
     ssaoChanged: function() {
-      _viewer.setQualityLevel(this.ssao, this.aa);
+      this.cel = this.cel && !this.ssao;
+      this.viewer.setQualityLevel(this.ssao, this.aa);
     },
     shadowsChanged: function() {
-      _viewer.setGroundShadow(this.shadows);
+      this.viewer.setGroundShadow(this.shadows);
     },
     reflectionsChanged: function() {
-      _viewer.setGroundReflection(this.reflections);
+      this.viewer.setGroundReflection(this.reflections);
     },
     celChanged: function() {
-      _viewer.impl.toggleCelShading(this.cel);  // TODO_NOP: messes with ssao settings
+      this.ssao = !this.cel;
+      this.viewer.impl.toggleCelShading(this.cel);
     },
     exposureChanged: function() {
-      _viewer.impl.setTonemapExposureBias(this.exposure, 0);
+      this.viewer.impl.setTonemapExposureBias(this.exposure, 0);
     },
     fovChanged: function() {
-      _viewer.setFOV(this.fov);
+      this.viewer.setFOV(this.fov);
     },
     orthoChanged: function() {
       if (this.ortho)
-        _viewer.navigation.toOrthographic();
+        this.viewer.navigation.toOrthographic();
       else
-        _viewer.navigation.toPerspective();
+        this.viewer.navigation.toPerspective();
     },
     explodeChanged: function() {
-      _viewer.explode(this.explode);
+      this.viewer.explode(this.explode);
     }
 
   });
