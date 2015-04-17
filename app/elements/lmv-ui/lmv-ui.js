@@ -108,11 +108,14 @@
       // geometry complete
       this.viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function() {
         // set render stats
+        var geomList = self.viewer.impl.modelQueue().getGeometryList();
         self.renderStats = [];
-        self.renderStats.push(["Meshes",          self.viewer.impl.modelQueue().getGeometryList().geoms.length]);
+        self.renderStats.push(["Meshes",          geomList.geoms.length]);
         self.renderStats.push(["Fragments",       self.viewer.impl.modelQueue().getFragmentList().getCount()]);
-        self.renderStats.push(["Instanced Polys", self.viewer.impl.modelQueue().getGeometryList().instancePolyCount.toLocaleString()]);
-        self.renderStats.push(["Geometry Polys",  self.viewer.impl.modelQueue().getGeometryList().geomPolyCount.toLocaleString()]);
+        self.renderStats.push(["Instanced Polys", geomList.instancePolyCount.toLocaleString()]);
+        self.renderStats.push(["Geometry Polys",  geomList.geomPolyCount.toLocaleString()]);
+        self.renderStats.push(["Geometry Size",   (geomList.geomMemory/(1024*1024)).toFixed(2) + " MB"]);
+        self.renderStats.push(["Load time",       (self.viewer.impl.svfloader.loadTime/1000).toFixed(2) + " s"]);
       });
     },
 
