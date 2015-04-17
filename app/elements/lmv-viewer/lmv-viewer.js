@@ -17,8 +17,10 @@
       config3d.docStructureConfig = JSON.parse(docStructureConfig);
     }
 
+    // NOTE_NOP: avoid loading extensions upfront
+    // ui elements should be responsible for lazy-loading their own extensions
     var extensions = config3d.extensions || [];
-    extensions.push("Autodesk.Viewing.Collaboration");
+    // extensions.push("Autodesk.Viewing.Collaboration");
     // extensions.push("Autodesk.Viewing.RemoteControl");
     // extensions.push("Autodesk.Viewing.FusionOrbit");
     // extensions.push("Autodesk.Section");
