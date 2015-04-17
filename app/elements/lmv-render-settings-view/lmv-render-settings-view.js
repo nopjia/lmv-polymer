@@ -34,7 +34,8 @@
     },
 
     envChanged: function() {
-      _viewer.setLightPreset(this.env);
+      if (this.env !== _viewer.impl.currentLightPreset())
+        _viewer.setLightPreset(this.env);
     },
     aaChanged: function() {
       _viewer.setQualityLevel(this.ssao, this.aa);
