@@ -127,6 +127,8 @@
       _viewerDom = document.querySelector("lmv-viewer");
       if (_viewerDom) _viewer = _viewerDom.viewer;
 
+      _viewer.loadExtension("Autodesk.Viewing.Collaboration");
+
       // TODO_NOP: arbitrary session id for now
       var sessionId = window.location.origin + "|" + _viewerDom.url;
 
