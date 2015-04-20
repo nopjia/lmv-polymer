@@ -1,0 +1,59 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="lmv-remote-control-view" attributes="">
+  <template>
+    <style type="text/css">
+      :host, lmv-button {
+        display: block;
+      }
+      .qrcode {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 10px;
+      }
+    </style>
+    <template if="{{started && !connected}}">
+      <a href="{{remoteUrl}}" target="_blank"><img class="qrcode" src="{{remoteImgUrl}}"></a>
+    </template>
+    <lmv-button label="{{started ? 'Disconnect' : 'Connect'}}" on-click="{{toggleConnect}}"></lmv-button>
+  </template>
+  <script>
+    (function () {
+      Polymer({
+        started: false,
+        connected: false,
+        rc: undefined,
+
+        toggleConnect: function() {
+          // lazy load extension
+          if (!this.rc) {
+            var viewer = document.querySelector("lmv-viewer").viewer;
+            viewer.loadExtension("Autodesk.Viewing.RemoteControl");
+            this.rc = viewer.getExtension("Autodesk.Viewing.RemoteControl");
+          }
+
+          // call extension public API connect/disconnect
+          if (!this.started) {
+            var self = this;
+            this.rc.connect(function(url) {
+              self.remoteUrl = url;
+              self.remoteImgUrl = "http://chart.googleapis.com/chart?cht=qr&chs=200x200&choe=UTF-8&chld=H|0&chl=" + escape(url);
+              self.started = true;
+
+              var onConnect = function() {
+                self.connected = true;
+                self.rc.p2p.removeEventListener(onConnect);
+              };
+              self.rc.p2p.addEventListener("dataChannelAdded", onConnect);
+            });
+          }
+          else {
+            this.rc.disconnect();
+            this.started = false;
+            this.connected = false;
+          }
+        }
+      });
+    })();
+  </script>
+</polymer-element>
