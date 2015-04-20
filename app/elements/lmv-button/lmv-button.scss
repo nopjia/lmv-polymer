@@ -1,6 +1,7 @@
 @import "../elements";
 
 :host {
+  display: inline-block;
   position: relative;
   cursor: pointer;
   background-color: $color-bg-darken;

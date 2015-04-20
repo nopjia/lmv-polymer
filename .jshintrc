@@ -18,6 +18,6 @@
     "Polymer": true,
     "Platform": true,
     "Autodesk": true,
-    "Hammer": true
+    "escape": true
   }
 }
