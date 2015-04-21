@@ -1,0 +1,143 @@
+/*
+@font-face {
+	font-family: 'icomoon';
+	src:url('icomoon.eot?-2zswbb');
+	src:url('icomoon.eot?#iefix-2zswbb') format('embedded-opentype'),
+		url('icomoon.woff?-2zswbb') format('woff'),
+		url('icomoon.ttf?-2zswbb') format('truetype'),
+		url('icomoon.svg?-2zswbb#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+*/
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-clock:before {
+	content: "\e60e";
+}
+
+.icon-document:before {
+	content: "\e60f";
+}
+
+.icon-help:before {
+	content: "\e610";
+}
+
+.icon-info:before {
+	content: "\e611";
+}
+
+.icon-people:before {
+	content: "\e612";
+}
+
+.icon-person:before {
+	content: "\e613";
+}
+
+.icon-picture:before {
+	content: "\e614";
+}
+
+.icon-pictures:before {
+	content: "\e615";
+}
+
+.icon-screen:before {
+	content: "\e616";
+}
+
+.icon-heart:before {
+	content: "\e617";
+}
+
+.icon-star:before {
+	content: "\e618";
+}
+
+.icon-gear:before {
+	content: "\e619";
+}
+
+.icon-magnify:before {
+	content: "\e61a";
+}
+
+.icon-zoom-in:before {
+	content: "\e61b";
+}
+
+.icon-zoom-out:before {
+	content: "\e61c";
+}
+
+.icon-no-eye:before {
+	content: "\e60a";
+}
+
+.icon-eye:before {
+	content: "\e60b";
+}
+
+.icon-crosshair:before {
+	content: "\e60c";
+}
+
+.icon-refresh:before {
+	content: "\e60d";
+}
+
+.icon-rewind:before {
+	content: "\e608";
+}
+
+.icon-forward:before {
+	content: "\e609";
+}
+
+.icon-pause:before {
+	content: "\e607";
+}
+
+.icon-play:before {
+	content: "\e606";
+}
+
+.icon-fullscreen:before {
+	content: "\e605";
+}
+
+.icon-photo:before {
+	content: "\e604";
+}
+
+.icon-menu:before {
+	content: "\e603";
+}
+
+.icon-check:before {
+	content: "\e602";
+}
+
+.icon-x:before {
+	content: "\e601";
+}
+
+.icon-arrow:before {
+	content: "\e600";
+}
+

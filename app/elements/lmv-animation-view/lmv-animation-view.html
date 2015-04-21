@@ -4,13 +4,13 @@
   <template>
     <link rel="stylesheet" href="lmv-animation-view.css">
     <lmv-button id="prev-button"
-      icon="images/iconmonstr-rewind-5-icon-64.png"
+      image="images/iconmonstr-rewind-5-icon-64.png"
       on-click="{{prev}}"></lmv-button>
     <lmv-button id="play-button"
       icon="{{playing ? 'images/iconmonstr-pause-icon-64.png' : 'images/iconmonstr-arrow-37-icon-64.png'}}"
       on-click="{{play}}"></lmv-button>
     <lmv-button id="next-button"
-      icon="images/fast-forward-5-icon-64.png"
+      image="images/fast-forward-5-icon-64.png"
       on-click="{{next}}"></lmv-button>
     <input id="timeline" type="range"
       value="{{timeVal}}"

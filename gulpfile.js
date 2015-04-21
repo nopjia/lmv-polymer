@@ -101,9 +101,15 @@ gulp.task("copy", function () {
 
 // Copy Web Fonts To Dist
 gulp.task("fonts", function () {
-  return gulp.src(["app/fonts/**"])
-    .pipe(gulp.dest("dist/fonts"))
-    .pipe($.size({title: "fonts"}));
+  // fonts folder
+  var fonts = gulp.src(["app/fonts/**"])
+    .pipe(gulp.dest("dist/fonts"));
+
+  // element fonts
+  var elements = gulp.src(["app/elements/**/*.{woff,ttf,eot,svg}"])
+    .pipe(gulp.dest("dist/elements"));
+
+  return merge(fonts, elements).pipe($.size({title: "fonts"}));
 });
 
 // Scan Your HTML For Assets & Optimize Them
@@ -147,8 +153,8 @@ gulp.task("vulcanize", function () {
 
   // clean up unnecessary elements files
   del([
-    "dist/elements/*",
-    "!dist/elements/elements.vulcanized.html"
+    "dist/elements/**/*.{html,css,js}",
+    "!dist/elements/elements.vulcanized.html",
   ]);
 
   return vulcanize;

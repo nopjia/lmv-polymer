@@ -34,8 +34,7 @@
     var options = {};
     // options.svf = svf;
     // options.documentId = documentId;
-    // options.env = "Local";   // TODO_NOP: how?
-    options.shouldInitializeAuth = true;
+    options.env = "Local";   // TODO_NOP: how?
 
     var viewer = new Autodesk.Viewing.Viewer3D(parentDom, config3d);
 

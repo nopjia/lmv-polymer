@@ -1,0 +1,29 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!-- Polymer Bug: @font-face needs to be loaded outside <polymer-element> -->
+<!-- http://stackoverflow.com/questions/27675534/font-face-not-working-in-polymer-web-components -->
+<style type="text/css">
+@font-face {
+  font-family: 'icomoon';
+  src:url('icomoon.eot?-2zswbb');
+  src:url('icomoon.eot?#iefix-2zswbb') format('embedded-opentype'),
+    url('icomoon.woff?-2zswbb') format('woff'),
+    url('icomoon.ttf?-2zswbb') format('truetype'),
+    url('icomoon.svg?-2zswbb#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+</style>
+
+<polymer-element name="lmv-icon" attributes="icon size" noscript>
+  <template>
+    <link rel="stylesheet" type="text/css" href="icomoon.css">
+    <style type="text/css">
+    :host {
+      display: inline-block;
+      vertical-align: top;
+    }
+    </style>
+    <div class="icon-{{icon}}"></div>
+  </template>
+</polymer-element>

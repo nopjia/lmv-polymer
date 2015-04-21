@@ -25,15 +25,20 @@
   align-items: stretch;
 }
 
-#icon {
+#image {
   flex-grow: 1;
 
   background: center no-repeat;
   background-size: 80%;
 }
 
-:host([label]) #icon {
+:host([label]) #image {
   background-size: 50%;
+}
+
+// TODO_NOP: style icon for button
+#icon {
+  // flex-grow: 1;
 }
 
 #label {
