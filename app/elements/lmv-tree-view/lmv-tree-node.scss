@@ -1,60 +1,54 @@
 @import "../elements";
 
-$icon-size: 20px;
+$indent-size: 15px;
 
 :host {
   // background-color: black;
   // border: 1px solid white;
   user-select: none;
-};
 
-.expand-icon {
-  width: $icon-size;
-  height: $icon-size;
+  #content {
+    display: none;
+    padding-left: $indent-size;
 
-  // pointer-events: none;
-  cursor: auto;
+    &[expanded=true] {
+      display: block;
+    }
+  }
 
-  visibility: hidden;
-  background: url("../../images/arrow.png") center no-repeat;
-  background-size: 50%;
+  #line {
+    margin-top: .4em;
+  }
 
-  &[expanded=true], &[expanded=false] {
-    visibility: visible;
+  #label {
     cursor: pointer;
-    transition: transform $color-hover-duration;
-  }
-  &[expanded=true] {
-    transform: rotate(90deg);
-  }
-}
 
-#tree-node-wrap {
-  &, tbody, tr {
-    display: block;
-    width: 100%;
-  }
-}
+    &:hover, &[selected=true] {
+      text-decoration: underline;
+      color: $color-2;
+    }
 
-#label {
-  cursor: pointer;
-  vertical-align: middle;
-
-  &:hover, &[selected=true] {
-    text-decoration: underline;
-    color: $color-2;
+    &[grayed=true] {
+      color: $color-3;
+    }
   }
 
-  &[grayed=true] {
-    color: $color-3;
-  }
-}
+  .expand-icon {
+    font-size: 1em;
 
-#content {
-  display: none;
-  padding-left: $icon-size;
+    // pointer-events: none;
+    cursor: auto;
 
-  &[expanded=true] {
-    display: block;
+    visibility: hidden;
+
+    &[expanded=true], &[expanded=false] {
+      visibility: visible;
+      cursor: pointer;
+      transition: transform $color-hover-duration;
+    }
+    &[expanded=true] {
+      transform: rotate(90deg);
+    }
   }
+
 }

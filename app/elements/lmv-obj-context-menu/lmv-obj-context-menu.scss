@@ -3,29 +3,33 @@
 $item-size: 60px;
 $item-icon-size: 30px;
 
-lmv-context-menu {
-  background-color: transparent;
-  width: auto;
-}
+:host {
 
-#wrapper {
-  margin-left: -50%;
-  width: 100%;
-  background-color: $color-bg;
-  white-space: nowrap;
-}
-
-lmv-button {
-  display: inline-block;
-  width: $item-size;
-  height: $item-size;
-  vertical-align: bottom; // TODO_NOP: random css bug
-
-  font-size: 12px;
-  background-color: transparent;
-
-  lmv-icon {
-    display: block;
-    font-size: $item-icon-size;
+  lmv-context-menu {
+    background-color: transparent;
+    width: auto;
   }
+
+  #wrapper {
+    margin-left: -50%;
+    width: 100%;
+    background-color: $color-bg;
+    white-space: nowrap;
+  }
+
+  lmv-button {
+    display: inline-block;
+    width: $item-size;
+    height: $item-size;
+    vertical-align: bottom; // TODO_NOP: random css bug
+
+    font-size: 12px;
+    background-color: transparent;
+
+    lmv-icon {
+      display: block;
+      font-size: $item-icon-size;
+    }
+  }
+
 }

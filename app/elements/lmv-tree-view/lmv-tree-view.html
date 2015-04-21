@@ -4,22 +4,23 @@
   <template>
     <link rel="stylesheet" href="lmv-tree-node.css">
 
-    <table id="tree-node-wrap">
-      <tr>
-        <td class="expand-icon" expanded="{{expanded}}" on-click="{{toggleExpand}}"></td>
-        <td id="label"
-          selected="{{selected}}"
-          grayed="{{grayed}}"
-          on-click="{{onNodeClick}}"
-          on-dblclick="{{onNodeDoubleClick}}">
-          {{label}}</td>
-      </tr>
-      <tr>
-        <td id="content" expanded="{{expanded}}">
-          <content></content>
-        </td>
-      </tr>
-    </table>
+    <div id="line">
+      <lmv-icon class="expand-icon"
+        icon="arrow"
+        expanded="{{expanded}}"
+        on-click="{{toggleExpand}}">
+      </lmv-icon>
+      <span id="label"
+        selected="{{selected}}"
+        grayed="{{grayed}}"
+        on-click="{{onNodeClick}}"
+        on-dblclick="{{onNodeDoubleClick}}">
+        {{label}}
+      </span>
+    </div>
+    <div id="content" expanded="{{expanded}}">
+      <content></content>
+    </div>
 
   </template>
   <script>

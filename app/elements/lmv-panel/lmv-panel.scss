@@ -3,31 +3,36 @@
 $header-font-size: 20px;
 $border: 1px solid $color-1;
 
-#header, #content {
-  padding: 10px;
-}
+:host {
+  #header, #content {
+    padding: 10px;
+  }
 
-#header {
-  font-size: $header-font-size;
-  cursor: pointer;
+  #header {
+    font-size: $header-font-size;
+    cursor: pointer;
 
-  background-color: $color-bg-darken;
-  transition: background-color $color-hover-duration;
-  &:hover {
-    background-color: $color-bg-hover;
+    background-color: $color-bg-darken;
+    transition: background-color $color-hover-duration;
+    &:hover {
+      background-color: $color-bg-hover;
+    }
+  }
+
+  #header .collapse-icon {
+    float:right;
+    transition: transform $color-hover-duration;
+    transform: rotate(90deg);
   }
 }
 
-:host([collapse]) #content {
-  display: none;
+:host([collapse]) {
+  #content {
+    display: none;
+  }
+
+  #header .collapse-icon {
+    transform: rotate(180deg);
+  }
 }
 
-#header .collapse-icon {
-  float:right;
-  transition: transform $color-hover-duration;
-  transform: rotate(90deg);
-}
-
-:host([collapse]) #header .collapse-icon {
-  transform: rotate(180deg);
-}
