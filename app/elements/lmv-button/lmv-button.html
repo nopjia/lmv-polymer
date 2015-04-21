@@ -1,17 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<polymer-element name="lmv-button" attributes="label image icon toggle active" on-click="{{onClick}}">
+<polymer-element name="lmv-button" attributes="toggle active" on-click="{{onClick}}">
   <template>
     <link rel="stylesheet" href="lmv-button.css">
     <div id="button-wrap">
-      <template if="{{image}}">
-        <div id="image" style="background-image: url({{image}})"></div>
-      </template>
-      <div id="label">
-        <template if="{{icon}}">
-          <lmv-icon id="icon" icon="{{icon}}"></lmv-icon>
-        </template>
-        {{label}}
+      <div>
+        <content></content>
       </div>
     </div>
   </template>

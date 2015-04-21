@@ -6,22 +6,17 @@
     <lmv-context-menu id="menu" on-open="{{onOpen}}">
       <div id="wrapper">
         <template if="{{hasSelection}}">
-          <lmv-button
-            image="images/iconmonstr-eye-7-icon-64.png"
-            label="Isolate"
-            on-click="{{isolate}}">
+          <lmv-button on-click="{{isolate}}">
+            <lmv-icon icon="eye"></lmv-icon>Isolate
           </lmv-button><lmv-button
-            image="images/iconmonstr-eye-7-icon-crossed-64.png"
-            label="Hide"
             on-click="{{hide}}">
+            <lmv-icon icon="no-eye"></lmv-icon>Hide
           </lmv-button><lmv-button
-            image="images/iconmonstr-crosshair-6-icon-64.png"
-            label="Focus"
             on-click="{{focus}}">
+            <lmv-icon icon="crosshair"></lmv-icon>Focus
           </lmv-button></template><template if="{{hasHidden}}"><lmv-button
-            image="images/iconmonstr-refresh-2-icon-64.png"
-            label="Show All"
             on-click="{{showAll}}">
+            <lmv-icon icon="refresh"></lmv-icon>Show All
           </lmv-button>
         </template>
       </div>

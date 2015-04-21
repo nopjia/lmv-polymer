@@ -15,7 +15,10 @@
     <template if="{{started && !connected}}">
       <a href="{{remoteUrl}}" target="_blank"><img class="qrcode" src="{{remoteImgUrl}}"></a>
     </template>
-    <lmv-button icon="refresh" label="{{started ? 'Disconnect' : 'Connect'}}" on-click="{{toggleConnect}}"></lmv-button>
+    <lmv-button on-click="{{toggleConnect}}">
+      <lmv-icon icon="refresh"></lmv-icon>
+      {{started ? 'Disconnect' : 'Connect'}}
+    </lmv-button>
   </template>
   <script>
     (function () {

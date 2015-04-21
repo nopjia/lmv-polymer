@@ -1,6 +1,7 @@
 @import "../_elements";
 
 $item-size: 60px;
+$item-icon-size: 30px;
 
 lmv-context-menu {
   background-color: transparent;
@@ -22,4 +23,9 @@ lmv-button {
 
   font-size: 12px;
   background-color: transparent;
+
+  lmv-icon {
+    display: block;
+    font-size: $item-icon-size;
+  }
 }

@@ -9,6 +9,8 @@
 
   box-sizing: border-box;
   padding: 0.5em;
+
+  text-align: center;
 }
 
 :host(:hover), :host([active]) {
@@ -23,24 +25,4 @@
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-}
-
-#image {
-  flex-grow: 1;
-
-  background: center no-repeat;
-  background-size: 80%;
-}
-
-:host([label]) #image {
-  background-size: 50%;
-}
-
-// TODO_NOP: style icon for button
-#icon {
-  // flex-grow: 1;
-}
-
-#label {
-  text-align: center;
 }

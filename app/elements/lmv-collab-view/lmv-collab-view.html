@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="lmv-collab-view.css">
     <div style="display: {{connected ? 'none' : 'block'}}">
       <form id="join" on-submit="{{onStart}}">
-        <lmv-button label="Start" on-click="{{onStart}}"></lmv-button>
+        <lmv-button on-click="{{onStart}}">Start</lmv-button>
         <input placeholder="Enter your name" value="{{username}}">
       </form>
     </div>

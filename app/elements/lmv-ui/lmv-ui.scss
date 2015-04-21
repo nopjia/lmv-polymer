@@ -1,6 +1,7 @@
 @import "../_elements";
 
 $toolbar-width: 40px;
+$toolbar-icon-size: 25px;
 $panel-width: 350px;
 $anim-duration: 0.5s;
 
@@ -88,6 +89,10 @@ $phone-width: 550px;
       width: $toolbar-width;
       height: $toolbar-width;
       display: block;
+
+      lmv-icon {
+        font-size: $toolbar-icon-size;
+      }
     }
   }
 }
@@ -126,6 +131,10 @@ $phone-width: 550px;
     width: $toolbar-width;
     height: $toolbar-width;
     display: block;
+
+    lmv-icon {
+      font-size: $toolbar-icon-size;
+    }
   }
 }
 

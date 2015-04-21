@@ -9,8 +9,8 @@
       <div id="right">
         <lmv-button id="close-right-button"
           style="display:{{rightPanelCount ? 'block' : 'none'}}"
-          image="images/iconmonstr-x-mark-icon-64.png"
           on-click="{{closeRight}}">
+          <lmv-icon icon="x"></lmv-icon>
         </lmv-button>
         <div id="right-content" ondragover="return false">
         </div>
@@ -22,16 +22,16 @@
         <div id="toolbar">
           <lmv-button
             id="fold-button"
-            image="images/iconmonstr-menu-icon-64.png"
             toggle active="{{showleft}}">
+            <lmv-icon icon="menu"></lmv-icon>
           </lmv-button>
           <lmv-button
-            image="images/iconmonstr-photo-camera-4-icon-64.png"
             on-click="{{takeScreenshot}}">
+            <lmv-icon icon="photo"></lmv-icon>
           </lmv-button>
           <lmv-button
-            image="images/iconmonstr-fullscreen-icon-64.png"
             toggle active="{{fullscreen}}">
+            <lmv-icon icon="fullscreen"></lmv-icon>
           </lmv-button>
         </div>
 
