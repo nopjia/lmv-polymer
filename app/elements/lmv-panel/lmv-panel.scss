@@ -3,7 +3,7 @@
 $header-font-size: 20px;
 $border: 1px solid $color-1;
 
-:host {
+:host > {
   #header, #content {
     padding: 10px;
   }
@@ -26,7 +26,7 @@ $border: 1px solid $color-1;
   }
 }
 
-:host([collapse]) {
+:host([collapse]) > {
   #content {
     display: none;
   }

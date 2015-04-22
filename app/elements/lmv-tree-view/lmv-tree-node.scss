@@ -7,7 +7,7 @@ $indent-size: 15px;
   // border: 1px solid white;
   user-select: none;
 
-  #content {
+  & > #content {
     display: none;
     padding-left: $indent-size;
 
@@ -16,11 +16,11 @@ $indent-size: 15px;
     }
   }
 
-  #line {
+  & > #line {
     margin-top: .4em;
   }
 
-  #label {
+  & > #line > #label {
     cursor: pointer;
 
     &:hover, &[selected=true] {
