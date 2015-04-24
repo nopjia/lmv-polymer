@@ -31,6 +31,7 @@
           // grab viewer reference
           var viewerDom = document.querySelector("lmv-viewer");
           if (viewerDom) this.viewer = viewerDom.viewer;
+          if (!this.viewer) return;
 
           var self = this;
           this.viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, function() {
