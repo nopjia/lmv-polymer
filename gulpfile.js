@@ -93,7 +93,7 @@ gulp.task("copy", function () {
     .pipe(gulp.dest("dist/elements"));
 
   var vulcanized = gulp.src(["app/elements/elements.html"])
-    .pipe($.rename("elements.vulcanized.html"))
+    .pipe($.rename("elements.min.html"))
     .pipe(gulp.dest("dist/elements"));
 
   return merge(app, bower, elements, vulcanized).pipe($.size({title: "copy"}));
@@ -118,7 +118,7 @@ gulp.task("html", function () {
 
   return gulp.src(["app/**/*.html", "!app/{elements,test}/**/*.html"])
     // Replace path for vulcanized assets
-    .pipe($.if("*.html", $.replace("elements/elements.html", "elements/elements.vulcanized.html")))
+    .pipe($.if("*.html", $.replace("elements/elements.html", "elements/elements.min.html")))
     .pipe(assets)
     // Concatenate And Minify JavaScript
     .pipe($.if("*.js", $.uglify({preserveComments: "some"})))
@@ -142,7 +142,9 @@ gulp.task("html", function () {
 gulp.task("vulcanize", function () {
   var DEST_DIR = "dist/elements";
 
-  var vulcanize = gulp.src("dist/elements/elements.vulcanized.html")
+  // TODO_NOP: looks like it's not minimizing js
+
+  var vulcanize = gulp.src("dist/elements/elements.min.html")
     .pipe($.vulcanize({
       dest: DEST_DIR,
       strip: true,
@@ -151,11 +153,11 @@ gulp.task("vulcanize", function () {
     .pipe(gulp.dest(DEST_DIR))
     .pipe($.size({title: "vulcanize"}));
 
-  // clean up unnecessary elements files
-  del([
-    "dist/elements/**/*.{html,css,js}",
-    "!dist/elements/elements.vulcanized.html",
-  ]);
+  // // clean up unnecessary elements files
+  // del([
+  //   "dist/elements/**/*.{html,css,js}",
+  //   "!dist/elements/elements.min.html",
+  // ]);
 
   return vulcanize;
 });
