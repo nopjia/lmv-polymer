@@ -54,20 +54,21 @@
           }
           var self = this;
           this.viewer.getProperties(nodeId, function(result) {
-            self.setProperties(result.properties);
+            self.setProperties(result);
           });
         },
-        setProperties: function(props) {
+        setProperties: function(result) {
           // grab name of file
-          var name = props[0].displayValue;
+          var name = result.name;
           this.categories = {};
+
+          var props = result.properties;
 
           for (var i=0; i<props.length; i++) {
             // if no category, goes under generic "name" category
             var cat = props[i].displayCategory || name;
 
-            // if special __category__, disregard
-            if (cat.indexOf("__") === 0)
+            if (props[i].hidden)
               continue;
 
             // create new category, if necessary
