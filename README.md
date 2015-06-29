@@ -11,7 +11,7 @@ The LMV (for Large Model Viewer), or also officially known as [the View and Data
 
 [Polymer](http://www.polymer-project.org/) is Google's experimental library built on top of [Web Components](http://webcomponents.org/), a collection of next-gen web standards that allows you to build modular, encapsulated, and reusable custom HTML elements.
 
-**Warning:** Polymer is currently in 0.5 Developer Preview. The upcoming [0.8 Alpha Release](https://www.polymer-project.org/0.8/) is the first step in providing a stable API, but it will not be compatible with 0.5. Fork at your own risk!
+**Warning:** This project is using Polymer [0.5 Developer Preview](https://www.polymer-project.org/0.5/). Google has since released a stable [1.0 Production Release](https://www.polymer-project.org/1.0/), which is not backwards compatible with 0.5. Fork at your own risk!
 
 ## Installation
 
