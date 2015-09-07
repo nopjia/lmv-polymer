@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "dependencies": {
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nopjia/lmv-polymer.git"
+  },
   "devDependencies": {
     "web-component-tester": "^2.2.3",
     "apache-server-configs": "^2.7.1",
